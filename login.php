@@ -14,16 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // ==================== TEMPORARY BYPASS - REMOVE AFTER USE ====================
-        if ($email === "glenard2308@gmail.com" && $password === "temp123") {
-            $_SESSION["user_id"] = $user['id'];
-            $_SESSION["user_email"] = $user['email'];
-            $_SESSION["user_role"] = $user['role'];
-            header("Location: admin_dashboard.php");
-            exit;
-        }
-        // ==================== END TEMPORARY BYPASS ====================
-
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION["user_id"] = $user['id'];
             $_SESSION["user_email"] = $user['email'];
