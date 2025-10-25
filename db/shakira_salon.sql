@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2025 at 01:10 PM
+-- Generation Time: Oct 25, 2025 at 05:54 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `shakira_salon`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `type` enum('info','warning','success','danger') DEFAULT 'info',
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `announcements`
+--
+
+INSERT INTO `announcements` (`id`, `title`, `content`, `type`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'Sample', 'Lezzgo', 'info', 'active', '2025-10-25 14:53:08', '2025-10-25 14:53:08');
 
 -- --------------------------------------------------------
 
@@ -55,7 +78,8 @@ CREATE TABLE `appointments` (
 
 INSERT INTO `appointments` (`id`, `date`, `user_id`, `appointment_date`, `appointment_time`, `service`, `status`, `created_at`, `customer_name`, `phone`, `address`, `price`, `schedule`, `stylist`, `payment_proof`, `payment_status`, `proof_payment`, `approved_at`, `email`) VALUES
 (60, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'approved', '2025-09-30 00:17:04', 'Jovelyn Erece', '09756432188', 'niug', 2000.00, '08:00 AM', 'Shakira', 'proof_68db21807feec.jpg', 'Pending', NULL, NULL, 'erecejovelyn@gmail.com'),
-(61, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'pending', '2025-09-30 00:41:19', 'Nicole Daguio Acojedo', '09657951427', 'Tabang', 2000.00, '08:00 AM', 'melody delacruz', 'proof_68db272fd6903.jpg', 'Pending', NULL, NULL, 'nicoleacojedo03@gmail.com');
+(61, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'pending', '2025-09-30 00:41:19', 'Nicole Daguio Acojedo', '09657951427', 'Tabang', 2000.00, '08:00 AM', 'melody delacruz', 'proof_68db272fd6903.jpg', 'Pending', NULL, NULL, 'nicoleacojedo03@gmail.com'),
+(62, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'approved', '2025-10-25 15:26:45', 'Sample', '09192783312', 'sample', 2000.00, '05:00 PM', 'Lala Ursola Uy', NULL, 'Pending', NULL, NULL, 'glenard0823@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -169,9 +193,73 @@ CREATE TABLE `hairstylists` (
 
 INSERT INTO `hairstylists` (`id`, `name`, `email`, `phone`, `specialization`, `status`, `created_at`, `full_name`, `phone_number`, `role`, `hairstyle`) VALUES
 (3, '', NULL, NULL, NULL, 'active', '2025-09-24 11:00:27', 'melody delacruz', '09269223220', 'Administrator', NULL),
-(4, '', NULL, NULL, NULL, 'active', '2025-09-26 11:55:49', 'Shakira', '09872625154', 'Manager', NULL),
 (6, '', NULL, NULL, NULL, 'active', '2025-09-30 00:20:40', 'Nicole Acojedo', '09623224038', 'Manager', NULL),
 (7, '', NULL, NULL, NULL, 'active', '2025-09-30 00:51:11', 'Lala Ursola Uy', '09657951427', 'Manager', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `login_attempts`
+--
+
+CREATE TABLE `login_attempts` (
+  `id` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `attempt_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `success` tinyint(1) NOT NULL DEFAULT 0,
+  `user_agent` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `login_attempts`
+--
+
+INSERT INTO `login_attempts` (`id`, `email`, `ip_address`, `attempt_time`, `success`, `user_agent`) VALUES
+(3, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:09', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(4, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:12', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(5, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:16', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(6, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:37', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(7, 'glenard2308@gmail.com', '::1', '2025-10-25 14:25:39', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(8, 'glenard2308@gmail.com', '::1', '2025-10-25 14:51:28', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(9, 'glenard2308@gmail.com', '::1', '2025-10-25 14:51:42', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(10, 'glenard2308@gmail.com', '::1', '2025-10-25 14:54:37', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(11, 'glenard0823@gmail.com', '::1', '2025-10-25 15:14:46', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(12, 'glenard2308@gmail.com', '::1', '2025-10-25 15:32:52', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(13, 'glenard0823@gmail.com', '::1', '2025-10-25 15:33:15', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(14, 'glenard0823@gmail.com', '::1', '2025-10-25 15:33:40', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(15, 'glenard0823@gmail.com', '::1', '2025-10-25 15:42:55', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(16, 'glenard2308@gmail.com', '::1', '2025-10-25 15:49:02', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(17, 'glenard0823@gmail.com', '::1', '2025-10-25 15:50:11', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(18, 'glenard2308@gmail.com', '::1', '2025-10-25 15:53:22', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `promos`
+--
+
+CREATE TABLE `promos` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `discount_percentage` int(11) DEFAULT NULL,
+  `discount_amount` decimal(10,2) DEFAULT NULL,
+  `valid_from` date NOT NULL,
+  `valid_until` date NOT NULL,
+  `promo_code` varchar(50) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `promos`
+--
+
+INSERT INTO `promos` (`id`, `title`, `description`, `discount_percentage`, `discount_amount`, `valid_from`, `valid_until`, `promo_code`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'Sample', 'Sample', 10, 500.00, '2025-10-25', '2025-10-29', '123', 'uploads/promos/68fce483c9d46_Hero 2.jpg', 'active', '2025-10-25 14:53:55', '2025-10-25 14:53:55');
 
 -- --------------------------------------------------------
 
@@ -222,7 +310,8 @@ INSERT INTO `services` (`id`, `name`, `description`, `price`, `image`) VALUES
 (23, 'Make Up', 'Flawless make', 1000.00, 'uploads/services/1759191686_IMG_20250929_191123.jpg'),
 (24, 'Make Up', 'flawless make up', 1000.00, 'uploads/services/1759193656_IMG_20250929_191123.jpg'),
 (25, 'HairCut', 'ASJ', 200.00, 'uploads/services/1759193832_Swanky-Malone-Skin-Fade.jpg'),
-(26, 'Men\'s Haircut', 'SHDD', 250.00, 'uploads/services/1759193872_IMG_20250924_071541.jpg');
+(26, 'Men\'s Haircut', 'SHDD', 250.00, 'uploads/services/1759193872_IMG_20250924_071541.jpg'),
+(27, 'Make Up', 'Sample', 100.00, 'uploads/services/1761404100_Hero 3.jpg');
 
 -- --------------------------------------------------------
 
@@ -256,13 +345,20 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `id`, `full_name`, `first_name`, `last_name`, `name`, `email`, `phone_number`, `password`, `phone`, `security_question`, `security_answer`, `created_at`, `password_hash`, `role`, `security_question_id`, `security_answer_hash`, `contact_number`) VALUES
-(NULL, 22, 'Nicole Acojedo', '', '', '', 'nicols@gmail.com', '', '$2y$10$EtpkfoF9avosWh5cZbTeyeLYbnngR56AFXFmU9MIUO5/r/3TPCY2q', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427'),
+(NULL, 22, 'Nicole Acojedo', '', '', '', 'glenard2308@gmail.com', '', '$2y$10$EtpkfoF9avosWh5cZbTeyeLYbnngR56AFXFmU9MIUO5/r/3TPCY2q', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427'),
 (NULL, 41, 'Nicole Acojedo', '', '', '', 'nicoleacojedo03@gmail.com', '', '$2y$10$7.TtRnMd2KCO4UCo.Arpc.vIA8f1riJCb7NGIddOJnkvTJ5NgQnP.', NULL, 'What was your childhood nickname?', '06c7945e848256abb85430c42a8e7c3f3583d30390e45ddd038f5004cfc4fbba', '2025-09-27 12:03:46', '', 'customer', NULL, NULL, '09753243405'),
-(NULL, 43, 'Lala', '', '', '', 'ursolauy2021@gmail.com', '', '$2y$10$zYaqnp/qJMC023ppHN/C.uGSGH4cUERfIAQIiJ7p6YZVQmmbxdq0.', NULL, 'What was your childhood nickname?', '494414ded24da13c451b13b424928821351c78fce49f93d9e1b55f102790c206', '2025-09-30 00:33:06', '', 'customer', NULL, NULL, '09877362821');
+(NULL, 43, 'Lala', '', '', '', 'ursolauy2021@gmail.com', '', '$2y$10$zYaqnp/qJMC023ppHN/C.uGSGH4cUERfIAQIiJ7p6YZVQmmbxdq0.', NULL, 'What was your childhood nickname?', '494414ded24da13c451b13b424928821351c78fce49f93d9e1b55f102790c206', '2025-09-30 00:33:06', '', 'customer', NULL, NULL, '09877362821'),
+(NULL, 46, 'Glenard U Pagurayan', '', '', '', 'glenard0823@gmail.com', '', '$2y$10$iZTLMbiYoqgHHekJHviu1eVYpntmoFXGeH3W1eJou7Jm9NzkudasC', NULL, 'What was your childhood nickname?', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '2025-10-25 13:46:30', '', 'customer', NULL, NULL, '09718361278');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `appointments`
@@ -302,6 +398,20 @@ ALTER TABLE `hairstylists`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idx_email_time` (`email`,`attempt_time`),
+  ADD KEY `idx_ip_time` (`ip_address`,`attempt_time`);
+
+--
+-- Indexes for table `promos`
+--
+ALTER TABLE `promos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `security_questions`
 --
 ALTER TABLE `security_questions`
@@ -324,10 +434,16 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -360,6 +476,18 @@ ALTER TABLE `hairstylists`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `promos`
+--
+ALTER TABLE `promos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `security_questions`
 --
 ALTER TABLE `security_questions`
@@ -369,13 +497,13 @@ ALTER TABLE `security_questions`
 -- AUTO_INCREMENT for table `services`
 --
 ALTER TABLE `services`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Constraints for dumped tables
