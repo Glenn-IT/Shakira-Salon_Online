@@ -20,28 +20,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = trim($_POST['description']);
     $price = floatval($_POST['price']);
 
-    $imagePath = "";
-    if (isset($_FILES['service_image']) && $_FILES['service_image']['error'] == 0) {
-        $targetDir = "uploads/services/";
-        if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true);
-        }
-        $fileName = time() . "_" . basename($_FILES["service_image"]["name"]);
-        $targetFile = $targetDir . $fileName;
-        if (move_uploaded_file($_FILES["service_image"]["tmp_name"], $targetFile)) {
-            $imagePath = $targetFile;
-        }
-    }
+    // Check if service name already exists
+    $checkStmt = $conn->prepare("SELECT id FROM services WHERE name = ?");
+    $checkStmt->bind_param("s", $service_name);
+    $checkStmt->execute();
+    $checkStmt->store_result();
 
-    $stmt = $conn->prepare("INSERT INTO services (name, description, price, image) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssds", $service_name, $description, $price, $imagePath);
-
-    if ($stmt->execute()) {
-        $message = "<div class='alert success'>Service added successfully!</div>";
+    if ($checkStmt->num_rows > 0) {
+        $message = "<div class='alert error'> A service with this name already exists!</div>";
+        $checkStmt->close();
     } else {
-        $message = "<div class='alert error'>Error: " . $conn->error . "</div>";
+        $checkStmt->close();
+
+        $imagePath = "";
+        if (isset($_FILES['service_image']) && $_FILES['service_image']['error'] == 0) {
+            $targetDir = "uploads/services/";
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0777, true);
+            }
+            $fileName = time() . "_" . basename($_FILES["service_image"]["name"]);
+            $targetFile = $targetDir . $fileName;
+            if (move_uploaded_file($_FILES["service_image"]["tmp_name"], $targetFile)) {
+                $imagePath = $targetFile;
+            }
+        }
+
+        $stmt = $conn->prepare("INSERT INTO services (name, description, price, image) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssds", $service_name, $description, $price, $imagePath);
+
+        if ($stmt->execute()) {
+            $message = "<div class='alert success'>Service added successfully!</div>";
+        } else {
+            $message = "<div class='alert error'> " . $conn->error . "</div>";
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 
 $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
