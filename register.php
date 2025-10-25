@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Full Name is required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
-    } elseif (!preg_match('/^[0-9]{11}$/', $cp)) {
-        $error = "Contact number must be numeric 11 digits.";
+    } elseif (!preg_match('/^09[0-9]{9}$/', $cp)) {
+        $error = "Contact number must be a valid Philippine number (starts with 09 followed by 9 digits).";
     } else {
         try {
             // Check if email already exists in the database
@@ -31,6 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->fetch()) {
                 $error = "This email address is already in use. Please use a different email or try logging in if you already have an account.";
             } else {
+                // Check if full name already exists in the database
+                $stmt = $pdo->prepare("SELECT id FROM users WHERE LOWER(full_name) = LOWER(?)");
+                $stmt->execute([$fullname]);
+                if ($stmt->fetch()) {
+                    $error = "This full name is already registered. Please use a different name or contact support if this is your name.";
+                } else {
                 $stmt = $pdo->prepare("INSERT INTO users (full_name, email, password, contact_number, role, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 if ($stmt->execute([$fullname, $email, $password, $cp, $role, $question, $answer])) {
 
@@ -61,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $success = "Registration successful! A confirmation email has been sent. You can now <a href='login.php'>login</a>.";
                 } else {
                     $error = "Something went wrong. Please try again.";
+                }
                 }
             }
         } catch (Exception $e) {
@@ -177,8 +184,121 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         color: #842029;
         border: 1px solid #f5c2c7;
     }
+    .fullname-status {
+        font-size: 12px;
+        margin-top: 5px;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    .fullname-available {
+        background: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+    }
+    .fullname-taken {
+        background: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+    }
+    .cp-status {
+        font-size: 12px;
+        margin-top: 5px;
+        padding: 5px;
+        border-radius: 4px;
+    }
+    .cp-valid {
+        background: #d1e7dd;
+        color: #0f5132;
+        border: 1px solid #badbcc;
+    }
+    .cp-invalid {
+        background: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+    }
 </style>
 <script>
+function validatePhilippineNumber(input) {
+    const statusDiv = document.getElementById('cp-status');
+    const value = input.value.trim();
+    
+    // Clear previous status
+    statusDiv.innerHTML = '';
+    statusDiv.className = 'cp-status';
+    
+    // Allow only numbers and ensure 09 format
+    let cleanValue = value.replace(/[^0-9]/g, '');
+    
+    // Format the input based on what user types
+    if (cleanValue.startsWith('09')) {
+        // Keep 09 format
+        if (cleanValue.length > 11) {
+            cleanValue = cleanValue.substring(0, 11);
+        }
+    } else if (cleanValue.length > 0 && cleanValue.startsWith('9')) {
+        // If starts with 9, add 0
+        cleanValue = '0' + cleanValue;
+        if (cleanValue.length > 11) {
+            cleanValue = cleanValue.substring(0, 11);
+        }
+    } else if (cleanValue.length > 0 && !cleanValue.startsWith('0')) {
+        // If doesn't start with 0, add 09
+        cleanValue = '09' + cleanValue;
+        if (cleanValue.length > 11) {
+            cleanValue = cleanValue.substring(0, 11);
+        }
+    }
+    
+    input.value = cleanValue;
+    
+    // Validate the format
+    const philippinePattern = /^09[0-9]{9}$/;
+    
+    if (cleanValue.length >= 11) {
+        if (philippinePattern.test(cleanValue)) {
+            statusDiv.innerHTML = '✓ Valid Philippine number';
+            statusDiv.className = 'cp-status cp-valid';
+        } else {
+            statusDiv.innerHTML = '✗ Invalid format. Use 09XXXXXXXXX';
+            statusDiv.className = 'cp-status cp-invalid';
+        }
+    }
+}
+
+function checkFullNameAvailability() {
+    const fullnameInput = document.getElementById('fullname');
+    const statusDiv = document.getElementById('fullname-status');
+    const fullname = fullnameInput.value.trim();
+    
+    // Clear previous status
+    statusDiv.innerHTML = '';
+    statusDiv.className = 'fullname-status';
+    
+    // Only check if fullname is not empty and has at least 2 characters
+    if (fullname && fullname.length >= 2) {
+        fetch('check_fullname.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'fullname=' + encodeURIComponent(fullname)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                statusDiv.innerHTML = '✗ This name is already registered';
+                statusDiv.className = 'fullname-status fullname-taken';
+            } else {
+                statusDiv.innerHTML = '✓ Name is available';
+                statusDiv.className = 'fullname-status fullname-available';
+            }
+        })
+        .catch(error => {
+            console.error('Error checking fullname:', error);
+        });
+    }
+}
+
 function checkEmailAvailability() {
     const emailInput = document.getElementById('email');
     const statusDiv = document.getElementById('email-status');
@@ -226,7 +346,8 @@ function checkEmailAvailability() {
 
   <form method="POST" novalidate>
     <label for="fullname">Full Name</label>
-    <input type="text" id="fullname" name="fullname" placeholder="John Doe" required autocomplete="name" />
+    <input type="text" id="fullname" name="fullname" placeholder="John Doe" required autocomplete="name" onblur="checkFullNameAvailability()" />
+    <div id="fullname-status" class="fullname-status"></div>
 
     <label for="email">Email Address</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" onblur="checkEmailAvailability()" />
@@ -236,7 +357,8 @@ function checkEmailAvailability() {
     <input type="password" id="password" name="password" placeholder="Choose a strong password" required minlength="8" autocomplete="new-password" />
 
     <label for="cp">Contact Number</label>
-    <input type="text" id="cp" name="cp" placeholder="11-digit contact number" pattern="\d{11}" required maxlength="11" minlength="11" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+    <input type="text" id="cp" name="cp" placeholder="e.g., 09123456789" pattern="09[0-9]{9}" required maxlength="11" minlength="11" oninput="validatePhilippineNumber(this)" />
+    <div id="cp-status" class="cp-status"></div>
 
     <label for="security_question">Security Question</label>
     <select id="security_question" name="security_question" required>
