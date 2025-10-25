@@ -7,16 +7,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['add_hairstylist'])) {
     $fullName = trim($_POST['full_name'] ?? '');
     $phone    = trim($_POST['phone_number'] ?? '');
     $role     = trim($_POST['role'] ?? '');
+    $error    = '';
 
     if ($fullName && $phone && $role) {
-        $stmt = $pdo->prepare("INSERT INTO hairstylists (full_name, phone_number, role, created_at) 
-                               VALUES (:full_name, :phone_number, :role, NOW())");
-        $stmt->execute([
-            ':full_name'   => $fullName,
-            ':phone_number'=> $phone,
-            ':role'        => $role
-        ]);
-        header("Location: hairstyle.php?added=1");
+        // Validate Philippine phone number (must start with 09 and be 11 digits)
+        if (!preg_match('/^09\d{9}$/', $phone)) {
+            $error = 'invalid_phone';
+        } else {
+            // Check for duplicate full name
+            $checkName = $pdo->prepare("SELECT id FROM hairstylists WHERE full_name = :full_name");
+            $checkName->execute([':full_name' => $fullName]);
+            
+            if ($checkName->fetch()) {
+                $error = 'duplicate_name';
+            } else {
+                // Insert new hairstylist
+                $stmt = $pdo->prepare("INSERT INTO hairstylists (full_name, phone_number, role, created_at) 
+                                       VALUES (:full_name, :phone_number, :role, NOW())");
+                $stmt->execute([
+                    ':full_name'   => $fullName,
+                    ':phone_number'=> $phone,
+                    ':role'        => $role
+                ]);
+                header("Location: hairstyle.php?added=1");
+                exit;
+            }
+        }
+    }
+    
+    if ($error) {
+        header("Location: hairstyle.php?error=$error");
         exit;
     }
 }
@@ -27,16 +47,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['update_hairstylist'])
     $fullName = trim($_POST['full_name'] ?? '');
     $phone    = trim($_POST['phone_number'] ?? '');
     $role     = trim($_POST['role'] ?? '');
+    $error    = '';
 
     if ($id && $fullName && $phone && $role) {
-        $update = $pdo->prepare("UPDATE hairstylists SET full_name = :full_name, phone_number = :phone_number, role = :role WHERE id = :id");
-        $update->execute([
-            ':full_name'    => $fullName,
-            ':phone_number' => $phone,
-            ':role'         => $role,
-            ':id'           => $id
-        ]);
-        header("Location: hairstyle.php?updated=1");
+        // Validate Philippine phone number (must start with 09 and be 11 digits)
+        if (!preg_match('/^09\d{9}$/', $phone)) {
+            $error = 'invalid_phone';
+        } else {
+            // Check for duplicate full name (excluding current record)
+            $checkName = $pdo->prepare("SELECT id FROM hairstylists WHERE full_name = :full_name AND id != :id");
+            $checkName->execute([':full_name' => $fullName, ':id' => $id]);
+            
+            if ($checkName->fetch()) {
+                $error = 'duplicate_name';
+            } else {
+                // Update hairstylist
+                $update = $pdo->prepare("UPDATE hairstylists SET full_name = :full_name, phone_number = :phone_number, role = :role WHERE id = :id");
+                $update->execute([
+                    ':full_name'    => $fullName,
+                    ':phone_number' => $phone,
+                    ':role'         => $role,
+                    ':id'           => $id
+                ]);
+                header("Location: hairstyle.php?updated=1");
+                exit;
+            }
+        }
+    }
+    
+    if ($error) {
+        header("Location: hairstyle.php?error=$error");
         exit;
     }
 }
@@ -201,6 +241,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="alert alert-success alert-dismissible fade show">✅ Hairstylist deleted successfully!
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
+    <?php elseif (isset($_GET['error'])): ?>
+        <?php if ($_GET['error'] === 'invalid_phone'): ?>
+            <div class="alert alert-danger alert-dismissible fade show">❌ Invalid phone number! Please enter a valid Philippine number (e.g., 09123456789).
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php elseif ($_GET['error'] === 'duplicate_name'): ?>
+            <div class="alert alert-danger alert-dismissible fade show">❌ A hairstylist with this name already exists!
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
 
     <!-- Add Hairstylist Form -->
@@ -212,10 +262,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <form method="POST">
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <input type="text" name="full_name" class="form-control" placeholder="Full Name" required>
+                        <input type="text" name="full_name" id="add_full_name" class="form-control" placeholder="Full Name" required>
+                        <small class="text-muted">Full name must be unique</small>
                     </div>
                     <div class="col-md-3">
-                        <input type="text" name="phone_number" class="form-control" placeholder="Phone Number" required>
+                        <input type="text" name="phone_number" id="add_phone_number" class="form-control" placeholder="09XXXXXXXXX" pattern="09\d{9}" maxlength="11" required>
+                        <small class="text-muted">Format: 09XXXXXXXXX</small>
                     </div>
                     <div class="col-md-3">
                         <select name="role" class="form-select" required>
@@ -296,10 +348,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input type="text" name="full_name" id="edit_full_name" class="form-control" required>
+                <small class="text-muted">Full name must be unique</small>
             </div>
             <div class="mb-3">
                 <label class="form-label">Phone Number</label>
-                <input type="text" name="phone_number" id="edit_phone_number" class="form-control" required>
+                <input type="text" name="phone_number" id="edit_phone_number" class="form-control" placeholder="09XXXXXXXXX" pattern="09\d{9}" maxlength="11" required>
+                <small class="text-muted">Format: 09XXXXXXXXX (Philippine number only)</small>
             </div>
             <div class="mb-3">
                 <label class="form-label">Role</label>
@@ -325,6 +379,38 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Phone number validation for Philippine numbers
+    function validatePhoneNumber(input) {
+        const phonePattern = /^09\d{9}$/;
+        if (!phonePattern.test(input.value)) {
+            input.setCustomValidity('Please enter a valid Philippine phone number starting with 09 (11 digits total)');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
+    // Add phone validation listeners
+    document.getElementById('add_phone_number').addEventListener('input', function() {
+        validatePhoneNumber(this);
+    });
+
+    document.getElementById('edit_phone_number').addEventListener('input', function() {
+        validatePhoneNumber(this);
+    });
+
+    // Allow only numbers in phone fields
+    document.getElementById('add_phone_number').addEventListener('keypress', function(e) {
+        if (e.key < '0' || e.key > '9') {
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('edit_phone_number').addEventListener('keypress', function(e) {
+        if (e.key < '0' || e.key > '9') {
+            e.preventDefault();
+        }
+    });
+
     function openEditModal(id, fullName, phone, role) {
         document.getElementById('edit_id').value = id;
         document.getElementById('edit_full_name').value = fullName;
