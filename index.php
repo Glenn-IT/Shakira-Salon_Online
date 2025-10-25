@@ -17,9 +17,13 @@ try {
     // Fetch active promos
     $today = date('Y-m-d');
     $promos = $pdo->query("SELECT * FROM promos WHERE status='active' AND valid_from <= '$today' AND valid_until >= '$today' ORDER BY created_at DESC LIMIT 4")->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Fetch services
+    $services = $pdo->query("SELECT * FROM services ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $announcements = [];
     $promos = [];
+    $services = [];
 }
 ?>
 <!DOCTYPE html>
@@ -291,6 +295,62 @@ try {
       transform: translateY(0);
     }
 
+    /* Services Section Styles */
+    .services-section {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+    .service-card {
+      border: none;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      background: white;
+      height: 100%;
+    }
+    .service-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 40px rgba(233,30,99,0.3);
+    }
+    .service-card img {
+      height: 250px;
+      object-fit: cover;
+      width: 100%;
+      transition: transform 0.5s ease;
+    }
+    .service-card:hover img {
+      transform: scale(1.15);
+    }
+    .service-card .card-body {
+      padding: 1.5rem;
+    }
+    .service-price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #e91e63;
+      margin: 10px 0;
+    }
+    .service-description {
+      color: #666;
+      font-size: 0.95rem;
+      min-height: 60px;
+    }
+    .btn-book-service {
+      background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%);
+      color: white;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(233,30,99,0.3);
+    }
+    .btn-book-service:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(233,30,99,0.5);
+      background: linear-gradient(135deg, #c2185b 0%, #e91e63 100%);
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.2rem;
@@ -358,6 +418,44 @@ try {
     </div>
   </div>
 </section>
+
+<?php if (!empty($services)): ?>
+<!-- Services Section -->
+<section class="py-5 services-section" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center section-title" data-aos="zoom-in">
+      <i class="fas fa-cut"></i> Our Services
+    </h2>
+    <p class="text-center text-muted mb-5" data-aos="fade-in">
+      Discover our wide range of professional salon services tailored just for you
+    </p>
+    <div class="row g-4">
+      <?php foreach ($services as $index => $service): ?>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="<?= ($index * 100) ?>">
+          <div class="service-card card h-100">
+            <?php if ($service['image'] && file_exists($service['image'])): ?>
+              <img src="<?= htmlspecialchars($service['image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($service['name']) ?>">
+            <?php else: ?>
+              <div style="height: 250px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-scissors" style="font-size: 5rem; color: white; opacity: 0.5;"></i>
+              </div>
+            <?php endif; ?>
+            
+            <div class="card-body text-center d-flex flex-column">
+              <h5 class="card-title"><?= htmlspecialchars($service['name']) ?></h5>
+              <p class="service-description flex-grow-1"><?= htmlspecialchars($service['description']) ?></p>
+              <div class="service-price">₱<?= number_format($service['price'], 2) ?></div>
+              <a href="register.php" class="btn btn-book-service mt-3">
+                <i class="fas fa-calendar-check"></i> Book Now
+              </a>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
 <section class="py-5 bg-light" data-aos="fade-up">
   <div class="container">
