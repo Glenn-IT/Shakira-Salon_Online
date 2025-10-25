@@ -153,9 +153,10 @@ try {
     <a href="admin_dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php"><i class="fa-solid fa-users"></i> Manage Users</a>
     <a href="manage_bookings.php"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
-    <a href="announcement.php"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
-     <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-    <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Services</a>]
+    <a href="announcement.php" class="active"><i class="fa-solid fa-clock"></i> Business Hours</a>
+    <a href="manage_announcements.php"><i class="fa-solid fa-bullhorn"></i> Announcements & Promos</a>
+    <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+    <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Services</a>
     <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
 
     <li class="nav-item">

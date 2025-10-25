@@ -1,4 +1,27 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+
+// Database connection
+$host = 'localhost';
+$db = 'shakira_salon';
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Fetch active announcements
+    $announcements = $pdo->query("SELECT * FROM announcements WHERE status='active' ORDER BY created_at DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+    
+    // Fetch active promos
+    $today = date('Y-m-d');
+    $promos = $pdo->query("SELECT * FROM promos WHERE status='active' AND valid_from <= '$today' AND valid_until >= '$today' ORDER BY created_at DESC LIMIT 4")->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $announcements = [];
+    $promos = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -200,12 +223,83 @@
       color: #e91e63;
     }
 
+    /* Announcements & Promos Styles */
+    .announcement-bar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 0;
+      overflow: hidden;
+    }
+    .announcement-content {
+      display: flex;
+      animation: scroll 20s linear infinite;
+      white-space: nowrap;
+    }
+    .announcement-item {
+      padding: 0 50px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .announcement-item i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    .promo-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+    .promo-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(233,30,99,0.4);
+    }
+    .promo-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #e91e63;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 25px;
+      font-weight: bold;
+      z-index: 1;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    .promo-card img {
+      height: 200px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .promo-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      padding: 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .promo-card:hover .promo-overlay {
+      transform: translateY(0);
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.2rem;
       }
       .card img {
         height: 200px;
+      }
+      .announcement-item {
+        padding: 0 30px;
       }
     }
   </style>
@@ -234,6 +328,25 @@
     </div>
   </div>
 </nav>
+
+<?php if (!empty($announcements)): ?>
+<!-- Announcements Bar -->
+<div class="announcement-bar">
+  <div class="announcement-content">
+    <?php 
+    // Duplicate announcements for seamless loop
+    $duplicated_announcements = array_merge($announcements, $announcements);
+    foreach ($duplicated_announcements as $announcement): 
+    ?>
+      <div class="announcement-item">
+        <i class="fas fa-bullhorn"></i>
+        <strong><?= htmlspecialchars($announcement['title']) ?>:</strong>
+        <?= htmlspecialchars($announcement['content']) ?>
+      </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+<?php endif; ?>
 
 <section class="hero">
   <div class="hero-content animate__animated animate__fadeInUp" data-aos="zoom-in">
@@ -280,6 +393,63 @@
     </div>
   </div>
 </section>
+
+<?php if (!empty($promos)): ?>
+<!-- Promos Section -->
+<section class="py-5" data-aos="fade-up">
+  <div class="container">
+    <h2 class="text-center section-title" data-aos="zoom-in">
+      <i class="fas fa-tags"></i> Special Promos & Offers
+    </h2>
+    <div class="row g-4">
+      <?php foreach ($promos as $promo): ?>
+        <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="promo-card card h-100">
+            <?php if ($promo['discount_percentage']): ?>
+              <div class="promo-badge"><?= $promo['discount_percentage'] ?>% OFF</div>
+            <?php elseif ($promo['discount_amount']): ?>
+              <div class="promo-badge">₱<?= number_format($promo['discount_amount'], 0) ?> OFF</div>
+            <?php endif; ?>
+            
+            <?php if ($promo['image']): ?>
+              <img src="<?= htmlspecialchars($promo['image']) ?>" class="card-img-top" alt="<?= htmlspecialchars($promo['title']) ?>">
+            <?php else: ?>
+              <div style="height: 200px; background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%); display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-tag" style="font-size: 4rem; color: white; opacity: 0.5;"></i>
+              </div>
+            <?php endif; ?>
+            
+            <div class="card-body">
+              <h5 class="card-title text-center"><?= htmlspecialchars($promo['title']) ?></h5>
+              <p class="card-text text-center"><?= htmlspecialchars($promo['description']) ?></p>
+              <?php if ($promo['promo_code']): ?>
+                <div class="text-center mt-2">
+                  <small class="text-muted">Use code:</small>
+                  <div class="badge bg-dark" style="font-size: 1rem; padding: 8px 15px;">
+                    <?= htmlspecialchars($promo['promo_code']) ?>
+                  </div>
+                </div>
+              <?php endif; ?>
+              <div class="text-center mt-3">
+                <small class="text-muted">
+                  Valid until: <strong><?= date('M d, Y', strtotime($promo['valid_until'])) ?></strong>
+                </small>
+              </div>
+            </div>
+            
+            <div class="promo-overlay">
+              <p class="mb-1"><i class="fas fa-calendar"></i> <?= date('M d', strtotime($promo['valid_from'])) ?> - <?= date('M d, Y', strtotime($promo['valid_until'])) ?></p>
+              <a href="register.php" class="btn btn-light btn-sm mt-2">
+                <i class="fas fa-gift"></i> Avail Now
+              </a>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
 
 <section class="cta-section" data-aos="zoom-in">
   <div class="container">
