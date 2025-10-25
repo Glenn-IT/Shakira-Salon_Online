@@ -1,20 +1,33 @@
 <?php
 include('config.php');
+include('email_security.php');
 session_start();
 $error = '';
+
+// Clean old login attempts (run occasionally)
+if (rand(1, 100) == 1) {
+    cleanOldAttempts($pdo, 24);
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $password = $_POST["password"];
+    $ipAddress = $_SERVER['REMOTE_ADDR'];
+    $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "Invalid email format.";
+        // Log the failed attempt
+        logLoginAttempt($pdo, $email, $ipAddress, $userAgent, false);
     } else {
-        $stmt = $pdo->prepare("SELECT id, email, password, role FROM users WHERE BINARY email = ?");
+        $stmt = $pdo->prepare("SELECT id, email, password, role, full_name FROM users WHERE BINARY email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['password'])) {
+            // Successful login - log it
+            logLoginAttempt($pdo, $email, $ipAddress, $userAgent, true);
+            
             $_SESSION["user_id"] = $user['id'];
             $_SESSION["user_email"] = $user['email'];
             $_SESSION["user_role"] = $user['role'];
@@ -26,7 +39,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             exit;
         } else {
-            $error = "Invalid email or password.";
+            // Failed login - log it
+            logLoginAttempt($pdo, $email, $ipAddress, $userAgent, false);
+            
+            // Check if this is an admin account attempt
+            if ($user && $user['role'] === 'admin') {
+                $failedAttempts = getRecentFailedAttempts($pdo, $email, 30);
+                
+                // Send security alert after 3 failed attempts
+                if ($failedAttempts >= 3) {
+                    $adminName = $user['full_name'] ?: 'Admin';
+                    $currentTime = date('Y-m-d H:i:s');
+                    
+                    // Send security notification email
+                    $emailSent = sendSecurityAlert($email, $adminName, $ipAddress, $userAgent, $currentTime);
+                    
+                    if ($emailSent) {
+                        $error = "Invalid email or password. Security alert has been sent to the admin email due to multiple failed attempts.";
+                    } else {
+                        $error = "Invalid email or password. Multiple failed attempts detected.";
+                    }
+                } else {
+                    $error = "Invalid email or password.";
+                }
+            } else {
+                $error = "Invalid email or password.";
+            }
         }
     }
 }
