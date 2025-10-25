@@ -1,0 +1,393 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Oct 10, 2025 at 01:10 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `shakira_salon`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointments`
+--
+
+CREATE TABLE `appointments` (
+  `id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `appointment_date` date NOT NULL,
+  `appointment_time` time NOT NULL,
+  `service` varchar(100) DEFAULT NULL,
+  `status` enum('pending','approved','cancelled') DEFAULT 'pending',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `customer_name` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `schedule` varchar(20) DEFAULT NULL,
+  `stylist` varchar(100) DEFAULT NULL,
+  `payment_proof` varchar(255) DEFAULT NULL,
+  `payment_status` enum('Pending','Paid','Cancelled') DEFAULT 'Pending',
+  `proof_payment` varchar(255) DEFAULT NULL,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointments`
+--
+
+INSERT INTO `appointments` (`id`, `date`, `user_id`, `appointment_date`, `appointment_time`, `service`, `status`, `created_at`, `customer_name`, `phone`, `address`, `price`, `schedule`, `stylist`, `payment_proof`, `payment_status`, `proof_payment`, `approved_at`, `email`) VALUES
+(60, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'approved', '2025-09-30 00:17:04', 'Jovelyn Erece', '09756432188', 'niug', 2000.00, '08:00 AM', 'Shakira', 'proof_68db21807feec.jpg', 'Pending', NULL, NULL, 'erecejovelyn@gmail.com'),
+(61, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'pending', '2025-09-30 00:41:19', 'Nicole Daguio Acojedo', '09657951427', 'Tabang', 2000.00, '08:00 AM', 'melody delacruz', 'proof_68db272fd6903.jpg', 'Pending', NULL, NULL, 'nicoleacojedo03@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `service` varchar(100) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `booking_date` datetime NOT NULL,
+  `status` enum('Pending','Approved','Completed','Cancelled') DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `business_hours`
+--
+
+CREATE TABLE `business_hours` (
+  `id` int(11) NOT NULL,
+  `open_hour` int(11) NOT NULL,
+  `close_hour` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `business_hours`
+--
+
+INSERT INTO `business_hours` (`id`, `open_hour`, `close_hour`, `status`) VALUES
+(1, 11, 14, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contact_messages`
+--
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `subject` varchar(200) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('unread','read') NOT NULL DEFAULT 'unread'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `contact_messages`
+--
+
+INSERT INTO `contact_messages` (`id`, `name`, `email`, `subject`, `message`, `created_at`, `status`) VALUES
+(12, 'Rica Attaban', 'ricamaeattaban24@gmail.com', 'haircut', 'hi', '2025-09-25 05:41:32', 'read');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gallery`
+--
+
+CREATE TABLE `gallery` (
+  `id` int(11) NOT NULL,
+  `service_name` varchar(100) NOT NULL,
+  `style_name` varchar(255) NOT NULL,
+  `haircut_name` varchar(255) DEFAULT NULL,
+  `before_image` varchar(255) NOT NULL,
+  `after_image` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gallery`
+--
+
+INSERT INTO `gallery` (`id`, `service_name`, `style_name`, `haircut_name`, `before_image`, `after_image`, `created_at`) VALUES
+(11, 'Layered haircut', '', NULL, 'images/before/IMG_20250926_070008.jpg', 'images/after/IMG_20250926_070020.jpg', '2025-09-25 23:02:52'),
+(12, 'Make up look is poilished and elegant', '', NULL, 'images/before/IMG_20250926_071120.jpg', 'images/after/IMG_20250926_071129.jpg', '2025-09-25 23:14:54'),
+(13, 'Hair Rebonding', '', NULL, 'images/before/IMG_20250827_174814.jpg', 'images/after/IMG_20250827_174835.jpg', '2025-09-25 23:17:42'),
+(14, 'Hair coloring rich auburn shade', '', NULL, 'images/before/IMG_20250926_072053.jpg', 'images/after/IMG_20250926_072122.jpg', '2025-09-25 23:23:31'),
+(15, 'Low skin fade a textured top', '', NULL, 'images/before/IMG_20250924_071532.jpg', 'images/after/IMG_20250924_071541.jpg', '2025-09-25 23:25:25'),
+(16, 'Make Up', '', NULL, 'images/before/IMG_20250929_191108.jpg', 'images/after/IMG_20250929_191123.jpg', '2025-09-30 00:23:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hairstylists`
+--
+
+CREATE TABLE `hairstylists` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `specialization` varchar(100) DEFAULT NULL,
+  `status` enum('active','inactive') DEFAULT 'active',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `full_name` varchar(200) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `role` varchar(50) DEFAULT NULL,
+  `hairstyle` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hairstylists`
+--
+
+INSERT INTO `hairstylists` (`id`, `name`, `email`, `phone`, `specialization`, `status`, `created_at`, `full_name`, `phone_number`, `role`, `hairstyle`) VALUES
+(3, '', NULL, NULL, NULL, 'active', '2025-09-24 11:00:27', 'melody delacruz', '09269223220', 'Administrator', NULL),
+(4, '', NULL, NULL, NULL, 'active', '2025-09-26 11:55:49', 'Shakira', '09872625154', 'Manager', NULL),
+(6, '', NULL, NULL, NULL, 'active', '2025-09-30 00:20:40', 'Nicole Acojedo', '09623224038', 'Manager', NULL),
+(7, '', NULL, NULL, NULL, 'active', '2025-09-30 00:51:11', 'Lala Ursola Uy', '09657951427', 'Manager', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `security_questions`
+--
+
+CREATE TABLE `security_questions` (
+  `id` int(11) NOT NULL,
+  `question` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `security_questions`
+--
+
+INSERT INTO `security_questions` (`id`, `question`) VALUES
+(1, 'What is your mother’s maiden name?'),
+(2, 'What is the name of your first pet?'),
+(3, 'What city were you born in?'),
+(4, 'What is your favorite color?'),
+(5, 'What is your favorite food?');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `services`
+--
+
+CREATE TABLE `services` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `image` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `services`
+--
+
+INSERT INTO `services` (`id`, `name`, `description`, `price`, `image`) VALUES
+(18, 'Hair Rebonding', 'A professional hair treatment that makes hair permanently straight and shiny', 3000.00, 'uploads/services/1758839958_IMG_20250827_174835.jpg'),
+(19, 'Hair Coloring', 'Transform your look with Oakey Premium hair color in orange red(6/43)', 2000.00, 'uploads/services/1758840040_FB_IMG_1756900640237.jpg'),
+(20, 'Hair Cut', 'Long layered haircut with soft waves, designed to add volume and movement', 350.00, 'uploads/services/1758840118_Long+Layered+Cut+for+Effortless+Volume.jpg'),
+(21, 'Make Up', 'Fresh Make up', 1000.00, 'uploads/services/1758840486_0914c4ee311ea3669d11458f3fe64909.jpg'),
+(22, 'Men\'s Haircut', 'Clean and stylish haircut with fade, tailored to you look', 350.00, 'uploads/services/1758840770_short-skin-fade-and-swept-forward-crew-cut-for-men.jpg'),
+(23, 'Make Up', 'Flawless make', 1000.00, 'uploads/services/1759191686_IMG_20250929_191123.jpg'),
+(24, 'Make Up', 'flawless make up', 1000.00, 'uploads/services/1759193656_IMG_20250929_191123.jpg'),
+(25, 'HairCut', 'ASJ', 200.00, 'uploads/services/1759193832_Swanky-Malone-Skin-Fade.jpg'),
+(26, 'Men\'s Haircut', 'SHDD', 250.00, 'uploads/services/1759193872_IMG_20250924_071541.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `username` varchar(100) DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `full_name` varchar(255) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `phone_number` varchar(11) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `security_question` text DEFAULT NULL,
+  `security_answer` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `password_hash` varchar(255) NOT NULL,
+  `role` enum('admin','customer') DEFAULT 'customer',
+  `security_question_id` int(11) DEFAULT NULL,
+  `security_answer_hash` varchar(255) DEFAULT NULL,
+  `contact_number` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`username`, `id`, `full_name`, `first_name`, `last_name`, `name`, `email`, `phone_number`, `password`, `phone`, `security_question`, `security_answer`, `created_at`, `password_hash`, `role`, `security_question_id`, `security_answer_hash`, `contact_number`) VALUES
+(NULL, 22, 'Nicole Acojedo', '', '', '', 'nicols@gmail.com', '', '$2y$10$EtpkfoF9avosWh5cZbTeyeLYbnngR56AFXFmU9MIUO5/r/3TPCY2q', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427'),
+(NULL, 41, 'Nicole Acojedo', '', '', '', 'nicoleacojedo03@gmail.com', '', '$2y$10$7.TtRnMd2KCO4UCo.Arpc.vIA8f1riJCb7NGIddOJnkvTJ5NgQnP.', NULL, 'What was your childhood nickname?', '06c7945e848256abb85430c42a8e7c3f3583d30390e45ddd038f5004cfc4fbba', '2025-09-27 12:03:46', '', 'customer', NULL, NULL, '09753243405'),
+(NULL, 43, 'Lala', '', '', '', 'ursolauy2021@gmail.com', '', '$2y$10$zYaqnp/qJMC023ppHN/C.uGSGH4cUERfIAQIiJ7p6YZVQmmbxdq0.', NULL, 'What was your childhood nickname?', '494414ded24da13c451b13b424928821351c78fce49f93d9e1b55f102790c206', '2025-09-30 00:33:06', '', 'customer', NULL, NULL, '09877362821');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `business_hours`
+--
+ALTER TABLE `business_hours`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `gallery`
+--
+ALTER TABLE `gallery`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hairstylists`
+--
+ALTER TABLE `hairstylists`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `security_questions`
+--
+ALTER TABLE `security_questions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `services`
+--
+ALTER TABLE `services`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `appointments`
+--
+ALTER TABLE `appointments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+
+--
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `business_hours`
+--
+ALTER TABLE `business_hours`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contact_messages`
+--
+ALTER TABLE `contact_messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `gallery`
+--
+ALTER TABLE `gallery`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `hairstylists`
+--
+ALTER TABLE `hairstylists`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `security_questions`
+--
+ALTER TABLE `security_questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `services`
+--
+ALTER TABLE `services`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `appointments`
+--
+ALTER TABLE `appointments`
+  ADD CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
