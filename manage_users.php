@@ -67,7 +67,7 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
     <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
     <a href="announcement.php"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
     <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-    <a href="insert.php"><i class="fa-solid fa-plus"></i> Insert</a>
+    <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Services</a>
     <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 </div>
 

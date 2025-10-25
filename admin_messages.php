@@ -87,7 +87,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
       <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
       <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
           <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-      <a href="insert.php"><i class="fas fa-plus"></i> Insert</a>
+      <a href="insert.php"><i class="fas fa-plus"></i> Add Services</a>
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 
