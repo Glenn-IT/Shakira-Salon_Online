@@ -7,10 +7,10 @@ if ($conn->connect_error) {
 
 // Fetch booked services (from booking table)
 $bookedServices = [];
-$bookingResult = $conn->query("SELECT service_id FROM bookings");
+$bookingResult = $conn->query("SELECT service FROM bookings");
 if ($bookingResult) {
     while ($b = $bookingResult->fetch_assoc()) {
-        $bookedServices[] = $b['service_id'];
+        $bookedServices[] = $b['service'];
     }
 }
 
@@ -162,6 +162,7 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
     <div class="menu">
         <a href="services.php"><i class="fa-solid fa-gears"></i> Services</a>
         <a href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a>
+        <a href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a>
         <a href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a>
         <a href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a>
         <a href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
@@ -179,7 +180,7 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
                 <p><?= nl2br(htmlspecialchars($row['description'])) ?></p>
                 <strong>₱<?= number_format($row['price'], 2) ?></strong>
 
-                <?php if (in_array($row['id'], $bookedServices)): ?>
+                <?php if (in_array($row['name'], $bookedServices)): ?>
                     <div class="status booked">Booked</div>
                 <?php else: ?>
                     <div class="status available">Available</div>

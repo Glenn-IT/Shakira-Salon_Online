@@ -1,5 +1,28 @@
 <?php
+session_start();
 require 'config.php';
+
+// ✅ Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit;
+}
+
+// ✅ Fetch logged-in user's data
+$loggedInUser = [];
+try {
+    $stmt = $pdo->prepare("SELECT full_name, email, phone_number, cp_number, phone, contact_number FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $loggedInUser = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Get the first non-empty phone number from available columns
+    $loggedInUser['user_phone'] = $loggedInUser['cp_number'] ?? 
+                                   $loggedInUser['contact_number'] ?? 
+                                   $loggedInUser['phone_number'] ?? 
+                                   $loggedInUser['phone'] ?? '';
+} catch (Exception $e) {
+    $loggedInUser = [];
+}
 
 // ✅ Include PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -62,16 +85,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $price    = isset($_POST['price']) ? (float) $_POST['price'] : 0;
     $schedule = trim($_POST['schedule'] ?? '');
     $stylist  = trim($_POST['stylist'] ?? '');
+    $paymentMethod = trim($_POST['payment_method'] ?? '');
     $paymentProof = $_FILES['payment_proof'] ?? null;
 
     // ✅ Validate fields
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = "⚠️ Please enter a valid email.";
-    } elseif (!preg_match('/^[0-9]{11}$/', $phone)) {
-        $error = "⚠️ Phone number must be exactly 11 digits.";
-    } elseif (!$paymentProof || $paymentProof['error'] !== UPLOAD_ERR_OK) {
-        $error = "⚠️ Please upload your payment proof.";
-    } elseif ($name && $phone && $address && $service && $schedule && $stylist) {
+    } elseif (!preg_match('/@gmail\.com$/i', $email)) {
+        $error = "⚠️ Only Gmail addresses are allowed.";
+    } elseif (!preg_match('/^09[0-9]{9}$/', $phone)) {
+        $error = "⚠️ Phone number must start with 09 and be exactly 11 digits.";
+    } elseif ($paymentMethod === 'gcash' && (!$paymentProof || $paymentProof['error'] !== UPLOAD_ERR_OK)) {
+        $error = "⚠️ Please upload your payment proof for GCash payment.";
+    } elseif ($name && $phone && $address && $service && $schedule && $stylist && $paymentMethod) {
         try {
             // ✅ Check duplicates (name OR email OR phone)
             $checkStmt = $pdo->prepare("SELECT * FROM appointments WHERE customer_name = :name OR email = :email OR phone = :phone LIMIT 1");
@@ -84,30 +110,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($checkStmt->fetch()) {
                 $error = "⚠️ Duplicate booking found! Name, Email, or Phone number already used.";
             } else {
-                // ✅ Upload payment proof
-                $uploadDir = __DIR__ . "/uploads/payment_proofs/";
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0777, true);
-                }
-                $ext = pathinfo($paymentProof['name'], PATHINFO_EXTENSION);
-                $filename = uniqid("proof_") . "." . strtolower($ext);
-                $targetPath = $uploadDir . $filename;
+                // ✅ Handle file upload for GCash payment
+                $filename = null;
+                if ($paymentMethod === 'gcash' && $paymentProof && $paymentProof['error'] === UPLOAD_ERR_OK) {
+                    $uploadDir = __DIR__ . "/uploads/payment_proofs/";
+                    if (!is_dir($uploadDir)) {
+                        mkdir($uploadDir, 0777, true);
+                    }
+                    $ext = pathinfo($paymentProof['name'], PATHINFO_EXTENSION);
+                    $filename = uniqid("proof_") . "." . strtolower($ext);
+                    $targetPath = $uploadDir . $filename;
 
-                if (move_uploaded_file($paymentProof['tmp_name'], $targetPath)) {
-                    // ✅ Save appointment with proof
+                    if (!move_uploaded_file($paymentProof['tmp_name'], $targetPath)) {
+                        $error = "❌ Failed to upload payment proof.";
+                    }
+                }
+
+                if (!$error) {
+                    // ✅ Save appointment
+                    $paymentStatus = ($paymentMethod === 'cash') ? 'Pending' : 'Pending';
                     $stmt = $pdo->prepare("INSERT INTO appointments 
                         (customer_name, email, phone, address, service, price, schedule, stylist, payment_status, payment_proof) 
-                        VALUES (:name, :email, :phone, :address, :service, :price, :schedule, :stylist, 'Pending', :proof)");
+                        VALUES (:name, :email, :phone, :address, :service, :price, :schedule, :stylist, :payment_status, :proof)");
                     $stmt->execute([
-                        ':name'     => $name,
-                        ':email'    => $email,
-                        ':phone'    => $phone,
-                        ':address'  => $address,
-                        ':service'  => $service,
-                        ':price'    => $price,
-                        ':schedule' => $schedule,
-                        ':stylist'  => $stylist,
-                        ':proof'    => $filename
+                        ':name'           => $name,
+                        ':email'          => $email,
+                        ':phone'          => $phone,
+                        ':address'        => $address,
+                        ':service'        => $service,
+                        ':price'          => $price,
+                        ':schedule'       => $schedule,
+                        ':stylist'        => $stylist,
+                        ':payment_status' => $paymentStatus,
+                        ':proof'          => $filename
                     ]);
 
                     try {
@@ -125,14 +160,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                         $mail->isHTML(true);
                         $mail->Subject = "Your Appointment is Pending - Shakira Salon";
+                        $paymentInfo = ($paymentMethod === 'cash') 
+                            ? "Payment will be made in cash at the salon." 
+                            : "Your payment proof has been uploaded. Please wait for admin verification.";
+                        
                         $mail->Body    = "
                             <h2>Hi $name,</h2>
                             <p>Thank you for booking an appointment at <b>Shakira Salon</b>.</p>
                             <p><b>Service:</b> $service<br>
                                <b>Price:</b> ₱$price<br>
                                <b>Schedule:</b> $schedule<br>
-                               <b>Stylist:</b> $stylist</p>
-                            <p>Your payment proof has been uploaded. Please wait for admin confirmation.</p>
+                               <b>Stylist:</b> $stylist<br>
+                               <b>Payment Method:</b> " . ucfirst($paymentMethod) . "</p>
+                            <p>$paymentInfo</p>
                             <br><p>✨ Shakira Salon ✨</p>
                         ";
 
@@ -142,8 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     }
 
                     $success = true;
-                } else {
-                    $error = "❌ Failed to upload payment proof.";
                 }
             }
         } catch (PDOException $e) {
@@ -178,12 +216,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .nav-link:hover {text-decoration:underline;}
     .qr-box {text-align:center;margin:15px 0;}
     .qr-box img {max-width:220px;border:8px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,0.2);border-radius:12px;}
+    #gcash-section {display:none;}
   </style>
   <script>
     function updatePrice(){
       const prices={<?php foreach ($services as $s=>$p): ?>"<?= $s ?>":<?= (float)$p ?>,<?php endforeach; ?>};
       const s=document.getElementById("service").value;
       document.getElementById("price").value=prices[s]||0;
+    }
+    
+    function togglePaymentSection() {
+      const paymentMethod = document.getElementById("payment_method").value;
+      const gcashSection = document.getElementById("gcash-section");
+      const proofInput = document.getElementById("payment_proof");
+      
+      if (paymentMethod === "gcash") {
+        gcashSection.style.display = "block";
+        proofInput.required = true;
+      } else {
+        gcashSection.style.display = "none";
+        proofInput.required = false;
+      }
+    }
+    
+    function validateEmail() {
+      const emailInput = document.getElementById("email");
+      const email = emailInput.value.trim();
+      
+      if (!email.toLowerCase().endsWith('@gmail.com')) {
+        emailInput.setCustomValidity('Only Gmail addresses are allowed (e.g., yourname@gmail.com)');
+      } else {
+        emailInput.setCustomValidity('');
+      }
+    }
+    
+    function validatePhone() {
+      const phoneInput = document.getElementById("phone");
+      const phone = phoneInput.value.trim();
+      
+      if (!phone.startsWith('09') || phone.length !== 11) {
+        phoneInput.setCustomValidity('Phone number must start with 09 and be exactly 11 digits (e.g., 09123456789)');
+      } else if (!/^[0-9]+$/.test(phone)) {
+        phoneInput.setCustomValidity('Phone number must contain only digits');
+      } else {
+        phoneInput.setCustomValidity('');
+      }
     }
   </script>
 </head>
@@ -197,6 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="book_appointment.php">Book</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php">Booking History</a></li>
         <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="business_hours_client.php">Business Hours</a></li>
@@ -210,33 +288,31 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="container-box">
   <h2>💇 Book Appointment</h2>
 
-  <div class="alert alert-info text-center">
-    <strong>💰 GCash Payment Instructions</strong><br>
-    Send your payment to:<br>
-    <b>GCash Number:</b> <?= $gcashNumber ?><br>
-    <b>Account Name:</b> <?= $gcashName ?><br>
-    <div class="qr-box">
-      <p>📷 Scan this official QR Code to pay:</p>
-      <img src="<?= $gcashQRPath ?>" alt="GCash QR Code">
-    </div>
-    <small>⚠️ After paying, upload your screenshot/receipt below to confirm your booking. Admin will verify your payment.</small>
-  </div>
-
   <?php if ($success): ?>
-    <div class="success">✅ Appointment saved! Your payment proof has been uploaded. Please wait for admin confirmation. A confirmation email has been sent to you.</div>
+    <div class="success">✅ Appointment saved! Your booking has been confirmed. A confirmation email has been sent to you.</div>
   <?php elseif ($error): ?>
     <div class="error"><?= htmlspecialchars($error) ?></div>
   <?php endif; ?>
 
   <form method="POST" enctype="multipart/form-data">
     <label>Name</label>
-    <input type="text" name="name" required>
+    <input type="text" name="name" value="<?= htmlspecialchars($loggedInUser['full_name'] ?? '') ?>" required>
     
-    <label>Email</label>
-    <input type="email" name="email" required>
+    <label>Email (Gmail only)</label>
+    <input type="email" name="email" id="email" 
+           value="<?= htmlspecialchars($loggedInUser['email'] ?? '') ?>"
+           placeholder="yourname@gmail.com" 
+           oninput="validateEmail()" 
+           required>
     
-    <label>Phone</label>
-    <input type="text" name="phone" maxlength="11" required>
+    <label>Phone (PH format: 09XXXXXXXXX)</label>
+    <input type="text" name="phone" id="phone" 
+           value="<?= htmlspecialchars($loggedInUser['user_phone'] ?? '') ?>"
+           maxlength="11" 
+           placeholder="09123456789" 
+           pattern="09[0-9]{9}"
+           oninput="validatePhone()" 
+           required>
     
     <label>Address</label>
     <input type="text" name="address" required>
@@ -268,8 +344,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <?php endforeach; ?>
     </select>
 
-    <label>Upload Payment Proof (Screenshot)</label>
-    <input type="file" name="payment_proof" accept="image/*" required>
+    <label>Payment Method</label>
+    <select name="payment_method" id="payment_method" onchange="togglePaymentSection()" required>
+      <option value="">--Select Payment Method--</option>
+      <option value="cash">Cash</option>
+      <option value="gcash">GCash</option>
+    </select>
+
+    <!-- GCash Section (Hidden by default) -->
+    <div id="gcash-section">
+      <div class="alert alert-info text-center" style="margin-top:15px;">
+        <strong>💰 GCash Payment Instructions</strong><br>
+        Send your payment to:<br>
+        <b>GCash Number:</b> <?= $gcashNumber ?><br>
+        <b>Account Name:</b> <?= $gcashName ?><br>
+        <div class="qr-box">
+          <p>📷 Scan this official QR Code to pay:</p>
+          <img src="<?= $gcashQRPath ?>" alt="GCash QR Code">
+        </div>
+        <small>⚠️ After paying, upload your screenshot/receipt below to confirm your booking. Admin will verify your payment.</small>
+      </div>
+
+      <label>Upload Payment Proof (Screenshot)</label>
+      <input type="file" name="payment_proof" id="payment_proof" accept="image/*">
+    </div>
 
     <button type="submit">Confirm Booking</button>
   </form>

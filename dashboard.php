@@ -97,13 +97,13 @@ if ($mysqli->connect_errno) {
     <div class="title"><i class="fas fa-scissors me-2"></i>Shakira Salon - Dashboard</div>
     <nav>
       <a href="services.php"><i class="fas fa-cog"></i> Services</a>
-            <a href="book_appointment.php"><i class="fas fa-calendar-check"></i> Book</a>
-
+      <a href="book_appointment.php"><i class="fas fa-calendar-check"></i> Book</a>
+      <a href="booking_history.php"><i class="fas fa-history"></i> Booking History</a>
       <a href="gallery.php"><i class="fas fa-images"></i> Gallery</a>
       <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-<a href="business_hours_client.php">
-  <i class="fas fa-clock"></i> Business Hours
-</a>
+      <a href="business_hours_client.php">
+        <i class="fas fa-clock"></i> Business Hours
+      </a>
       <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
     </nav>
   </div>

@@ -101,6 +101,7 @@ try {
   <ul>
     <li><a href="services.php">💆 Services</a></li>
     <li><a href="book_appointment.php">📅 Book</a></li>
+    <li><a href="booking_history.php">🕐 Booking History</a></li>
     <li><a href="gallery.php">🖼️ Gallery</a></li>
     <li><a href="contact.php">📧 Contact Us</a></li>
     <li><a href="business_hours_client.php">🕒 Business Hours</a></li>

@@ -175,7 +175,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                       <img src="uploads/payment_proofs/<?= htmlspecialchars($row['payment_proof']) ?>" class="proof-img">
                     </a>
                   <?php else: ?>
-                    <span style="color:#aaa;">No Proof</span>
+                    <span style="color:#555; font-weight: bold;">Cash</span>
                   <?php endif; ?>
                 </td>
                 <td><span class="status-<?= $status ?>"><?= ucfirst($status) ?></span></td>

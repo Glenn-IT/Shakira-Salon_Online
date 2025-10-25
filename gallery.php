@@ -51,6 +51,7 @@ if (!$result) {
         <div>
             <a href="services.php"><i class="fa-solid fa-gears"></i> Services</a>
             <a href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a>
+            <a href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a>
             <a href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a>
             <a href="contact.php"><i class="fa-solid fa-envelope"></i> Contact</a>
             <a href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
