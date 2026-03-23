@@ -41,12 +41,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     .floating-icons { position:absolute;top:-10px;right:-10px;font-size:3rem;opacity:0.15;animation:float 6s ease-in-out infinite; }
     @keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-10px)} }
 
-    h2.section-title { color:var(--primary);margin-bottom:10px; }
-
-    table { width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm); }
-    th, td { padding:15px 20px;text-align:left;border-bottom:1px solid #eee; }
-    th { background:var(--primary);color:#fff; }
-    tr:last-child td { border-bottom:none; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:400px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
   </style>
 </head>
 <body>
@@ -83,20 +83,22 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <i class="fa-solid fa-star floating-icons"></i>
   </div>
 
-  <h2 class="section-title">Services Offered</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Service</th>
-        <th>Price (₱)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Haircut</td><td>150.00</td></tr>
-      <tr><td>Hair Coloring</td><td>200.00</td></tr>
-      <tr><td>Rebonding</td><td>1500.00</td></tr>
-    </tbody>
-  </table>
+  <div class="content-card">
+    <h2><i class="fa-solid fa-concierge-bell"></i> Services Offered</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Price (₱)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Haircut</td><td>150.00</td></tr>
+        <tr><td>Hair Coloring</td><td>200.00</td></tr>
+        <tr><td>Rebonding</td><td>1500.00</td></tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 </body>

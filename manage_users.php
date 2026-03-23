@@ -1,13 +1,80 @@
 <?php
+session_start();
 require 'config.php';
 
-// ✅ Fetch Registered Users
-$stmtUsers = $pdo->query("SELECT id, full_name, email, contact_number, role FROM users ORDER BY id DESC");
+// ✅ Only admin can access
+if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
+    header("Location: login.php");
+    exit;
+}
+
+$success = '';
+$errorMsg = '';
+
+// ─── Handle POST actions ───
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Edit User
+    if (isset($_POST['edit_user'])) {
+        $id = (int)$_POST['id'];
+        $full_name = trim($_POST['full_name']);
+        $email = trim($_POST['email']);
+        $contact_number = trim($_POST['contact_number']);
+        $role = trim($_POST['role']);
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errorMsg = "Invalid email address.";
+        } else {
+            // Check duplicate email (exclude current user)
+            $check = $pdo->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+            $check->execute([$email, $id]);
+            if ($check->fetch()) {
+                $errorMsg = "Another user with this email already exists.";
+            } else {
+                $stmt = $pdo->prepare("UPDATE users SET full_name = ?, email = ?, contact_number = ?, role = ? WHERE id = ?");
+                $stmt->execute([$full_name, $email, $contact_number, $role, $id]);
+                $success = "User updated successfully!";
+            }
+        }
+    }
+
+    // Delete User
+    if (isset($_POST['delete_user'])) {
+        $id = (int)$_POST['id'];
+        // Prevent deleting self (admin)
+        if ($id === (int)$_SESSION['user_id']) {
+            $errorMsg = "You cannot delete your own account.";
+        } else {
+            $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+            $stmt->execute([$id]);
+            $success = "User deleted successfully!";
+        }
+    }
+
+    // Toggle Status (Activate / Deactivate)
+    if (isset($_POST['toggle_status'])) {
+        $id = (int)$_POST['id'];
+        $newStatus = $_POST['new_status'];
+        // Prevent deactivating self
+        if ($id === (int)$_SESSION['user_id'] && $newStatus === 'deactivated') {
+            $errorMsg = "You cannot deactivate your own account.";
+        } else {
+            $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ?");
+            $stmt->execute([$newStatus, $id]);
+            $success = "User " . ($newStatus === 'active' ? 'activated' : 'deactivated') . " successfully!";
+        }
+    }
+}
+
+// ✅ Fetch Registered Users (re-fetch after any changes)
+$stmtUsers = $pdo->query("SELECT id, full_name, email, contact_number, role, status FROM users ORDER BY id DESC");
 $registeredUsers = $stmtUsers->fetchAll(PDO::FETCH_ASSOC);
 
 // ✅ Fetch Hairstylists
 $stmtHairstylists = $pdo->query("SELECT id, full_name, phone_number, role FROM hairstylists ORDER BY id DESC");
 $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
+
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -21,11 +88,23 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
         * { box-sizing: border-box; }
         body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
         .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto;margin-bottom:30px; }
-        .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
-        table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:600px; }
+        .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem;margin-bottom:15px; }
+        table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:800px; }
         th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
         th { background:var(--primary);color:#fff;white-space:nowrap; }
         tr:hover td { background:#fff5f8; }
+        .btn-action { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition);border:none;color:#fff; }
+        .btn-action:hover { opacity:0.85;transform:translateY(-1px); }
+        .btn-edit { background:#ffc107;color:#000; }
+        .btn-edit:hover { background:#e0a800;color:#000; }
+        .btn-delete { background:#dc3545;color:#fff; }
+        .btn-delete:hover { background:#c82333; }
+        .btn-activate { background:#28a745;color:#fff; }
+        .btn-activate:hover { background:#218838; }
+        .btn-deactivate { background:#6c757d;color:#fff; }
+        .btn-deactivate:hover { background:#5a6268; }
+        .status-active { color:#28a745;font-weight:bold; }
+        .status-deactivated { color:#dc3545;font-weight:bold; }
     </style>
 </head>
 <body>

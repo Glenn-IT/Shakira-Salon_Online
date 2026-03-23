@@ -121,14 +121,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <style>
     * { box-sizing: border-box; }
     body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
-    .card { border:none;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:30px; }
-    .card-header { background:var(--primary);color:white;font-weight:bold;border-radius:var(--radius-lg) var(--radius-lg) 0 0 !important; }
-    .badge-info { background:#17a2b8; }
-    .badge-warning { background:#ffc107;color:#000; }
-    .badge-success { background:#28a745; }
-    .badge-danger { background:#dc3545; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto;margin-bottom:30px; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem;margin-bottom:15px; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:700px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
+    .btn-action { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition);border:none; }
+    .btn-action:hover { opacity:0.85;transform:translateY(-1px); }
     .promo-image { max-width:80px;max-height:80px;object-fit:cover;border-radius:5px; }
-    .table-responsive { overflow-x:auto; }
   </style>
 </head>
 <body>
@@ -166,17 +167,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <?php endif; ?>
 
   <!-- Announcements Section -->
-  <div class="card">
-    <div class="card-header">
-      <h4 class="mb-0"><i class="fa-solid fa-megaphone"></i> Announcements</h4>
-    </div>
-    <div class="card-body">
+  <div class="content-card">
+    <h2><i class="fa-solid fa-megaphone"></i> Announcements</h2>
       <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addAnnouncementModal">
         <i class="fa-solid fa-plus"></i> Add Announcement
       </button>
 
-      <div class="table-responsive">
-        <table class="table table-hover">
+      <table>
           <thead>
             <tr>
               <th>Title</th>
@@ -191,17 +188,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <?php foreach ($announcements as $announcement): ?>
               <tr>
                 <td><strong><?= htmlspecialchars($announcement['title']) ?></strong></td>
-                <td><?= htmlspecialchars(substr($announcement['content'], 0, 100)) ?>...</td>
-                <td><span class="badge badge-<?= $announcement['type'] ?>"><?= ucfirst($announcement['type']) ?></span></td>
+                <td style="text-align:left;max-width:250px;"><?= htmlspecialchars(substr($announcement['content'], 0, 100)) ?>...</td>
+                <td><span class="badge bg-<?= $announcement['type'] === 'info' ? 'info' : ($announcement['type'] === 'success' ? 'success' : ($announcement['type'] === 'warning' ? 'warning' : 'danger')) ?>"><?= ucfirst($announcement['type']) ?></span></td>
                 <td><span class="badge bg-<?= $announcement['status'] === 'active' ? 'success' : 'secondary' ?>"><?= ucfirst($announcement['status']) ?></span></td>
                 <td><?= date('M d, Y', strtotime($announcement['created_at'])) ?></td>
                 <td>
-                  <button class="btn btn-sm btn-warning" onclick="editAnnouncement(<?= htmlspecialchars(json_encode($announcement)) ?>)">
+                  <button class="btn-action btn btn-sm btn-warning" onclick="editAnnouncement(<?= htmlspecialchars(json_encode($announcement)) ?>)">
                     <i class="fa-solid fa-edit"></i>
                   </button>
                   <form method="POST" style="display:inline;" onsubmit="return confirm('Delete this announcement?')">
                     <input type="hidden" name="id" value="<?= $announcement['id'] ?>">
-                    <button type="submit" name="delete_announcement" class="btn btn-sm btn-danger">
+                    <button type="submit" name="delete_announcement" class="btn-action btn btn-sm btn-danger">
                       <i class="fa-solid fa-trash"></i>
                     </button>
                   </form>
@@ -209,23 +206,17 @@ $currentPage = basename($_SERVER['PHP_SELF']);
               </tr>
             <?php endforeach; ?>
           </tbody>
-        </table>
-      </div>
-    </div>
+      </table>
   </div>
 
   <!-- Promos Section -->
-  <div class="card">
-    <div class="card-header">
-      <h4 class="mb-0"><i class="fa-solid fa-tags"></i> Promos</h4>
-    </div>
-    <div class="card-body">
+  <div class="content-card">
+    <h2><i class="fa-solid fa-tags"></i> Promos</h2>
       <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addPromoModal">
         <i class="fa-solid fa-plus"></i> Add Promo
       </button>
 
-      <div class="table-responsive">
-        <table class="table table-hover">
+      <table>
           <thead>
             <tr>
               <th>Image</th>
@@ -259,12 +250,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <td><code><?= htmlspecialchars($promo['promo_code']) ?></code></td>
                 <td><span class="badge bg-<?= $promo['status'] === 'active' ? 'success' : 'secondary' ?>"><?= ucfirst($promo['status']) ?></span></td>
                 <td>
-                  <button class="btn btn-sm btn-warning" onclick="editPromo(<?= htmlspecialchars(json_encode($promo)) ?>)">
+                  <button class="btn-action btn btn-sm btn-warning" onclick="editPromo(<?= htmlspecialchars(json_encode($promo)) ?>)">
                     <i class="fa-solid fa-edit"></i>
                   </button>
                   <form method="POST" style="display:inline;" onsubmit="return confirm('Delete this promo?')">
                     <input type="hidden" name="id" value="<?= $promo['id'] ?>">
-                    <button type="submit" name="delete_promo" class="btn btn-sm btn-danger">
+                    <button type="submit" name="delete_promo" class="btn-action btn btn-sm btn-danger">
                       <i class="fa-solid fa-trash"></i>
                     </button>
                   </form>
@@ -272,9 +263,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
               </tr>
             <?php endforeach; ?>
           </tbody>
-        </table>
-      </div>
-    </div>
+      </table>
   </div>
 </div>
 

@@ -246,6 +246,19 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </a>
                             </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <i class="fa-solid fa-info-circle"></i> No hairstylists found.
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+    </div><!-- /content-card -->
+</div><!-- /admin-main -->
 
 <!-- Edit Modal -->
 <div id="editModal" class="modal">

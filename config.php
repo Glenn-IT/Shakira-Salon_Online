@@ -20,6 +20,9 @@ try {
     // Auto-fix: ensure cp_number column exists in users table
     $pdo->exec("ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `cp_number` varchar(15) DEFAULT NULL");
 
+    // Auto-fix: ensure status column exists in users table (active/deactivated)
+    $pdo->exec("ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `status` ENUM('active','deactivated') NOT NULL DEFAULT 'active'");
+
 } catch (\PDOException $e) {
     die('Database connection failed: ' . $e->getMessage());
 }
