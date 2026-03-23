@@ -285,25 +285,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!-- ✅ Navbar -->
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
+    <a class="navbar-brand" href="dashboard.php"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-home"></i> Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
-        <li class="nav-item"><a class="nav-link active" href="book_appointment.php">Book</a></li>
-        <li class="nav-item"><a class="nav-link" href="booking_history.php">Booking History</a></li>
-        <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>
-        <li class="nav-item"><a class="nav-link" href="business_hours_client.php">Business Hours</a></li>
-        <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.php"><i class="fa-solid fa-gears"></i> Services</a></li>
+        <li class="nav-item"><a class="nav-link active" href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a></li>
+        <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<div class="page-header">
+  <h1><i class="fa-solid fa-calendar-check me-2"></i>Book an Appointment</h1>
+  <p>Fill in your details and we'll get you booked in</p>
+</div>
 
 <!-- ✅ Booking Form -->
 <div class="container-box">
@@ -393,6 +398,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <button type="submit">Confirm Booking</button>
   </form>
 </div>
+
+<footer style="background:#ff69b4;color:white;padding:40px 0;text-align:center;margin-top:20px;">
+  <div class="container">
+    <h5>Shakira Salon</h5>
+    <p><i class="fa-solid fa-location-dot"></i> Tuao West, Cagayan, Philippines</p>
+    <p><i class="fa-solid fa-phone"></i> +63 912 345 6789</p>
+    <p><i class="fa-solid fa-envelope"></i> <a href="mailto:shakirabeautysalon@email.com" style="color:white;">shakirabeautysalon@email.com</a></p>
+    <hr style="border-color:rgba(255,255,255,0.5);">
+    <p>&copy; <?= date('Y'); ?> Shakira Salon. All rights reserved.</p>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
