@@ -213,33 +213,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
 
     <!-- ✅ Hairstylists -->
-    <div class="content-card">
-      <h2><i class="fa-solid fa-scissors"></i> Manage Hairstylist</h2>
-      <table>
-        <thead>
-            <tr>
-                <th>Full Name</th>
-                <th>Contact Number</th>
-                <th>Role</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php if ($hairstylists): ?>
-            <?php foreach ($hairstylists as $stylist): ?>
-                <tr>
-                    <td><?= htmlspecialchars($stylist['full_name']) ?></td>
-                    <td><?= htmlspecialchars($stylist['phone_number']) ?></td>
-                    <td><?= htmlspecialchars($stylist['role']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="3" class="text-center">No hairstylists found.</td>
-            </tr>
-        <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+    
 </div>
 
 <!-- Edit User Modal -->
