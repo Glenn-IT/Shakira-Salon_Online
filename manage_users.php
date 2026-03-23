@@ -132,30 +132,80 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </div>
 
 <div class="admin-main">
+
+  <?php if ($success): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="fa-solid fa-check-circle"></i> <?= htmlspecialchars($success) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <?php endif; ?>
+  <?php if ($errorMsg): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="fa-solid fa-exclamation-circle"></i> <?= htmlspecialchars($errorMsg) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+  <?php endif; ?>
+
     <div class="content-card">
       <h2><i class="fa-solid fa-users"></i> Registered Users</h2>
       <table>
         <thead>
             <tr>
+                <th>ID</th>
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Contact Number</th> 
                 <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         <?php if ($registeredUsers): ?>
             <?php foreach ($registeredUsers as $user): ?>
                 <tr>
+                    <td><?= $user['id'] ?></td>
                     <td><?= htmlspecialchars($user['full_name']) ?></td>
                     <td><?= htmlspecialchars($user['email']) ?></td>
-                    <td><?= htmlspecialchars($user['contact_number']) ?></td>
-                    <td><?= htmlspecialchars($user['role']) ?></td>
+                    <td><?= htmlspecialchars($user['contact_number'] ?? '—') ?></td>
+                    <td><?= htmlspecialchars(ucfirst($user['role'])) ?></td>
+                    <td>
+                      <?php $status = $user['status'] ?? 'active'; ?>
+                      <span class="status-<?= $status ?>"><?= ucfirst($status) ?></span>
+                    </td>
+                    <td>
+                      <button class="btn-action btn-edit" onclick="editUser(<?= htmlspecialchars(json_encode($user)) ?>)" title="Edit">
+                        <i class="fa-solid fa-edit"></i>
+                      </button>
+                      <?php if ($status === 'active'): ?>
+                        <form method="POST" style="display:inline;" onsubmit="return confirm('Deactivate this user?')">
+                          <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                          <input type="hidden" name="new_status" value="deactivated">
+                          <button type="submit" name="toggle_status" class="btn-action btn-deactivate" title="Deactivate">
+                            <i class="fa-solid fa-ban"></i>
+                          </button>
+                        </form>
+                      <?php else: ?>
+                        <form method="POST" style="display:inline;" onsubmit="return confirm('Activate this user?')">
+                          <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                          <input type="hidden" name="new_status" value="active">
+                          <button type="submit" name="toggle_status" class="btn-action btn-activate" title="Activate">
+                            <i class="fa-solid fa-check-circle"></i>
+                          </button>
+                        </form>
+                      <?php endif; ?>
+                      <form method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to permanently delete this user? This cannot be undone.')">
+                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
+                        <button type="submit" name="delete_user" class="btn-action btn-delete" title="Delete">
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="4" class="text-center">No users found.</td>
+                <td colspan="7" class="text-center">No users found.</td>
             </tr>
         <?php endif; ?>
         </tbody>
@@ -191,6 +241,58 @@ $currentPage = basename($_SERVER['PHP_SELF']);
       </table>
     </div>
 </div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background:var(--primary);color:#fff;">
+        <h5 class="modal-title" id="editUserModalLabel"><i class="fa-solid fa-user-edit"></i> Edit User</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form method="POST">
+        <input type="hidden" name="id" id="edit_user_id">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Full Name</label>
+            <input type="text" name="full_name" id="edit_user_fullname" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Email</label>
+            <input type="email" name="email" id="edit_user_email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Contact Number</label>
+            <input type="text" name="contact_number" id="edit_user_contact" class="form-control" placeholder="09XXXXXXXXX" maxlength="11">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Role</label>
+            <select name="role" id="edit_user_role" class="form-select" required>
+              <option value="customer">Customer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" name="edit_user" class="btn" style="background:var(--primary);color:#fff;"><i class="fa-solid fa-save"></i> Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function editUser(user) {
+  document.getElementById('edit_user_id').value = user.id;
+  document.getElementById('edit_user_fullname').value = user.full_name || '';
+  document.getElementById('edit_user_email').value = user.email || '';
+  document.getElementById('edit_user_contact').value = user.contact_number || '';
+  document.getElementById('edit_user_role').value = user.role || 'customer';
+  new bootstrap.Modal(document.getElementById('editUserModal')).show();
+}
+</script>
 
 </body>
 </html>
