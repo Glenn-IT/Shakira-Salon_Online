@@ -75,99 +75,26 @@ try {
   <title>Admin - Business Hours</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f0f2f8; }
-    /* Sidebar */
-    .sidebar {
-      width: 260px;
-      background: linear-gradient(180deg,#ff4081,#e73370);
-      height: 100vh;
-      padding: 0;
-      position: fixed;
-      left: 0;
-      top: 0;
-      color: #fff;
-      overflow-y: auto;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-    }
-    .sidebar h2 {
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.3rem;
-      padding: 22px 10px 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      margin: 0;
-    }
-    .sidebar h2 small { display: block; font-size: 0.65rem; font-weight: 400; opacity: .8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
-    .sidebar a {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      color: #fff;
-      padding: 12px 20px;
-      text-decoration: none;
-      font-size: 0.88rem;
-      font-weight: 600;
-      transition: all .2s;
-      border-left: 3px solid transparent;
-    }
-    .sidebar a i { width: 18px; text-align: center; flex-shrink: 0; }
-    .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.2); }
-    .sidebar a.active { border-left-color: #fff; }
-    .sidebar a:hover:not(.active) { border-left-color: rgba(255,255,255,0.5); }
-    .sidebar a i { margin-right: 0; }
-    .sidebar .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 15px; }
-    /* Topbar */
-    .admin-topbar { position: fixed; top: 0; left: 260px; right: 0; height: 56px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 900; }
-    .admin-topbar .page-title { font-size: 1.05rem; font-weight: 700; color: #ff4081; }
-    .admin-topbar .admin-info { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
-    .admin-topbar .admin-info i { color: #ff4081; }
-    /* Main content */
-    .main-content {
-      margin-left: 260px;
-      padding: 74px 30px 30px;
-      min-height: 100vh;
-      background: #f0f2f8;
-    }
+    body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
     .box {
-      background:#fff;
-      padding:30px;
-      border-radius:14px;
-      box-shadow:0 5px 15px rgba(0,0,0,0.1);
-      text-align:center;
-      max-width: 600px;
+      background:#fff;padding:30px;border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);text-align:center;max-width:600px;
     }
-    .open { color:green; font-weight:bold; font-size:20px; }
-    .closed { color:red; font-weight:bold; font-size:20px; }
-    button, select {
-      padding:8px 15px;
-      margin:5px;
-      border-radius:6px;
-    }
-    button {
-      background:#ff4081;
-      color:white;
-      border:none;
-      cursor:pointer;
-    }
-    button:hover {
-      background:#e73370;
-    }
-    @media (max-width: 768px) {
-      .sidebar { width: 220px; }
-      .admin-topbar { left: 220px; }
-      .main-content { margin-left: 220px; padding: 70px 15px 20px; }
-    }
+    .box h2 { color:var(--primary); }
+    .open { color:green;font-weight:bold;font-size:20px; }
+    .closed { color:red;font-weight:bold;font-size:20px; }
+    button, select { padding:8px 15px;margin:5px;border-radius:var(--radius-sm);font-family:var(--font-family); }
+    button { background:var(--primary);color:white;border:none;cursor:pointer;font-weight:600;transition:var(--transition); }
+    button:hover { background:var(--primary-dark); }
   </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h2><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></h2>
+<div class="admin-sidebar">
+    <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
     <a href="admin_dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php"><i class="fa-solid fa-users"></i> Manage Users</a>
     <a href="manage_bookings.php"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>

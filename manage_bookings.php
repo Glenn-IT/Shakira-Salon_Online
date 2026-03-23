@@ -109,48 +109,29 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <meta charset="UTF-8">
   <title>Manage Bookings - Shakira Salon</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
     * { box-sizing: border-box; }
-    body { font-family: Arial, sans-serif; background: #f0f2f8; margin: 0; }
-    /* ── Sidebar ── */
-    .sidebar { width: 260px; background: linear-gradient(180deg,#ff4081,#e73370); color: white; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; }
-    .sidebar .logo { font-size: 1.4rem; font-weight: bold; text-align: center; padding: 22px 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.2); }
-    .sidebar .logo small { display: block; font-size: 0.65rem; font-weight: 400; opacity: .8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
-    .sidebar nav a { display: flex; align-items: center; gap: 10px; color: white; padding: 12px 20px; text-decoration: none; font-size: 0.88rem; font-weight: 600; white-space: nowrap; border-left: 3px solid transparent; transition: all .2s; }
-    .sidebar nav a i { width: 18px; text-align: center; flex-shrink: 0; }
-    .sidebar nav a:hover:not(.active) { background: rgba(255,255,255,0.1); border-left-color: rgba(255,255,255,0.5); }
-    .sidebar nav a.active { background: rgba(255,255,255,0.2); border-left-color: #fff; }
-    .sidebar nav .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 15px; }
-    /* ── Topbar ── */
-    .admin-topbar { position: fixed; top: 0; left: 260px; right: 0; height: 56px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 900; }
-    .admin-topbar .page-title { font-size: 1.05rem; font-weight: 700; color: #ff4081; }
-    .admin-topbar .admin-info { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
-    .admin-topbar .admin-info i { color: #ff4081; }
-    /* ── Main Content ── */
-    .main-content { margin-left: 260px; padding: 74px 30px 30px; min-height: 100vh; }
-    .content-card { background: #fff; padding: 25px; border-radius: 14px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); overflow-x: auto; }
-    .content-card h2 { color: #ff4081; margin-top: 0; font-size: 1.3rem; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; min-width: 900px; }
-    th, td { padding: 10px 8px; border: 1px solid #e9ecef; text-align: center; font-size: 0.88rem; word-break: break-word; }
-    th { background-color: #ff4081; color: white; white-space: nowrap; }
-    tr:hover td { background: #fff5f8; }
-    .btn { padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 2px; text-decoration: none; display: inline-block; font-size: 0.82rem; }
-    .btn-approve { background-color: #28a745; color: white; }
-    .btn-reject { background-color: #dc3545; color: white; }
-    .btn-delete { background-color: #6c757d; color: white; }
-    .status-pending { color: #ffc107; font-weight: bold; }
-    .status-approved { color: #28a745; font-weight: bold; }
-    .status-rejected { color: #dc3545; font-weight: bold; }
-    .proof-img { max-width: 80px; max-height: 80px; border-radius: 6px; }
-    @media (max-width: 768px) {
-      .sidebar { width: 220px; }
-      .admin-topbar { left: 220px; }
-      .main-content { margin-left: 220px; padding: 70px 15px 20px; }
-    }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f8; margin: 0; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:900px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
+    .btn { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition); }
+    .btn-approve { background:#28a745;color:#fff; }
+    .btn-reject { background:#dc3545;color:#fff; }
+    .btn-delete { background:#6c757d;color:#fff; }
+    .btn:hover { opacity:0.85;transform:translateY(-1px); }
+    .status-pending { color:#ffc107;font-weight:bold; }
+    .status-approved { color:#28a745;font-weight:bold; }
+    .status-rejected { color:#dc3545;font-weight:bold; }
+    .proof-img { max-width:80px;max-height:80px;border-radius:6px; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
+  <div class="admin-sidebar">
     <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
     <nav>
       <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
@@ -172,7 +153,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
   </div>
 
-  <div class="main-content">
+  <div class="admin-main">
     <div class="content-card">
       <h2><i class="fa-solid fa-calendar-check"></i> Manage Bookings</h2>
       <table>

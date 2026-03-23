@@ -46,115 +46,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Admin - Upload Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/shared.css">
     <style>
-        body { 
-            margin:0; 
-            font-family:'Nunito',sans-serif; 
-            background:#f0f2f8; 
-            color:#333; 
-        }
-        /* Sidebar */
-        .sidebar { 
-            position:fixed; 
-            top:0; bottom:0; left:0; 
-            width:260px; 
-            background:linear-gradient(180deg,#ff4081,#e73370); 
-            color:#fff; 
-            padding-top:0; 
-            display:flex; 
-            flex-direction:column;
-            overflow-y:auto;
-            z-index:1000;
-        }
-        .sidebar .logo { 
-            font-size:1.4rem; 
-            font-weight:700; 
-            text-align:center; 
-            padding:22px 10px 16px;
-            border-bottom:1px solid rgba(255,255,255,0.2);
-        }
-        .sidebar .logo small { display:block; font-size:0.65rem; font-weight:400; opacity:.8; margin-top:3px; letter-spacing:1px; text-transform:uppercase; }
-        .sidebar a { 
-            display:flex; 
-            align-items:center; 
-            gap:10px;
-            padding:12px 20px; 
-            color:#fff; 
-            text-decoration:none; 
-            font-weight:600;
-            font-size:0.88rem;
-            white-space:nowrap;
-            border-left:3px solid transparent;
-            transition:all .2s ease;
-        }
-        .sidebar a i { width:18px; text-align:center; flex-shrink:0; }
-        .sidebar a.active, .sidebar a:hover { background:rgba(255,255,255,0.2); }
-        .sidebar a.active { border-left-color:#fff; }
-        .sidebar a:hover:not(.active) { border-left-color:rgba(255,255,255,0.5); }
-        .sidebar .nav-divider { height:1px; background:rgba(255,255,255,0.15); margin:6px 15px; }
-        /* Topbar */
-        .admin-topbar { position:fixed; top:0; left:260px; right:0; height:56px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.08); display:flex; align-items:center; justify-content:space-between; padding:0 30px; z-index:900; }
-        .admin-topbar .page-title { font-size:1.05rem; font-weight:700; color:#ff4081; }
-        .admin-topbar .admin-info { display:flex; align-items:center; gap:8px; font-size:0.88rem; color:#555; }
-        .admin-topbar .admin-info i { color:#ff4081; }
-        /* Page Content */
-        .content { 
-            margin-left:260px; 
-            padding:74px 40px 30px;
-        }
+        body { margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8;color:#333; }
+        .content { margin-left:260px;padding:74px 40px 30px; }
         .container {
-            max-width:600px; 
-            margin:0 auto; 
-            background:#fff; 
-            padding:30px; 
-            border-radius:12px; 
-            box-shadow:0 5px 15px rgba(0,0,0,0.1);
+            max-width:600px;margin:0 auto;background:#fff;padding:30px;
+            border-radius:var(--radius-lg);box-shadow:var(--shadow-md);
         }
-        h2 { 
-            text-align:center; 
-            margin-bottom:20px; 
-            color:#ff4081; 
-        }
-        form { 
-            display:flex; 
-            flex-direction:column; 
-            gap:15px; 
-        }
-        input, button { 
-            padding:12px; 
-            font-size:16px; 
-            border:1px solid #ccc; 
-            border-radius:6px; 
-            width:100%;
-            box-sizing:border-box;
-        }
-        button { 
-            background:#ff4081; 
-            color:white; 
-            border:none; 
-            cursor:pointer; 
-            font-weight:600;
-            transition:.3s;
-        }
-        button:hover { 
-            background:#e60073; 
-        }
-        .msg { 
-            text-align:center; 
-            margin-bottom:15px; 
-            font-weight:bold; 
-            color:#ff4081; 
-        }
-        @media (max-width:768px) {
-            .sidebar { width:220px; }
-            .admin-topbar { left:220px; }
-            .content { margin-left:220px; padding:70px 20px 20px; }
-        }
+        h2 { text-align:center;margin-bottom:20px;color:var(--primary); }
+        form { display:flex;flex-direction:column;gap:15px; }
+        input, button { padding:12px;font-size:16px;border:2px solid #e8e8e8;border-radius:var(--radius-sm);width:100%;box-sizing:border-box;font-family:var(--font-family);transition:var(--transition); }
+        input:focus { border-color:var(--primary);outline:none;box-shadow:0 0 0 4px rgba(255,64,129,0.12); }
+        button { background:var(--primary);color:white;border:none;cursor:pointer;font-weight:600;border-radius:var(--radius-full); }
+        button:hover { background:var(--primary-dark); }
+        .msg { text-align:center;margin-bottom:15px;font-weight:bold;color:var(--primary); }
+        @media (max-width:768px) { .content { margin-left:220px;padding:70px 20px 20px; } }
+        @media (max-width:576px) { .content { margin-left:0;padding:115px 15px 20px; } }
     </style>
 </head>
 <body>
     <!-- ✅ Sidebar -->
-    <div class="sidebar">
+    <div class="admin-sidebar">
         <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
         <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
         <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
