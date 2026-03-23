@@ -38,7 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $error = "This full name is already registered. Please use a different name or contact support if this is your name.";
                 } else {
                 $stmt = $pdo->prepare("INSERT INTO users (full_name, email, password, cp_number, role, security_question, security_answer) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                if ($stmt->execute([$fullname, $email, $password, $cp, $role, $question, $answer])) {
+                $stmt->execute([$fullname, $email, $password, $cp, $role, $question, $answer]);
+                if ($stmt->rowCount() > 0) {
 
                     $mail = new PHPMailer(true);
                     $mail->isSMTP();

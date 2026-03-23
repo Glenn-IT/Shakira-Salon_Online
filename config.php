@@ -16,6 +16,10 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+
+    // Auto-fix: ensure cp_number column exists in users table
+    $pdo->exec("ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `cp_number` varchar(15) DEFAULT NULL");
+
 } catch (\PDOException $e) {
     die('Database connection failed: ' . $e->getMessage());
 }
