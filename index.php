@@ -406,7 +406,7 @@ try {
       <i class="fa-solid fa-scissors" style="color:var(--primary);font-size:1.3rem;"></i>
     </div>
     <p class="mb-2">&copy; <?= date("Y") ?> Shakira Salon | Tuao West, Cagayan</p>
-    <div class="social-icons d-flex justify-content-center gap-3">
+    <div class="social d-flex justify-content-center gap-3 mt-2">
       <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
       <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
       <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
