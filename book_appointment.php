@@ -214,14 +214,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .navbar {background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
     .navbar-brand {color:#fff !important;font-weight:bold;}
     .nav-link {color:#fff !important;font-weight:500;}
-    .nav-link:hover {text-decoration:underline;}
+    .nav-link:hover, .nav-link.active {text-decoration:underline;}
     .navbar-toggler {border-color:rgba(255,255,255,0.5);}
     .navbar-toggler-icon {filter:invert(1);}
+    .page-header {
+      background: linear-gradient(135deg, #ff69b4, #ff1493);
+      color: white; padding: 50px 0; text-align: center;
+      border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
+      margin-top: 56px;
+    }
+    .page-header h1 { margin: 0; font-size: 2rem; }
+    .page-header p { margin: 8px 0 0; opacity: 0.9; }
+    .container-box {max-width:650px;margin:-30px auto 30px;padding:30px;background:#fff;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
     .qr-box {text-align:center;margin:15px 0;}
     .qr-box img {max-width:200px;border:8px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,0.2);border-radius:12px;}
     #gcash-section {display:none;}
     @media (max-width:576px) {
-      .container-box {margin:20px 12px 40px;padding:20px;}
+      .page-header { border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; padding: 35px 15px; }
+      .container-box {margin:20px 12px 30px;padding:20px;}
     }
   </style>
   <script>
