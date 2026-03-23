@@ -133,8 +133,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
 
-<div class="sidebar">
-    <h2><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></h2>
+<div class="admin-sidebar">
+    <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
     <a href="admin_dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php"><i class="fa-solid fa-users"></i> Manage Users</a>
     <a href="manage_bookings.php"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
