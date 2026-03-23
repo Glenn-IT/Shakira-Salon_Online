@@ -487,7 +487,15 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
         }
         .modal-content {
             width: 95%;
-            margin: 10% auto;
+            margin: 5% auto;
+        }
+        .sidebar {
+            width: 200px;
+        }
+        .main-content {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+            padding: 20px;
         }
     }
 </style>

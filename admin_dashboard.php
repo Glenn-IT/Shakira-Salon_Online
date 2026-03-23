@@ -36,22 +36,36 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     body { margin:0; font-family:'Nunito',sans-serif; background:#f0f2f8; color:#333; }
-    .sidebar { position:fixed; top:0; bottom:0; left:0; width:260px; background:#ff4081; color:#fff; padding-top:30px; }
-    .sidebar .logo { font-size:2rem; font-weight:700; text-align:center; margin-bottom:2rem; }
-    .sidebar nav a { display:flex; align-items:center; padding:15px 30px; color:#fff; text-decoration:none; font-weight:600; }
+    .sidebar { position:fixed; top:0; bottom:0; left:0; width:260px; background:#ff4081; color:#fff; padding-top:30px; overflow-y:auto; z-index:1000; }
+    .sidebar .logo { font-size:2rem; font-weight:700; text-align:center; margin-bottom:2rem; padding:0 10px; }
+    .sidebar nav a { display:flex; align-items:center; gap:10px; padding:13px 20px; color:#fff; text-decoration:none; font-weight:600; font-size:0.9rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .sidebar nav a.active, .sidebar nav a:hover { background:#e73370; }
-    .main-content { margin-left:260px; padding:40px 60px; }
+    .main-content { margin-left:260px; padding:30px 40px; }
     h1 { color:#ff4081; margin-bottom:10px; }
     .cards { display:flex; gap:25px; flex-wrap:wrap; margin-bottom:40px; }
-    .card { flex:1; min-width:240px; border-radius:12px; padding:30px; text-align:center; color:#fff; }
+    .card { flex:1; min-width:200px; border-radius:12px; padding:25px; text-align:center; color:#fff; }
+    .card h3 { font-size:1rem; margin-bottom:8px; }
+    .card p { font-size:2rem; font-weight:700; margin:0; }
     .card-red { background:linear-gradient(145deg,#ff6b6b,#ff4757); }
     .card-yellow { background:linear-gradient(145deg,#feca57,#f6b93b); }
     .card-blue { background:linear-gradient(145deg,#54a0ff,#2e86de); }
-    .charts { background:#fff; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1); }
-    .tabs { display:flex; gap:15px; margin-bottom:20px; }
-    .tabs button { padding:10px 20px; border:none; border-radius:6px; cursor:pointer; background:#eee; font-weight:600; }
+    .charts { background:#fff; padding:20px; border-radius:12px; box-shadow:0 5px 15px rgba(0,0,0,0.1); overflow-x:auto; }
+    .tabs { display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap; }
+    .tabs button { padding:8px 16px; border:none; border-radius:6px; cursor:pointer; background:#eee; font-weight:600; font-size:0.9rem; }
     .tabs button.active { background:#ff4081; color:#fff; }
-    canvas { max-height:400px; }
+    canvas { max-height:400px; width:100% !important; }
+    @media (max-width:768px) {
+        .sidebar { width:200px; }
+        .main-content { margin-left:200px; padding:20px; }
+        .sidebar nav a { font-size:0.82rem; padding:11px 14px; }
+    }
+    @media (max-width:576px) {
+        .sidebar { position:static; width:100%; height:auto; padding-top:10px; }
+        .sidebar nav { display:flex; flex-wrap:wrap; }
+        .sidebar nav a { flex:1 1 auto; padding:10px 12px; font-size:0.8rem; justify-content:center; }
+        .main-content { margin-left:0; padding:15px; }
+        .cards { flex-direction:column; }
+    }
 </style>
 </head>
 <body>
@@ -61,17 +75,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
             <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
             <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
-           <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>">
-    <i class="fa-solid fa-scissors"></i> Hairstyles
-        <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-
-</a>
+            <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+            <a href="admin_messages.php" class="<?= $currentPage === 'admin_messages.php' ? 'active' : '' ?>"><i class="fa-solid fa-envelope"></i> Messages</a>
             <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
-            <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
-            <li class="nav-item">
-</li>
+            <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Business Hours</a>
+            <a href="manage_announcements.php" class="<?= $currentPage === 'manage_announcements.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
             <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Add Service</a>
-            
             <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </nav>
     </div>

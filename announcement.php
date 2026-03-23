@@ -157,14 +157,8 @@ try {
     <a href="manage_announcements.php"><i class="fa-solid fa-bullhorn"></i> Announcements & Promos</a>
     <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
     <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Services</a>
-    <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
-
-    <li class="nav-item">
-  <a class="nav-link" href="admin_messages.php">
-    <i class="fa-solid fa-envelope"></i> Messages
-  </a>
-</li>
-
+    <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+    <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
     <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
 </div>
 

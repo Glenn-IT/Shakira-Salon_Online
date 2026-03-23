@@ -201,22 +201,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
   <style>
-    body {font-family: Arial, sans-serif; background:#fdf3f7;}
-    .container-box {max-width:650px;margin:80px auto;padding:25px;background:#fff;border-radius:12px;}
-    label{font-weight:bold;display:block;margin-top:12px;}
-    input,select{width:100%;padding:10px;margin-top:6px;border-radius:8px;border:1px solid #ccc;}
-    button{margin-top:20px;padding:12px;width:100%;background:#ff4da6;color:white;border:none;border-radius:8px;cursor:pointer;}
+    body {font-family: Arial, sans-serif; background:#fdf3f7; padding-top: 76px;}
+    .container-box {max-width:650px;margin:30px auto 60px;padding:30px;background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
+    label{font-weight:bold;display:block;margin-top:14px;margin-bottom:4px;}
+    input,select{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;}
+    button[type="submit"]{margin-top:20px;padding:12px;width:100%;background:#ff4da6;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600;}
+    button[type="submit"]:hover{background:#e0358c;}
     .success,.error{padding:10px;margin-bottom:15px;border-radius:8px;text-align:center;}
     .success{background:#d4edda;color:#155724;}
     .error{background:#f8d7da;color:#721c24;}
-    .alert-info {background:#e7f3fe;color:#0c5460;border:1px solid #bee5eb;}
+    .alert-info {background:#e7f3fe;color:#0c5460;border:1px solid #bee5eb;border-radius:8px;padding:15px;}
     .navbar {background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
     .navbar-brand {color:#fff !important;font-weight:bold;}
     .nav-link {color:#fff !important;font-weight:500;}
     .nav-link:hover {text-decoration:underline;}
+    .navbar-toggler {border-color:rgba(255,255,255,0.5);}
+    .navbar-toggler-icon {filter:invert(1);}
     .qr-box {text-align:center;margin:15px 0;}
-    .qr-box img {max-width:220px;border:8px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,0.2);border-radius:12px;}
+    .qr-box img {max-width:200px;border:8px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,0.2);border-radius:12px;}
     #gcash-section {display:none;}
+    @media (max-width:576px) {
+      .container-box {margin:20px 12px 40px;padding:20px;}
+    }
   </style>
   <script>
     function updatePrice(){
@@ -270,10 +276,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand" href="#"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
-    <div class="collapse navbar-collapse">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="book_appointment.php">Book</a></li>
+        <li class="nav-item"><a class="nav-link active" href="book_appointment.php">Book</a></li>
         <li class="nav-item"><a class="nav-link" href="booking_history.php">Booking History</a></li>
         <li class="nav-item"><a class="nav-link" href="gallery.php">Gallery</a></li>
         <li class="nav-item"><a class="nav-link" href="contact.php">Contact</a></li>

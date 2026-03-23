@@ -34,44 +34,55 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
     body {
       margin: 0;
       font-family: Arial, sans-serif;
+      display: flex;
+      background: #f8f8f8;
     }
     .sidebar {
       width: 250px;
-      height: 100vh;
+      min-height: 100vh;
       background: #ff4081;
       position: fixed;
       top: 0;
       left: 0;
       padding: 20px 0;
       color: white;
+      overflow-y: auto;
+      z-index: 100;
     }
     .sidebar h2 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       font-weight: bold;
+      font-size: 1.3rem;
+      padding: 0 10px;
     }
     .sidebar h2 i {
       margin-right: 8px;
     }
     .sidebar a {
-      display: block;
+      display: flex;
+      align-items: center;
+      gap: 8px;
       color: white;
-      padding: 12px 20px;
+      padding: 11px 18px;
       text-decoration: none;
-      font-size: 16px;
+      font-size: 0.9rem;
       transition: 0.3s;
-    }
-    .sidebar a i {
-      margin-right: 10px;
+      white-space: nowrap;
     }
     .sidebar a:hover,
     .sidebar a.active {
       background: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
     }
     .content {
       margin-left: 250px;
-      padding: 20px;
+      padding: 25px;
+      width: calc(100% - 250px);
+      overflow-x: auto;
+    }
+    @media (max-width: 768px) {
+      .sidebar { width: 200px; }
+      .content { margin-left: 200px; width: calc(100% - 200px); padding: 15px; }
     }
   </style>
 </head>
@@ -80,14 +91,15 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   <!-- Sidebar -->
   <div class="sidebar">
     <h2><i class="fas fa-cut"></i> Shakira</h2>
-    <a href="dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
+    <a href="admin_dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
     <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
-    <a href="announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
-      <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-      <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
-          <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-      <a href="insert.php"><i class="fas fa-plus"></i> Add Services</a>
+    <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+    <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
+    <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+    <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+    <a href="admin_messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
+    <a href="insert.php"><i class="fas fa-plus"></i> Add Services</a>
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 

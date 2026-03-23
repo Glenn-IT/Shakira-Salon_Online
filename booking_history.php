@@ -60,6 +60,12 @@ try {
     .nav-link:hover {
       text-decoration: underline;
     }
+    .navbar-toggler {
+      border-color: rgba(255,255,255,0.5);
+    }
+    .navbar-toggler-icon {
+      filter: invert(1);
+    }
     .container-main {
       max-width: 1200px;
       margin: 100px auto 30px;

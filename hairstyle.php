@@ -116,37 +116,50 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         .sidebar {
             width: 250px;
             background: #ff4081;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px 0;
             position: fixed;
             left: 0;
             top: 0;
             color: #fff;
+            overflow-y: auto;
+            z-index: 100;
         }
         .sidebar h2 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: bold;
+            font-size: 1.3rem;
+            padding: 0 10px;
         }
         .sidebar a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: #fff;
-            padding: 12px 20px;
+            padding: 11px 18px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 0.9rem;
             transition: 0.3s;
+            white-space: nowrap;
         }
         .sidebar a:hover, .sidebar a.active {
             background: rgba(255,255,255,0.2);
         }
         .sidebar a i {
-            margin-right: 10px;
+            margin-right: 0;
+            width: 16px;
+            flex-shrink: 0;
         }
         /* Main content */
         .main-content {
             margin-left: 250px;
-            padding: 30px;
-            width: 100%;
+            padding: 25px 30px;
+            width: calc(100% - 250px);
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 200px; }
+            .main-content { margin-left: 200px; width: calc(100% - 200px); padding: 15px; }
         }
         .table {
             background: #fff;
@@ -181,21 +194,25 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 1050;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
+            overflow-y: auto;
             background-color: rgba(0,0,0,0.4);
+            padding: 20px;
+            box-sizing: border-box;
         }
         .modal-content {
             background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
+            margin: 40px auto;
+            padding: 25px;
             border: 1px solid #888;
-            width: 50%;
+            width: 100%;
+            max-width: 500px;
             border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
         }
         .close {
             color: #aaa;

@@ -353,13 +353,35 @@ try {
 
     @media (max-width: 768px) {
       .hero h1 {
-        font-size: 2.2rem;
+        font-size: 2rem;
+      }
+      .hero p.lead {
+        font-size: 1rem;
       }
       .card img {
-        height: 200px;
+        height: 190px;
       }
       .announcement-item {
-        padding: 0 30px;
+        padding: 0 25px;
+      }
+      .section-title {
+        font-size: 1.6rem;
+      }
+      .cta-section h2 {
+        font-size: 1.6rem;
+      }
+      .cta-section p.lead {
+        font-size: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero {
+        height: auto;
+        min-height: 100vh;
+        padding: 80px 1rem 40px;
+      }
+      .service-price {
+        font-size: 1.4rem;
       }
     }
   </style>

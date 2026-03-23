@@ -64,22 +64,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding-top:30px; 
             display:flex; 
             flex-direction:column;
+            overflow-y:auto;
+            z-index:100;
         }
         .sidebar .logo { 
             font-size:1.5rem; 
             font-weight:700; 
             text-align:center; 
-            margin-bottom:2rem; 
+            margin-bottom:2rem;
+            padding:0 10px;
         }
         .sidebar a { 
             display:flex; 
             align-items:center; 
-            padding:15px 25px; 
+            gap:8px;
+            padding:13px 20px; 
             color:#fff; 
             text-decoration:none; 
-            font-weight:600; 
-            border-radius:6px; 
-            margin:5px 10px;
+            font-weight:600;
+            font-size:0.9rem;
+            white-space:nowrap;
             transition:all .3s ease;
         }
         .sidebar a.active, 
@@ -90,8 +94,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         /* Page Content */
         .content { 
             margin-left:260px; 
-            padding:40px 60px; 
-            width:100%;
+            padding:30px 40px; 
+            width:calc(100% - 260px);
         }
         .container {
             max-width:600px; 
@@ -116,6 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-size:16px; 
             border:1px solid #ccc; 
             border-radius:6px; 
+            width:100%;
+            box-sizing:border-box;
         }
         button { 
             background:#ff4081; 
@@ -133,6 +139,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom:15px; 
             font-weight:bold; 
             color:#ff4081; 
+        }
+        @media (max-width:768px) {
+            .sidebar { width:200px; }
+            .content { margin-left:200px; width:calc(100% - 200px); padding:20px; }
         }
     </style>
 </head>

@@ -47,32 +47,35 @@ try {
       justify-content: space-between;
       align-items: center;
       background: #ff69b4;
-      padding: 10px 30px;
+      padding: 10px 20px;
       color: white;
       font-weight: bold;
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .navbar .logo {
-      font-size: 18px;
+      font-size: 17px;
     }
     .navbar ul {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
-    }
-    .navbar ul li {
-      margin-left: 20px;
+      flex-wrap: wrap;
+      gap: 4px;
     }
     .navbar ul li a {
       color: white;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 13px;
+      padding: 5px 10px;
+      border-radius: 5px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
     .navbar ul li a:hover {
-      text-decoration: underline;
+      background: rgba(0,0,0,0.15);
     }
 
     /* Content Box */
@@ -80,17 +83,24 @@ try {
       display:flex; 
       justify-content:center; 
       align-items:center; 
-      height: calc(100vh - 60px);
+      min-height: calc(100vh - 60px);
+      padding: 30px 15px;
     }
     .box { 
       background:#fff; 
-      padding:30px; 
+      padding:35px 40px; 
       border-radius:10px; 
       box-shadow:0 5px 15px rgba(0,0,0,0.2); 
-      text-align:center; 
+      text-align:center;
+      width:100%;
+      max-width:420px;
     }
-    .open { color:green; font-weight:bold; font-size:22px; }
-    .closed { color:red; font-weight:bold; font-size:22px; }
+    .open { color:green; font-weight:bold; font-size:20px; margin:10px 0; }
+    .closed { color:red; font-weight:bold; font-size:20px; margin:10px 0; }
+    @media (max-width:600px) {
+      .navbar { flex-direction:column; align-items:flex-start; }
+      .box { padding:25px 20px; }
+    }
   </style>
 </head>
 <body>

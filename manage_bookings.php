@@ -111,23 +111,27 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; display: flex; }
-    .sidebar { width: 250px; background: #ff4f81; color: white; height: 100vh; position: fixed; top: 0; left: 0; padding-top: 20px; }
-    .logo { text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; padding: 10px; border-bottom: 2px solid rgba(255,255,255,0.3); }
-    .sidebar a { display: block; color: white; padding: 12px 20px; text-decoration: none; }
-    .sidebar a:hover { background: #e04371; }
-    .main-content { margin-left: 250px; padding: 20px; width: 100%; }
-    .container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
-    th { background-color: #ff4081; color: white; }
-    .btn { padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 2px; text-decoration: none; display: inline-block; }
+    .sidebar { width: 250px; background: #ff4f81; color: white; height: 100vh; position: fixed; top: 0; left: 0; padding-top: 20px; overflow-y: auto; z-index: 100; }
+    .logo { text-align: center; font-size: 1.6rem; font-weight: bold; margin-bottom: 25px; padding: 10px; border-bottom: 2px solid rgba(255,255,255,0.3); }
+    .sidebar a { display: flex; align-items: center; gap: 8px; color: white; padding: 12px 18px; text-decoration: none; font-size: 0.9rem; white-space: nowrap; }
+    .sidebar a:hover, .sidebar a.active { background: #e04371; }
+    .main-content { margin-left: 250px; padding: 20px; width: calc(100% - 250px); min-height: 100vh; }
+    .container { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; min-width: 900px; }
+    th, td { padding: 10px 8px; border: 1px solid #ddd; text-align: center; font-size: 0.9rem; word-break: break-word; }
+    th { background-color: #ff4081; color: white; white-space: nowrap; }
+    .btn { padding: 5px 10px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 2px; text-decoration: none; display: inline-block; font-size: 0.82rem; }
     .btn-approve { background-color: #28a745; color: white; }
     .btn-reject { background-color: #dc3545; color: white; }
     .btn-delete { background-color: #6c757d; color: white; }
     .status-pending { color: #ffc107; font-weight: bold; }
     .status-approved { color: #28a745; font-weight: bold; }
     .status-rejected { color: #dc3545; font-weight: bold; }
-    .proof-img { max-width: 100px; max-height: 100px; border-radius: 8px; }
+    .proof-img { max-width: 80px; max-height: 80px; border-radius: 6px; }
+    @media (max-width: 768px) {
+      .sidebar { width: 200px; }
+      .main-content { margin-left: 200px; width: calc(100% - 200px); padding: 15px; }
+    }
   </style>
 </head>
 <body>

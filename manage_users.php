@@ -27,25 +27,32 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
         .sidebar {
             width: 250px;
             background: #ff4081;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px 0;
             position: fixed;
             left: 0;
             top: 0;
             color: #fff;
+            overflow-y: auto;
+            z-index: 100;
         }
         .sidebar h2 {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             font-weight: bold;
+            font-size: 1.4rem;
+            padding: 0 10px;
         }
         .sidebar a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 8px;
             color: #fff;
-            padding: 12px 20px;
+            padding: 11px 18px;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 0.9rem;
             transition: 0.3s;
+            white-space: nowrap;
         }
         .sidebar a:hover, .sidebar a.active {
             background: rgba(255,255,255,0.2);
@@ -53,7 +60,12 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
         .main-content {
             margin-left: 250px;
             padding: 30px;
-            width: 100%;
+            width: calc(100% - 250px);
+            overflow-x: auto;
+        }
+        @media (max-width: 768px) {
+            .sidebar { width: 200px; }
+            .main-content { margin-left: 200px; width: calc(100% - 200px); padding: 20px; }
         }
     </style>
 </head>

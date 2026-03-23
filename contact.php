@@ -75,11 +75,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
   <style>
-    body { background: #fdfdfd; font-family: Arial, sans-serif; margin-bottom: 0; }
+    body { background: #fdfdfd; font-family: Arial, sans-serif; margin-bottom: 0; padding-top: 0; }
     .navbar { background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .navbar-brand { font-weight: bold; color: #fff !important; }
     .nav-link { color: #fff !important; font-weight: 500; }
     .nav-link:hover { text-decoration: underline; }
+    .navbar-toggler { border-color: rgba(255,255,255,0.5); }
+    .navbar-toggler-icon { filter: invert(1); }
     .contact-header {
       background: linear-gradient(135deg, #ff69b4, #ff1493);
       color: white; padding: 50px 0; text-align: center;
@@ -91,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .form-control:focus { border-color: #ff69b4; box-shadow: 0 0 5px rgba(255,105,180,0.5); }
     .btn-salon { background-color: #ff1493; color: white; border-radius: 25px;
       padding: 10px 20px; border: none; }
-    .btn-salon:hover { background-color: #e01383; }
+    .btn-salon:hover { background-color: #e01383; color: white; }
     footer {
       background: #ff69b4;
       color: white;
@@ -109,6 +111,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     footer .social i:hover {
       color: #ffe4f2;
+    }
+    @media (max-width: 576px) {
+      .contact-header { border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; padding: 35px 15px; }
+      .contact-form { padding: 20px; }
     }
   </style>
 </head>

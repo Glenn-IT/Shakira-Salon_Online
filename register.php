@@ -88,11 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         font-family: Arial, sans-serif;
         background: linear-gradient(135deg, #ffdde1, #ee9ca7);
         margin: 0;
-        padding: 0;
+        padding: 20px 15px;
         display: flex;
         justify-content: center;
-        align-items: center;
-        height: 100vh;
+        align-items: flex-start;
+        min-height: 100vh;
+        box-sizing: border-box;
     }
     main.register-container {
         background: #fff;
@@ -101,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
         width: 100%;
         max-width: 450px;
+        margin: auto 0;
     }
     h1 {
         text-align: center;

@@ -44,10 +44,12 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
         position: sticky;
         top: 0;
         z-index: 1000;
+        flex-wrap: wrap;
+        gap: 8px;
     }
     .navbar .logo {
         color: white;
-        font-size: 20px;
+        font-size: 18px;
         font-weight: bold;
         display: flex;
         align-items: center;
@@ -55,20 +57,28 @@ $services = $conn->query("SELECT * FROM services ORDER BY id DESC");
     }
     .navbar .menu {
         display: flex;
-        gap: 25px;
+        flex-wrap: wrap;
+        gap: 6px;
     }
     .navbar a {
         color: white;
         text-decoration: none;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: bold;
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 5px;
+        padding: 5px 10px;
+        border-radius: 5px;
         transition: 0.3s;
     }
     .navbar a:hover {
-        color: #333;
+        background: rgba(0,0,0,0.15);
+    }
+    @media (max-width: 768px) {
+        .navbar { flex-direction: column; align-items: flex-start; }
+        .navbar .menu { width: 100%; }
+        .navbar a { font-size: 13px; }
     }
 
     .container {

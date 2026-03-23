@@ -43,11 +43,18 @@ if ($mysqli->connect_errno) {
       align-items: center;
       color: white;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
+      gap: 8px;
     }
     .navbar .title {
       font-size: 1.3rem;
       font-weight: bold;
       text-shadow: 1px 1px 2px #cc3366;
+    }
+    .navbar nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
     }
     .navbar nav a {
       color: white;
@@ -74,11 +81,11 @@ if ($mysqli->connect_errno) {
     .banner {
       background: linear-gradient(to right, #ff99bb, #ff4d88);
       color: white;
-      padding: 50px 20px;
+      padding: 40px 20px;
       border-radius: 12px;
       margin-bottom: 20px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-weight: bold;
     }
     h2 {
@@ -89,6 +96,13 @@ if ($mysqli->connect_errno) {
       margin-bottom: 20px;
       text-align: center;
       font-size: 1.4rem;
+    }
+    @media (max-width: 768px) {
+      .navbar { flex-direction: column; align-items: flex-start; }
+      .navbar nav { width: 100%; }
+      .navbar nav a { font-size: 0.85rem; padding: 5px 8px; }
+      .container { margin: 10px; padding: 15px; }
+      .banner { font-size: 1.2rem; padding: 25px 15px; }
     }
   </style>
 </head>
