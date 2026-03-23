@@ -4,11 +4,7 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "shakira_salon";
-<!-- Header -->
-<div class="page-header">
-  <h1><i class="fa-solid fa-envelope me-2"></i>Contact Shakira Salon</h1>
-  <p>We'd love to hear from you! Fill out the form below.</p>
-</div>n = new mysqli($host, $user, $pass, $db);
+$conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }

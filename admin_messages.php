@@ -33,9 +33,6 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   <style>
     * { box-sizing: border-box; }
     body { margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
-    .content { margin-left:260px;padding:74px 30px 30px;overflow-x:auto; }
-    @media (max-width:768px) { .content { margin-left:220px;padding:70px 15px 20px; } }
-    @media (max-width:576px) { .content { margin-left:0;padding:115px 15px 20px; } }
   </style>
 </head>
 <body>
@@ -43,17 +40,19 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   <!-- Sidebar -->
   <div class="admin-sidebar">
     <div class="logo"><i class="fas fa-cut"></i> Shakira <small>Admin Panel</small></div>
-    <a href="admin_dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
-    <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
-    <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
-    <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-    <a href="admin_messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
-    <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
-    <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
-    <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
-    <div class="nav-divider"></div>
-    <a href="insert.php"><i class="fas fa-plus"></i> Add Service</a>
-    <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <nav>
+      <a href="admin_dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
+      <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
+      <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+      <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+      <a href="admin_messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
+      <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+      <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+      <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
+      <div class="nav-divider"></div>
+      <a href="insert.php"><i class="fas fa-plus"></i> Add Service</a>
+      <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
   </div>
 
   <div class="admin-topbar">
@@ -62,7 +61,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   </div>
 
   <!-- Main Content -->
-  <div class="content">
+  <div class="admin-main">
     <div class="container-fluid mt-4">
       <h2>📩 Contact Messages</h2>
       <table class="table table-bordered table-hover mt-3">
