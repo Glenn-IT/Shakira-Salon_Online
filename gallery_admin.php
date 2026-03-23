@@ -46,114 +46,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Admin - Upload Gallery</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/shared.css">
     <style>
-        body { 
-            margin:0; 
-            font-family:'Nunito',sans-serif; 
-            background:#f0f2f8; 
-            color:#333; 
-            display:flex;
+        body { margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8;color:#333; }
+        .upload-container {
+            max-width:600px;margin:0 auto;background:#fff;padding:30px;
+            border-radius:var(--radius-lg);box-shadow:var(--shadow-md);
         }
-        /* Sidebar */
-        .sidebar { 
-            position:fixed; 
-            top:0; bottom:0; left:0; 
-            width:260px; 
-            background:#ff4081; 
-            color:#fff; 
-            padding-top:30px; 
-            display:flex; 
-            flex-direction:column;
-        }
-        .sidebar .logo { 
-            font-size:1.5rem; 
-            font-weight:700; 
-            text-align:center; 
-            margin-bottom:2rem; 
-        }
-        .sidebar a { 
-            display:flex; 
-            align-items:center; 
-            padding:15px 25px; 
-            color:#fff; 
-            text-decoration:none; 
-            font-weight:600; 
-            border-radius:6px; 
-            margin:5px 10px;
-            transition:all .3s ease;
-        }
-        .sidebar a.active, 
-        .sidebar a:hover { 
-            background:#e73370; 
-        }
-
-        /* Page Content */
-        .content { 
-            margin-left:260px; 
-            padding:40px 60px; 
-            width:100%;
-        }
-        .container {
-            max-width:600px; 
-            margin:0 auto; 
-            background:#fff; 
-            padding:30px; 
-            border-radius:12px; 
-            box-shadow:0 5px 15px rgba(0,0,0,0.1);
-        }
-        h2 { 
-            text-align:center; 
-            margin-bottom:20px; 
-            color:#ff4081; 
-        }
-        form { 
-            display:flex; 
-            flex-direction:column; 
-            gap:15px; 
-        }
-        input, button { 
-            padding:12px; 
-            font-size:16px; 
-            border:1px solid #ccc; 
-            border-radius:6px; 
-        }
-        button { 
-            background:#ff4081; 
-            color:white; 
-            border:none; 
-            cursor:pointer; 
-            font-weight:600;
-            transition:.3s;
-        }
-        button:hover { 
-            background:#e60073; 
-        }
-        .msg { 
-            text-align:center; 
-            margin-bottom:15px; 
-            font-weight:bold; 
-            color:#ff4081; 
-        }
+        h2 { text-align:center;margin-bottom:20px;color:var(--primary); }
+        form { display:flex;flex-direction:column;gap:15px; }
+        input, button { padding:12px;font-size:16px;border:2px solid #e8e8e8;border-radius:var(--radius-sm);width:100%;box-sizing:border-box;font-family:var(--font-family);transition:var(--transition); }
+        input:focus { border-color:var(--primary);outline:none;box-shadow:0 0 0 4px rgba(255,64,129,0.12); }
+        button { background:var(--primary);color:white;border:none;cursor:pointer;font-weight:600;border-radius:var(--radius-full); }
+        button:hover { background:var(--primary-dark); }
+        .msg { text-align:center;margin-bottom:15px;font-weight:bold;color:var(--primary); }
     </style>
 </head>
 <body>
     <!-- ✅ Sidebar -->
-    <div class="sidebar">
-        <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira Salon</div>
-        <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i>&nbsp; Dashboard</a>
-        <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i>&nbsp; Manage Users</a>
-        <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check"></i>&nbsp; Manage Bookings</a>
-        <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i>&nbsp; Announcements</a>
-        <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i>&nbsp; Hairstyles</a>
-        <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Insert</a>
-        <a href="admin_messages.php" class="<?= $currentPage === 'admin_messages.php' ? 'active' : '' ?>"><i class="fa-solid fa-envelope"></i>&nbsp; Messages</a>
-        <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i>&nbsp; Gallery</a>
-        <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i>&nbsp; Logout</a>
+    <div class="admin-sidebar">
+        <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
+        <nav>
+            <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+            <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
+            <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
+            <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+            <a href="admin_messages.php" class="<?= $currentPage === 'admin_messages.php' ? 'active' : '' ?>"><i class="fa-solid fa-envelope"></i> Messages</a>
+            <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
+            <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-clock"></i> Business Hours</a>
+            <a href="manage_announcements.php" class="<?= $currentPage === 'manage_announcements.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+            <div class="nav-divider"></div>
+            <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Add Service</a>
+            <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </nav>
+    </div>
+
+    <div class="admin-topbar">
+        <span class="page-title"><i class="fa-solid fa-image"></i> Gallery Management</span>
+        <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
     </div>
 
     <!-- ✅ Page Content -->
-    <div class="content">
-        <div class="container">
+    <div class="admin-main">
+        <div class="upload-container">
             <h2>Upload Before & After Images</h2>
             <?php if ($message) echo "<div class='msg'>$message</div>"; ?>
             <form method="post" enctype="multipart/form-data">

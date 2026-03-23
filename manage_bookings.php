@@ -109,45 +109,53 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <meta charset="UTF-8">
   <title>Manage Bookings - Shakira Salon</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; display: flex; }
-    .sidebar { width: 250px; background: #ff4f81; color: white; height: 100vh; position: fixed; top: 0; left: 0; padding-top: 20px; }
-    .logo { text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 30px; padding: 10px; border-bottom: 2px solid rgba(255,255,255,0.3); }
-    .sidebar a { display: block; color: white; padding: 12px 20px; text-decoration: none; }
-    .sidebar a:hover { background: #e04371; }
-    .main-content { margin-left: 250px; padding: 20px; width: 100%; }
-    .container { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-    th, td { padding: 12px; border: 1px solid #ddd; text-align: center; }
-    th { background-color: #ff4081; color: white; }
-    .btn { padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 2px; text-decoration: none; display: inline-block; }
-    .btn-approve { background-color: #28a745; color: white; }
-    .btn-reject { background-color: #dc3545; color: white; }
-    .btn-delete { background-color: #6c757d; color: white; }
-    .status-pending { color: #ffc107; font-weight: bold; }
-    .status-approved { color: #28a745; font-weight: bold; }
-    .status-rejected { color: #dc3545; font-weight: bold; }
-    .proof-img { max-width: 100px; max-height: 100px; border-radius: 8px; }
+    * { box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f8; margin: 0; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:900px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
+    .btn { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition); }
+    .btn-approve { background:#28a745;color:#fff; }
+    .btn-reject { background:#dc3545;color:#fff; }
+    .btn-delete { background:#6c757d;color:#fff; }
+    .btn:hover { opacity:0.85;transform:translateY(-1px); }
+    .status-pending { color:#ffc107;font-weight:bold; }
+    .status-approved { color:#28a745;font-weight:bold; }
+    .status-rejected { color:#dc3545;font-weight:bold; }
+    .proof-img { max-width:80px;max-height:80px;border-radius:6px; }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira </div>
+  <div class="admin-sidebar">
+    <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
     <nav>
       <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
       <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
       <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
       <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-      <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
-      <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Insert</a>
+      <a href="admin_messages.php" class="<?= $currentPage === 'admin_messages.php' ? 'active' : '' ?>"><i class="fa-solid fa-envelope"></i> Messages</a>
       <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
+      <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-clock"></i> Business Hours</a>
+      <a href="manage_announcements.php" class="<?= $currentPage === 'manage_announcements.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+      <div class="nav-divider"></div>
+      <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Add Service</a>
       <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </nav>
   </div>
 
-  <div class="main-content">
-    <div class="container">
-      <h2>📅 Manage Bookings</h2>
+  <div class="admin-topbar">
+    <span class="page-title"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</span>
+    <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
+  </div>
+
+  <div class="admin-main">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-calendar-check"></i> Manage Bookings</h2>
       <table>
         <thead>
           <tr>
@@ -175,7 +183,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                       <img src="uploads/payment_proofs/<?= htmlspecialchars($row['payment_proof']) ?>" class="proof-img">
                     </a>
                   <?php else: ?>
-                    <span style="color:#aaa;">No Proof</span>
+                    <span style="color:#555; font-weight: bold;">Cash</span>
                   <?php endif; ?>
                 </td>
                 <td><span class="status-<?= $status ?>"><?= ucfirst($status) ?></span></td>
@@ -194,8 +202,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           <?php endif; ?>
         </tbody>
       </table>
-    </div>
-  </div>
+    </div><!-- /content-card -->
+  </div><!-- /main-content -->
   <?php $conn->close(); ?>
 </body>
 </html>

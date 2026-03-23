@@ -16,6 +16,20 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+
+    // Auto-fix: ensure contact_number column exists in users table
+    $pdo->exec("ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `contact_number` varchar(15) DEFAULT NULL");
+
+    // Migrate any data from legacy cp_number column into contact_number
+    try {
+        $pdo->exec("UPDATE `users` SET `contact_number` = `cp_number` WHERE `cp_number` IS NOT NULL AND (`contact_number` IS NULL OR `contact_number` = '')");
+    } catch (\PDOException $ignore) {
+        // cp_number column may not exist — that's fine
+    }
+
+    // Auto-fix: ensure status column exists in users table (active/deactivated)
+    $pdo->exec("ALTER TABLE `users` ADD COLUMN IF NOT EXISTS `status` ENUM('active','deactivated') NOT NULL DEFAULT 'active'");
+
 } catch (\PDOException $e) {
     die('Database connection failed: ' . $e->getMessage());
 }

@@ -34,97 +34,81 @@ try {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Business Hours</title>
+  <title>Business Hours - Shakira Salon</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body { 
-      margin:0;
-      font-family: Arial, sans-serif; 
-      background: #f0f2f5; 
+    body { padding-top: 0; }
+    .content-wrap { display:flex;justify-content:center;padding:30px 15px 60px;margin-top:-30px; }
+    .box {
+      background:var(--bg-white);padding:35px 40px;border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);text-align:center;width:100%;max-width:440px;
+      position:relative;z-index:2;
     }
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #ff69b4;
-      padding: 10px 30px;
-      color: white;
-      font-weight: bold;
-    }
-    .navbar .logo {
-      font-size: 18px;
-    }
-    .navbar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-    }
-    .navbar ul li {
-      margin-left: 20px;
-    }
-    .navbar ul li a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .navbar ul li a:hover {
-      text-decoration: underline;
-    }
-
-    /* Content Box */
-    .container {
-      display:flex; 
-      justify-content:center; 
-      align-items:center; 
-      height: calc(100vh - 60px);
-    }
-    .box { 
-      background:#fff; 
-      padding:30px; 
-      border-radius:10px; 
-      box-shadow:0 5px 15px rgba(0,0,0,0.2); 
-      text-align:center; 
-    }
-    .open { color:green; font-weight:bold; font-size:22px; }
-    .closed { color:red; font-weight:bold; font-size:22px; }
+    .box h4 { color:var(--primary);font-weight:700; }
+    .status-open { color:#198754;font-weight:700;font-size:1.4rem;margin:12px 0; }
+    .status-closed { color:#dc3545;font-weight:700;font-size:1.4rem;margin:12px 0; }
+    @media (max-width:576px) { .box { padding:25px 20px; } }
   </style>
 </head>
 <body>
 
-<!-- ✅ Navbar -->
-<div class="navbar">
-  <div class="logo">💇 Shakira Salon</div>
-  <ul>
-    <li><a href="services.php">💆 Services</a></li>
-    <li><a href="book_appointment.php">📅 Book</a></li>
-    <li><a href="gallery.php">🖼️ Gallery</a></li>
-    <li><a href="contact.php">📧 Contact Us</a></li>
-    <li><a href="business_hours_client.php">🕒 Business Hours</a></li>
-    <li><a href="logout.php">↩️ Logout</a></li>
-  </ul>
+<nav class="salon-navbar navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="dashboard.php"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.php"><i class="fa-solid fa-gears"></i> Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link active" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Hours</a></li>
+        <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1><i class="fa-solid fa-clock me-2"></i>Business Hours</h1>
+  <p>Check if we're currently open</p>
 </div>
 
-<!-- ✅ Page Content -->
-<div class="container">
+<div class="content-wrap">
   <div class="box">
-      <h2>Salon Business Hours</h2>
-
-      <?php if ($isOpen): ?>
-          <div class="open">✅ We are OPEN!</div>
-      <?php elseif ($status == 0): ?>
-          <div class="closed">❌ CLOSED (Temporarily Disabled)</div>
-      <?php else: ?>
-          <div class="closed">❌ CLOSED (Outside Hours)</div>
-      <?php endif; ?>
-
-      <p>Operating Hours: <strong><?= $openTimeFormatted ?></strong> - <strong><?= $closeTimeFormatted ?></strong></p>
-      <p>Current Time: <?= date("g:i A") ?></p>
+    <h4 class="mb-3" style="color:#ff1493;"><i class="fa-solid fa-store me-2"></i>Salon Status</h4>
+    <?php if ($isOpen): ?>
+        <div class="status-open"><i class="fa-solid fa-circle-check me-1"></i> We are OPEN!</div>
+    <?php elseif ($status == 0): ?>
+        <div class="status-closed"><i class="fa-solid fa-circle-xmark me-1"></i> CLOSED (Temporarily Disabled)</div>
+    <?php else: ?>
+        <div class="status-closed"><i class="fa-solid fa-circle-xmark me-1"></i> CLOSED (Outside Hours)</div>
+    <?php endif; ?>
+    <hr>
+    <p class="mb-1"><strong>Operating Hours:</strong></p>
+    <p class="fs-5"><?= $openTimeFormatted ?> – <?= $closeTimeFormatted ?></p>
+    <p class="text-muted">Current Time: <?= date("g:i A") ?></p>
   </div>
 </div>
 
+<footer class="salon-footer">
+  <div class="container">
+    <h5><i class="fa-solid fa-scissors me-2"></i>Shakira Salon</h5>
+    <p><i class="fa-solid fa-location-dot me-1"></i> Tuao West, Cagayan, Philippines</p>
+    <p><i class="fa-solid fa-phone me-1"></i> +63 912 345 6789</p>
+    <p><i class="fa-solid fa-envelope me-1"></i> <a href="mailto:shakirabeautysalon@email.com">shakirabeautysalon@email.com</a></p>
+    <hr>
+    <p>&copy; <?= date('Y'); ?> Shakira Salon. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -17,105 +17,73 @@ if ($mysqli->connect_errno) {
   <meta charset="UTF-8">
   <title>Shakira Salon | Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Bootstrap + Font Awesome -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(-45deg, #fff0f5, #ffe6ef, #ffd6e0, #ffedf1);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      margin: 0;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    .navbar {
-      background: linear-gradient(to right, #ff4d88, #ff99bb);
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    .navbar .title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px #cc3366;
-    }
-    .navbar nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      padding: 6px 10px;
-      border-radius: 6px;
-      transition: all 0.3s;
-      font-size: 0.9rem;
-    }
-    .navbar nav a:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-      transform: scale(1.05);
-    }
-    .container {
-      max-width: 1100px;
-      margin: 20px auto;
-      background: #ffffff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    .banner {
-      background: linear-gradient(to right, #ff99bb, #ff4d88);
-      color: white;
-      padding: 50px 20px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      font-size: 2rem;
-      font-weight: bold;
-    }
-    h2 {
-      color: #d6005c;
-      font-weight: bold;
-      border-bottom: 2px solid #ffcce0;
-      padding-bottom: 8px;
-      margin-bottom: 20px;
-      text-align: center;
-      font-size: 1.4rem;
-    }
+    body { padding-top: 0; }
+    .welcome-text { color: var(--text-muted); font-size: 0.95rem; margin-top: 8px; }
+    .welcome-text strong { color: #fff; }
   </style>
 </head>
 <body>
-  <div class="navbar">
-    <div class="title"><i class="fas fa-scissors me-2"></i>Shakira Salon - Dashboard</div>
-    <nav>
-      <a href="services.php"><i class="fas fa-cog"></i> Services</a>
-            <a href="book_appointment.php"><i class="fas fa-calendar-check"></i> Book</a>
 
-      <a href="gallery.php"><i class="fas fa-images"></i> Gallery</a>
-      <a href="contact.php"><i class="fas fa-envelope"></i> Contact Us</a>
-<a href="business_hours_client.php">
-  <i class="fas fa-clock"></i> Business Hours
-</a>
-      <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
-    </nav>
-  </div>
-
+<nav class="navbar navbar-expand-lg fixed-top salon-navbar">
   <div class="container">
-    <!-- Banner -->
-    <div class="banner">
-      👋 Hello Client!
+    <a class="navbar-brand" href="dashboard.php"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="services.php"><i class="fa-solid fa-gears"></i> Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+        <li class="nav-item"><a class="nav-link" href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Hours</a></li>
+        <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+      </ul>
     </div>
-
-    <h2><i class="fas fa-home me-2"></i>Welcome to Shakira Salon</h2>
-    <p>Experience the beauty and relaxation you deserve. Book your appointment today and let us pamper you!</p>
   </div>
+</nav>
+
+<div class="page-header">
+  <h1><i class="fa-solid fa-scissors me-2"></i>Welcome to Shakira Salon</h1>
+  <p>Hello, <strong><?= htmlspecialchars($_SESSION['full_name'] ?? 'Client') ?></strong>! What would you like to do today?</p>
+</div>
+
+<div class="container" style="max-width: 900px;">
+  <div class="content-card animate-in">
+    <h4 class="section-title"><i class="fa-solid fa-bolt me-2"></i>Quick Access</h4>
+    <div class="quick-links">
+      <a href="services.php"><i class="fa-solid fa-gears"></i> Our Services</a>
+      <a href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book Appointment</a>
+      <a href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a>
+      <a href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a>
+      <a href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+      <a href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+    </div>
+  </div>
+</div>
+
+<footer class="salon-footer">
+  <div class="container">
+    <h5><i class="fa-solid fa-scissors me-2"></i>Shakira Salon</h5>
+    <p><i class="fa-solid fa-location-dot me-2"></i>Tuao West, Cagayan, Philippines</p>
+    <p><i class="fa-solid fa-phone me-2"></i>+63 912 345 6789</p>
+    <p><i class="fa-solid fa-envelope me-2"></i><a href="mailto:shakirabeautysalon@email.com">shakirabeautysalon@email.com</a></p>
+    <div class="social">
+      <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+    <hr>
+    <p class="copyright">&copy; <?= date('Y'); ?> Shakira Salon. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

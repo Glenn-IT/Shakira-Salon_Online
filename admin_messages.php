@@ -29,74 +29,52 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   <title>Admin - Contact Messages</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-    }
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      background: #ff4081;
-      position: fixed;
-      top: 0;
-      left: 0;
-      padding: 20px 0;
-      color: white;
-    }
-    .sidebar h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-weight: bold;
-    }
-    .sidebar h2 i {
-      margin-right: 8px;
-    }
-    .sidebar a {
-      display: block;
-      color: white;
-      padding: 12px 20px;
-      text-decoration: none;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-    .sidebar a i {
-      margin-right: 10px;
-    }
-    .sidebar a:hover,
-    .sidebar a.active {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-    }
-    .content {
-      margin-left: 250px;
-      padding: 20px;
-    }
+    * { box-sizing: border-box; }
+    body { margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:900px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
+    .btn-action { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition);color:#fff; }
+    .btn-action:hover { opacity:0.85;transform:translateY(-1px); }
+    .btn-mark-read { background:#007bff;color:#fff; }
   </style>
 </head>
 <body>
 
   <!-- Sidebar -->
-  <div class="sidebar">
-    <h2><i class="fas fa-cut"></i> Shakira</h2>
-    <a href="dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
-    <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
-    <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
-    <a href="announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
-      <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-      <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
-          <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-      <a href="insert.php"><i class="fas fa-plus"></i> Insert</a>
-    <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  <div class="admin-sidebar">
+    <div class="logo"><i class="fas fa-cut"></i> Shakira <small>Admin Panel</small></div>
+    <nav>
+      <a href="admin_dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
+      <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
+      <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
+      <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+      <a href="admin_messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
+      <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+      <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+      <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
+      <div class="nav-divider"></div>
+      <a href="insert.php"><i class="fas fa-plus"></i> Add Service</a>
+      <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </div>
+
+  <div class="admin-topbar">
+    <span class="page-title"><i class="fa-solid fa-envelope"></i> Contact Messages</span>
+    <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
   </div>
 
   <!-- Main Content -->
-  <div class="content">
-    <div class="container-fluid mt-4">
-      <h2>📩 Contact Messages</h2>
-      <table class="table table-bordered table-hover mt-3">
-        <thead class="table-dark">
+  <div class="admin-main">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-envelope"></i> Contact Messages</h2>
+      <table>
+        <thead>
           <tr>
             <th>ID</th>
             <th>From</th>
@@ -115,7 +93,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
               <td><?= htmlspecialchars($row['name']) ?></td>
               <td><?= htmlspecialchars($row['email']) ?></td>
               <td><?= htmlspecialchars($row['subject']) ?></td>
-              <td><?= nl2br(htmlspecialchars($row['message'])) ?></td>
+              <td style="text-align:left;max-width:250px;"><?= nl2br(htmlspecialchars($row['message'])) ?></td>
               <td>
                 <?php if ($row['status'] == 'unread'): ?>
                   <span class="badge bg-danger">Unread</span>
@@ -125,7 +103,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
               </td>
               <td><?= $row['created_at'] ?></td>
               <td>
-                <a href="?read_id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Mark as Read</a>
+                <a href="?read_id=<?= $row['id'] ?>" class="btn-action btn-mark-read">Mark as Read</a>
               </td>
             </tr>
           <?php endwhile; ?>
