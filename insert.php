@@ -160,52 +160,67 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
     body {
         margin: 0;
         padding: 0;
-        display: flex;
         font-family: 'Segoe UI', sans-serif;
-        background: #fceef3;
+        background: #f0f2f8;
     }
     /* Sidebar */
     .sidebar {
-        width: 250px;
-        background: #ff4f81;
+        width: 260px;
+        background: linear-gradient(180deg,#ff4081,#e73370);
         height: 100vh;
-        padding-top: 20px;
+        padding-top: 0;
         position: fixed;
         left: 0;
         top: 0;
         color: #fff;
+        overflow-y: auto;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
     }
     .logo {
         text-align: center;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: bold;
-        margin-bottom: 30px;
-        padding: 10px;
-        border-bottom: 2px solid rgba(255,255,255,0.3);
+        padding: 22px 10px 16px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
     }
-    .logo i { margin-right: 8px; }
+    .logo small { display: block; font-size: 0.65rem; font-weight: 400; opacity: .8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
+    .logo i { margin-right: 6px; }
     .sidebar a {
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         color: #fff;
         padding: 12px 20px;
         text-decoration: none;
-        font-size: 16px;
-        transition: 0.3s;
+        font-size: 0.88rem;
+        font-weight: 600;
+        transition: all .2s;
+        border-left: 3px solid transparent;
+        white-space: nowrap;
     }
+    .sidebar a i { width: 18px; text-align: center; flex-shrink: 0; margin-right: 0; }
     .sidebar a:hover,
     .sidebar a.active {
         background: rgba(255,255,255,0.2);
     }
-    .sidebar a i { margin-right: 10px; }
+    .sidebar a.active { border-left-color: #fff; }
+    .sidebar a:hover:not(.active) { border-left-color: rgba(255,255,255,0.5); }
+    .sidebar .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 15px; }
+    /* Topbar */
+    .admin-topbar { position: fixed; top: 0; left: 260px; right: 0; height: 56px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 900; }
+    .admin-topbar .page-title { font-size: 1.05rem; font-weight: 700; color: #ff4081; }
+    .admin-topbar .admin-info { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
+    .admin-topbar .admin-info i { color: #ff4081; }
 
     /* Main content */
     .main-content {
-        margin-left: 250px;
-        padding: 40px;
-        width: calc(100% - 250px);
+        margin-left: 260px;
+        padding: 74px 40px 40px;
         display: flex;
         flex-direction: column;
-        align-items: center; /* Center align */
+        align-items: center;
     }
 
     .form-section {
@@ -490,12 +505,12 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
             margin: 5% auto;
         }
         .sidebar {
-            width: 200px;
+            width: 220px;
         }
+        .admin-topbar { left: 220px; }
         .main-content {
-            margin-left: 200px;
-            width: calc(100% - 200px);
-            padding: 20px;
+            margin-left: 220px;
+            padding: 70px 20px 20px;
         }
     }
 </style>
@@ -505,7 +520,7 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
 <!-- Sidebar -->
 <div class="sidebar">
     <div class="logo">
-        <i class="fa-solid fa-scissors"></i> Shakira
+        <i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small>
     </div>
     <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
@@ -515,8 +530,14 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
     <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
     <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-clock"></i> Business Hours</a>
     <a href="manage_announcements.php" class="<?= $currentPage === 'manage_announcements.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <div class="nav-divider"></div>
     <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Add Service</a>
     <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+
+<div class="admin-topbar">
+    <span class="page-title"><i class="fa-solid fa-plus"></i> Add / Manage Services</span>
+    <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
 </div>
 
 <!-- Main content -->

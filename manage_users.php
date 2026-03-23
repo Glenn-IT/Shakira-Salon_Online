@@ -17,74 +17,53 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
-        }
-        .sidebar {
-            width: 250px;
-            background: #ff4081;
-            min-height: 100vh;
-            padding: 20px 0;
-            position: fixed;
-            left: 0;
-            top: 0;
-            color: #fff;
-            overflow-y: auto;
-            z-index: 100;
-        }
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-weight: bold;
-            font-size: 1.4rem;
-            padding: 0 10px;
-        }
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #fff;
-            padding: 11px 18px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            white-space: nowrap;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background: rgba(255,255,255,0.2);
-        }
-        .main-content {
-            margin-left: 250px;
-            padding: 30px;
-            width: calc(100% - 250px);
-            overflow-x: auto;
-        }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: Arial, sans-serif; background: #f0f2f8; }
+        .sidebar { width: 260px; background: linear-gradient(180deg,#ff4081,#e73370); min-height: 100vh; position: fixed; left: 0; top: 0; color: #fff; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; }
+        .sidebar .logo { font-size: 1.4rem; font-weight: bold; text-align: center; padding: 22px 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+        .sidebar .logo small { display: block; font-size: 0.65rem; font-weight: 400; opacity: .8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
+        .sidebar nav { flex: 1; }
+        .sidebar a { display: flex; align-items: center; gap: 10px; color: #fff; padding: 12px 20px; text-decoration: none; font-size: 0.88rem; font-weight: 600; white-space: nowrap; border-left: 3px solid transparent; transition: all .2s; }
+        .sidebar a i { width: 18px; text-align: center; flex-shrink: 0; }
+        .sidebar a:hover, .sidebar a.active { background: rgba(255,255,255,0.2); }
+        .sidebar a.active { border-left-color: #fff; }
+        .sidebar a:hover:not(.active) { border-left-color: rgba(255,255,255,0.5); }
+        .sidebar .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 15px; }
+        .admin-topbar { position: fixed; top: 0; left: 260px; right: 0; height: 56px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 900; }
+        .admin-topbar .page-title { font-size: 1.05rem; font-weight: 700; color: #ff4081; }
+        .admin-topbar .admin-info { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
+        .admin-topbar .admin-info i { color: #ff4081; }
+        .main-content { margin-left: 260px; padding: 74px 30px 30px; }
         @media (max-width: 768px) {
-            .sidebar { width: 200px; }
-            .main-content { margin-left: 200px; width: calc(100% - 200px); padding: 20px; }
+            .sidebar { width: 220px; }
+            .admin-topbar { left: 220px; }
+            .main-content { margin-left: 220px; padding: 70px 15px 20px; }
         }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
-    <h2><i class="fa-solid fa-scissors"></i> Shakira</h2>
-    <a href="admin_dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-    <a href="manage_users.php" class="active"><i class="fa-solid fa-users"></i> Manage Users</a>
-    <a href="manage_bookings.php"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
-    <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
-    <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
-    <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
-    <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
-    <a href="manage_announcements.php"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
-    <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Service</a>
-    <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
+    <nav>
+        <a href="admin_dashboard.php"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+        <a href="manage_users.php" class="active"><i class="fa-solid fa-users"></i> Manage Users</a>
+        <a href="manage_bookings.php"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
+        <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+        <a href="admin_messages.php"><i class="fa-solid fa-envelope"></i> Messages</a>
+        <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+        <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+        <a href="manage_announcements.php"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+        <div class="nav-divider"></div>
+        <a href="insert.php"><i class="fa-solid fa-plus"></i> Add Service</a>
+        <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </nav>
 </div>
 
+<div class="admin-topbar">
+    <span class="page-title"><i class="fa-solid fa-users"></i> Manage Users</span>
+    <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
+</div>
 
 <div class="main-content">
     <h2 class="mb-4 text-center">Registered Users</h2>
