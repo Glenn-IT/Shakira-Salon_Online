@@ -246,7 +246,7 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
 </div>
 
 <!-- Main content -->
-<div class="main-content">
+<div class="admin-main" style="display:flex;flex-direction:column;align-items:center;">
 
     <div class="form-section">
         <h2>Add New Service</h2>
