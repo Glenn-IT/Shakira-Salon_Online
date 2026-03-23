@@ -17,22 +17,24 @@
   --text-light: #999;
   --bg-body: #f8f9fc;
   --bg-white: #ffffff;
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
-  --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
-  --shadow-pink: 0 6px 20px rgba(255,64,129,0.25);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-pink: 0 6px 20px rgba(255, 64, 129, 0.25);
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 20px;
   --radius-pill: 50px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
   --navbar-height: 62px;
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -61,7 +63,9 @@ a {
 }
 
 /* --- Utility Classes --- */
-.text-primary { color: var(--primary) !important; }
+.text-primary {
+  color: var(--primary) !important;
+}
 .text-gradient {
   background: var(--gradient);
   -webkit-background-clip: text;
@@ -95,7 +99,7 @@ a {
 }
 
 .salon-navbar .nav-link {
-  color: rgba(255,255,255,0.9) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 500;
   font-size: 0.9rem;
   padding: 0.6rem 0.85rem !important;
@@ -108,12 +112,12 @@ a {
 .salon-navbar .nav-link:hover,
 .salon-navbar .nav-link.active {
   color: #fff !important;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   text-decoration: none;
 }
 
 .salon-navbar .nav-link.active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 2px;
   left: 50%;
@@ -130,13 +134,13 @@ a {
 }
 
 .salon-navbar .navbar-toggler {
-  border: 2px solid rgba(255,255,255,0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
   padding: 0.4rem 0.65rem;
   border-radius: var(--radius-sm);
 }
 
 .salon-navbar .navbar-toggler:focus {
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 .salon-navbar .navbar-toggler-icon {
@@ -162,7 +166,7 @@ a {
 
   .salon-navbar .nav-link:hover,
   .salon-navbar .nav-link.active {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
   }
 
   .salon-navbar .nav-link.active::after {
@@ -184,24 +188,24 @@ a {
 }
 
 .page-header::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -50%;
   right: -20%;
   width: 400px;
   height: 400px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
 }
 
 .page-header::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -30%;
   left: -10%;
   width: 300px;
   height: 300px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
   border-radius: 50%;
 }
 
@@ -345,7 +349,7 @@ a {
 /* --- Footer (Client) --- */
 .salon-footer {
   background: linear-gradient(135deg, #2d2d2d 0%, #1a1a2e 100%);
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   padding: 50px 0 25px;
   text-align: center;
   margin-top: 60px;
@@ -364,7 +368,7 @@ a {
 }
 
 .salon-footer a {
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
 }
 
@@ -383,7 +387,7 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   margin: 0 6px;
   transition: var(--transition);
 }
@@ -399,7 +403,7 @@ a {
 }
 
 .salon-footer hr {
-  border-color: rgba(255,255,255,0.1);
+  border-color: rgba(255, 255, 255, 0.1);
   margin: 25px 0 15px;
 }
 
@@ -623,7 +627,7 @@ textarea.salon-input {
   display: flex;
   flex-direction: column;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.3) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }
 
 .admin-sidebar::-webkit-scrollbar {
@@ -631,7 +635,7 @@ textarea.salon-input {
 }
 
 .admin-sidebar::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
 }
 
@@ -640,7 +644,7 @@ textarea.salon-input {
   font-weight: 700;
   text-align: center;
   padding: 22px 10px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .admin-sidebar .logo small {
@@ -663,7 +667,7 @@ textarea.salon-input {
   align-items: center;
   gap: 10px;
   padding: 11px 20px;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.87rem;
@@ -681,20 +685,20 @@ textarea.salon-input {
 }
 
 .admin-sidebar nav a:hover {
-  background: rgba(255,255,255,0.1);
-  border-left-color: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.1);
+  border-left-color: rgba(255, 255, 255, 0.4);
   color: #fff;
 }
 
 .admin-sidebar nav a.active {
-  background: rgba(255,255,255,0.18);
+  background: rgba(255, 255, 255, 0.18);
   border-left-color: #fff;
   color: #fff;
 }
 
 .admin-sidebar nav .nav-divider {
   height: 1px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
   margin: 8px 18px;
 }
 
@@ -755,13 +759,13 @@ textarea.salon-input {
 }
 
 .stat-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -20px;
   right: -20px;
   width: 80px;
   height: 80px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
 }
 
@@ -784,10 +788,19 @@ textarea.salon-input {
   margin: 0;
 }
 
-.stat-red { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
-.stat-yellow { background: linear-gradient(135deg, #ffd32a, #f6b93b); color: #333; }
-.stat-blue { background: linear-gradient(135deg, #54a0ff, #2e86de); }
-.stat-green { background: linear-gradient(135deg, #26de81, #20bf6b); }
+.stat-red {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+}
+.stat-yellow {
+  background: linear-gradient(135deg, #ffd32a, #f6b93b);
+  color: #333;
+}
+.stat-blue {
+  background: linear-gradient(135deg, #54a0ff, #2e86de);
+}
+.stat-green {
+  background: linear-gradient(135deg, #26de81, #20bf6b);
+}
 
 /* --- Admin Content Card --- */
 .admin-card {
