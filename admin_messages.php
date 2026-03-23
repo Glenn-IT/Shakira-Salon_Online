@@ -94,12 +94,12 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
     <a href="admin_dashboard.php"><i class="fas fa-chart-line"></i> Dashboard</a>
     <a href="manage_users.php"><i class="fas fa-users"></i> Manage Users</a>
     <a href="manage_bookings.php"><i class="fas fa-calendar-check"></i> Manage Bookings</a>
-    <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
-    <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
     <a href="hairstyle.php"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
     <a href="gallery_admin.php"><i class="fa-solid fa-image"></i> Gallery</a>
+    <a href="announcement.php"><i class="fa-solid fa-clock"></i> Business Hours</a>
+    <a href="manage_announcements.php"><i class="fas fa-bullhorn"></i> Announcements</a>
     <a href="admin_messages.php" class="active"><i class="fa-solid fa-envelope"></i> Messages</a>
-    <a href="insert.php"><i class="fas fa-plus"></i> Add Services</a>
+    <a href="insert.php"><i class="fas fa-plus"></i> Add Service</a>
     <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
   </div>
 

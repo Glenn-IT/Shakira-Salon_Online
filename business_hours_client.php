@@ -109,6 +109,7 @@ try {
 <div class="navbar">
   <div class="logo">💇 Shakira Salon</div>
   <ul>
+    <li><a href="dashboard.php">🏠 Home</a></li>
     <li><a href="services.php">💆 Services</a></li>
     <li><a href="book_appointment.php">📅 Book</a></li>
     <li><a href="booking_history.php">🕐 Booking History</a></li>

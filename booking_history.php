@@ -183,6 +183,7 @@ try {
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fas fa-home"></i> Home</a></li>
         <li class="nav-item"><a class="nav-link" href="services.php">Services</a></li>
         <li class="nav-item"><a class="nav-link" href="book_appointment.php">Book</a></li>
         <li class="nav-item"><a class="nav-link active" href="booking_history.php">Booking History</a></li>

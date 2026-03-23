@@ -55,6 +55,7 @@ if (!$result) {
     <div class="navbar">
         <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira Salon</div>
         <div class="nav-links">
+            <a href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a>
             <a href="services.php"><i class="fa-solid fa-gears"></i> Services</a>
             <a href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a>
             <a href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a>
