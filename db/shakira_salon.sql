@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2025 at 05:54 PM
+-- Generation Time: Mar 23, 2026 at 07:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -216,10 +216,6 @@ CREATE TABLE `login_attempts` (
 --
 
 INSERT INTO `login_attempts` (`id`, `email`, `ip_address`, `attempt_time`, `success`, `user_agent`) VALUES
-(3, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:09', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
-(4, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:12', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
-(5, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:16', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
-(6, 'glenard2308@gmail.com', '::1', '2025-10-25 14:14:37', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
 (7, 'glenard2308@gmail.com', '::1', '2025-10-25 14:25:39', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
 (8, 'glenard2308@gmail.com', '::1', '2025-10-25 14:51:28', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
 (9, 'glenard2308@gmail.com', '::1', '2025-10-25 14:51:42', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
@@ -231,7 +227,40 @@ INSERT INTO `login_attempts` (`id`, `email`, `ip_address`, `attempt_time`, `succ
 (15, 'glenard0823@gmail.com', '::1', '2025-10-25 15:42:55', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
 (16, 'glenard2308@gmail.com', '::1', '2025-10-25 15:49:02', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
 (17, 'glenard0823@gmail.com', '::1', '2025-10-25 15:50:11', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
-(18, 'glenard2308@gmail.com', '::1', '2025-10-25 15:53:22', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36');
+(18, 'glenard2308@gmail.com', '::1', '2025-10-25 15:53:22', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(19, 'glenard2308@gmail.com', '::1', '2025-10-26 14:17:10', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(20, 'glenard2308@gmail.com', '::1', '2025-10-26 14:17:16', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(21, 'glenard2308@gmail.com', '::1', '2025-10-26 14:17:20', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(22, 'glenard2308@gmail.com', '::1', '2025-10-26 14:17:26', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(23, 'glenard2308@gmail.com', '::1', '2025-10-26 14:18:58', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(24, 'glenard2308@gmail.com', '::1', '2025-10-26 14:28:53', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(25, 'glenard0823@gmail.com', '::1', '2025-10-26 14:29:35', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(26, 'glenard0823@gmail.com', '::1', '2025-10-26 14:31:35', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(27, 'glenard2308@gmail.com', '::1', '2025-10-26 14:34:50', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(28, 'glenard0823@gmail.com', '::1', '2025-10-26 14:40:52', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(29, 'glenard2308@gmail.com', '::1', '2025-11-02 16:11:26', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(30, 'glenard2308@gmail.com', '::1', '2025-11-02 16:11:31', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(31, 'glenard0823@gmail.com', '::1', '2025-11-02 16:11:40', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(32, 'glenard2308@gmail.com', '::1', '2025-11-02 16:15:52', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'),
+(33, 'glenard2308@gmail.com', '::1', '2026-03-23 06:34:03', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(34, 'glenard2308@gmail.com', '::1', '2026-03-23 06:34:08', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(35, 'glenard2308@gmail.com', '::1', '2026-03-23 06:34:12', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(36, 'glenard2308@gmail.com', '::1', '2026-03-23 06:37:10', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(37, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:45:51', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(38, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:45:55', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(39, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:46:17', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(40, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:46:22', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(41, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:46:52', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(42, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:47:08', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(43, 'glenard2308@gmail.com', '::1', '2026-03-23 06:47:18', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(44, 'glenard2308@gmail.com', '::1', '2026-03-23 06:47:22', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(45, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:47:26', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(46, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:48:04', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(47, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:48:18', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(48, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:48:43', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(49, 'glenard2308@gmail.com', '::1', '2026-03-23 06:50:44', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(50, 'glenard2308@gmail.com', '::1', '2026-03-23 06:50:52', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(51, 'erecejovelyn@gmail.com', '::1', '2026-03-23 06:51:23', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36');
 
 -- --------------------------------------------------------
 
@@ -302,16 +331,15 @@ CREATE TABLE `services` (
 --
 
 INSERT INTO `services` (`id`, `name`, `description`, `price`, `image`) VALUES
-(18, 'Hair Rebonding', 'A professional hair treatment that makes hair permanently straight and shiny', 3000.00, 'uploads/services/1758839958_IMG_20250827_174835.jpg'),
 (19, 'Hair Coloring', 'Transform your look with Oakey Premium hair color in orange red(6/43)', 2000.00, 'uploads/services/1758840040_FB_IMG_1756900640237.jpg'),
 (20, 'Hair Cut', 'Long layered haircut with soft waves, designed to add volume and movement', 350.00, 'uploads/services/1758840118_Long+Layered+Cut+for+Effortless+Volume.jpg'),
 (21, 'Make Up', 'Fresh Make up', 1000.00, 'uploads/services/1758840486_0914c4ee311ea3669d11458f3fe64909.jpg'),
 (22, 'Men\'s Haircut', 'Clean and stylish haircut with fade, tailored to you look', 350.00, 'uploads/services/1758840770_short-skin-fade-and-swept-forward-crew-cut-for-men.jpg'),
 (23, 'Make Up', 'Flawless make', 1000.00, 'uploads/services/1759191686_IMG_20250929_191123.jpg'),
 (24, 'Make Up', 'flawless make up', 1000.00, 'uploads/services/1759193656_IMG_20250929_191123.jpg'),
-(25, 'HairCut', 'ASJ', 200.00, 'uploads/services/1759193832_Swanky-Malone-Skin-Fade.jpg'),
+(25, 'HairCut', 'Boys & Girls', 100.00, 'uploads/services/1759193832_Swanky-Malone-Skin-Fade.jpg'),
 (26, 'Men\'s Haircut', 'SHDD', 250.00, 'uploads/services/1759193872_IMG_20250924_071541.jpg'),
-(27, 'Make Up', 'Sample', 100.00, 'uploads/services/1761404100_Hero 3.jpg');
+(27, 'Make Ups', 'Sample', 1001.00, 'uploads/services/1761404100_Hero 3.jpg');
 
 -- --------------------------------------------------------
 
@@ -345,10 +373,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`username`, `id`, `full_name`, `first_name`, `last_name`, `name`, `email`, `phone_number`, `password`, `phone`, `security_question`, `security_answer`, `created_at`, `password_hash`, `role`, `security_question_id`, `security_answer_hash`, `contact_number`) VALUES
-(NULL, 22, 'Nicole Acojedo', '', '', '', 'glenard2308@gmail.com', '', '$2y$10$EtpkfoF9avosWh5cZbTeyeLYbnngR56AFXFmU9MIUO5/r/3TPCY2q', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427'),
-(NULL, 41, 'Nicole Acojedo', '', '', '', 'nicoleacojedo03@gmail.com', '', '$2y$10$7.TtRnMd2KCO4UCo.Arpc.vIA8f1riJCb7NGIddOJnkvTJ5NgQnP.', NULL, 'What was your childhood nickname?', '06c7945e848256abb85430c42a8e7c3f3583d30390e45ddd038f5004cfc4fbba', '2025-09-27 12:03:46', '', 'customer', NULL, NULL, '09753243405'),
-(NULL, 43, 'Lala', '', '', '', 'ursolauy2021@gmail.com', '', '$2y$10$zYaqnp/qJMC023ppHN/C.uGSGH4cUERfIAQIiJ7p6YZVQmmbxdq0.', NULL, 'What was your childhood nickname?', '494414ded24da13c451b13b424928821351c78fce49f93d9e1b55f102790c206', '2025-09-30 00:33:06', '', 'customer', NULL, NULL, '09877362821'),
-(NULL, 46, 'Glenard U Pagurayan', '', '', '', 'glenard0823@gmail.com', '', '$2y$10$iZTLMbiYoqgHHekJHviu1eVYpntmoFXGeH3W1eJou7Jm9NzkudasC', NULL, 'What was your childhood nickname?', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '2025-10-25 13:46:30', '', 'customer', NULL, NULL, '09718361278');
+('Admin', 22, 'Nicole Acojedo', '', '', '', 'erecejovelyn@gmail.com', '', '$2y$10$rZqC.gjnp8wnzuyX58d.3OgLwZOBUmLDnetpYruhRA.RKR1m07M7u', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427');
 
 --
 -- Indexes for dumped tables
@@ -479,7 +504,7 @@ ALTER TABLE `hairstylists`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `promos`
