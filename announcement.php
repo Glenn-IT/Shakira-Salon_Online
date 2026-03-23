@@ -113,7 +113,7 @@ try {
     <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
 </div>
 
-<div class="main-content">
+<div class="admin-main">
   <div class="box">
     <h2>Business Hours (Admin)</h2>
 
