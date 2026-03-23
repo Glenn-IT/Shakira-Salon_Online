@@ -153,7 +153,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span>Admin</span></div>
 </div>
 
-<div class="main-content">
+<div class="admin-main">
   <h1 class="mb-4"><i class="fa-solid fa-bullhorn"></i> Manage Announcements & Promos</h1>
 
   <?php if (isset($success)): ?>
