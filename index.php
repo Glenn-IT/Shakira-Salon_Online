@@ -420,18 +420,15 @@ try {
 
 <script>
   AOS.init({
-    duration: 1200,
-    once: true
+    duration: 1000,
+    once: true,
+    offset: 80
   });
 
-  // Navbar scroll effect
+  // Navbar scroll effect — add "scrolled" class
   window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 20) {
-      navbar.classList.add('shadow-lg', 'bg-dark');
-    } else {
-      navbar.classList.remove('shadow-lg', 'bg-dark');
-    }
+    const navbar = document.querySelector('.landing-nav');
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
   });
 </script>
 
