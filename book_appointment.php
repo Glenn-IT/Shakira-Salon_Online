@@ -11,15 +11,12 @@ if (!isset($_SESSION['user_id'])) {
 // ✅ Fetch logged-in user's data
 $loggedInUser = [];
 try {
-    $stmt = $pdo->prepare("SELECT full_name, email, phone_number, cp_number, phone, contact_number FROM users WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT full_name, email, contact_number FROM users WHERE id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $loggedInUser = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Get the first non-empty phone number from available columns
-    $loggedInUser['user_phone'] = $loggedInUser['cp_number'] ?? 
-                                   $loggedInUser['contact_number'] ?? 
-                                   $loggedInUser['phone_number'] ?? 
-                                   $loggedInUser['phone'] ?? '';
+    // Get the phone number from the canonical contact_number column
+    $loggedInUser['user_phone'] = $loggedInUser['contact_number'] ?? '';
 } catch (Exception $e) {
     $loggedInUser = [];
 }

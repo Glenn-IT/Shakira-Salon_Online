@@ -45,7 +45,7 @@ try {
              (empty($user['email']) ? "<em style='color: red;'>(NOT SET)</em>" : htmlspecialchars($user['email'])) . 
              "</td></tr>";
         
-        $phone = $user['cp_number'] ?? $user['contact_number'] ?? $user['phone_number'] ?? $user['phone'] ?? '';
+        $phone = $user['contact_number'] ?? '';
         echo "<tr><td><strong>Phone</strong></td><td>" . 
              (empty($phone) ? "<em style='color: red;'>(NOT SET - Please update your profile)</em>" : htmlspecialchars($phone)) . 
              "</td></tr>";
