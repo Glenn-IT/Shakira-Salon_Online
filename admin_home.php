@@ -16,217 +16,64 @@ $currentPage = basename($_SERVER['PHP_SELF']);
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body {
-      margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: #f0f2f8;
-      display: flex;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0; left: 0; bottom: 0;
-      width: 260px;
-      background: #ff4081;
-      color: #fff;
-      padding-top: 30px;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .sidebar.hidden {
-      transform: translateX(-100%);
-    }
-
-    .logo {
-      font-size: 1.8rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      font-weight: bold;
-    }
-
-    nav a {
-      display: flex;
-      align-items: center;
-      padding: 15px 30px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      border-left: 4px solid transparent;
-      transition: background 0.3s, border-left-color 0.3s;
-    }
-
-    nav a:hover, nav a.active {
-      background: #e73370;
-      border-left-color: #fff;
-    }
-
-    nav a i {
-      margin-right: 12px;
-    }
-
-    .sidebar-footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    /* Main content */
-    .main-content {
-      margin-left: 260px;
-      padding: 40px;
-      flex: 1;
-      transition: margin-left 0.3s ease-in-out;
-    }
-
-    .sidebar.hidden + .main-content {
-      margin-left: 0;
-    }
+    * { box-sizing: border-box; }
+    body { margin:0;font-family:'Nunito',sans-serif;background:#f0f2f8; }
 
     /* Banner */
     .banner {
-      position: relative;
-      background: linear-gradient(135deg, #ff4081, #ff80ab, #ff4081);
-      background-size: 400% 400%;
-      color: white;
-      padding: 25px 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      animation: gradientBG 15s ease infinite;
-      overflow: hidden;
+      position:relative;
+      background:linear-gradient(135deg,#ff4081,#ff80ab,#ff4081);
+      background-size:400% 400%;
+      color:white;padding:25px 30px;border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);margin-bottom:30px;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      animation:gradientBG 15s ease infinite;overflow:hidden;
     }
-
     @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+      100% { background-position:0% 50%; }
     }
+    .banner h1 { margin:0;font-size:2rem;display:flex;align-items:center;gap:12px; }
+    .banner h2 { font-size:1.2rem;font-weight:400;margin:5px 0 0 0;color:rgba(255,255,255,0.9); }
+    .floating-icons { position:absolute;top:-10px;right:-10px;font-size:3rem;opacity:0.15;animation:float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-10px)} }
 
-    .banner h1 {
-      margin: 0;
-      font-size: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+    h2.section-title { color:var(--primary);margin-bottom:10px; }
 
-    .banner h2 {
-      font-size: 1.2rem;
-      font-weight: 400;
-      margin: 5px 0 0 0;
-      color: rgba(255,255,255,0.9);
-    }
-
-    .floating-icons {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      font-size: 3rem;
-      opacity: 0.15;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
-    h2.section-title {
-      color: #ff4081;
-      margin-bottom: 10px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    th, td {
-      padding: 15px 20px;
-      text-align: left;
-      border-bottom: 1px solid #eee;
-    }
-
-    th {
-      background: #ff4081;
-      color: #fff;
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    /* Toggle button for mobile */
-    .toggle-btn {
-      display: none;
-      background: #ff4081;
-      color: #fff;
-      border: none;
-      padding: 12px 16px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-
-      .sidebar.show {
-        transform: translateX(0);
-      }
-
-      .main-content {
-        margin-left: 0;
-        padding: 20px;
-      }
-
-      .toggle-btn {
-        display: inline-block;
-      }
-    }
+    table { width:100%;border-collapse:collapse;background:#fff;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm); }
+    th, td { padding:15px 20px;text-align:left;border-bottom:1px solid #eee; }
+    th { background:var(--primary);color:#fff; }
+    tr:last-child td { border-bottom:none; }
   </style>
 </head>
 <body>
 
-<div class="sidebar" id="sidebar">
-  <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira</div>
+<div class="admin-sidebar">
+  <div class="logo"><i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small></div>
   <nav>
-    <a href="admin_home.php" class="<?= $currentPage === 'admin_home.php' ? 'active' : '' ?>">
-      <i class="fa-solid fa-house"></i> Home
-    </a>
-    <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>">
-      <i class="fa-solid fa-chart-line"></i> Dashboard
-    </a>
-    <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>">
-      <i class="fa-solid fa-users"></i> Manage Users
-    </a>
-    <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>">
-      <i class="fa-solid fa-calendar-check"></i> Manage Bookings
-    </a>
-    <a href="logout.php">
-      <i class="fa-solid fa-right-from-bracket"></i> Logout
-    </a>
+    <a href="admin_dashboard.php" class="<?= $currentPage === 'admin_dashboard.php' ? 'active' : '' ?>"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+    <a href="manage_users.php" class="<?= $currentPage === 'manage_users.php' ? 'active' : '' ?>"><i class="fa-solid fa-users"></i> Manage Users</a>
+    <a href="manage_bookings.php" class="<?= $currentPage === 'manage_bookings.php' ? 'active' : '' ?>"><i class="fa-solid fa-calendar-check"></i> Manage Bookings</a>
+    <a href="hairstyle.php" class="<?= $currentPage === 'hairstyle.php' ? 'active' : '' ?>"><i class="fa-solid fa-scissors"></i> Hairstyles</a>
+    <a href="admin_messages.php" class="<?= $currentPage === 'admin_messages.php' ? 'active' : '' ?>"><i class="fa-solid fa-envelope"></i> Messages</a>
+    <a href="gallery_admin.php" class="<?= $currentPage === 'gallery_admin.php' ? 'active' : '' ?>"><i class="fa-solid fa-image"></i> Gallery</a>
+    <a href="announcement.php" class="<?= $currentPage === 'announcement.php' ? 'active' : '' ?>"><i class="fa-solid fa-clock"></i> Business Hours</a>
+    <a href="manage_announcements.php" class="<?= $currentPage === 'manage_announcements.php' ? 'active' : '' ?>"><i class="fa-solid fa-bullhorn"></i> Announcements</a>
+    <div class="nav-divider"></div>
+    <a href="insert.php" class="<?= $currentPage === 'insert.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus"></i> Add Service</a>
+    <a href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
   </nav>
-  <div class="sidebar-footer">Admin Panel</div>
 </div>
 
-<div class="main-content">
-  <button class="toggle-btn" onclick="toggleSidebar()"><i class="fa fa-bars"></i> Menu</button>
+<div class="admin-topbar">
+    <span class="page-title"><i class="fa-solid fa-house"></i> Admin Home</span>
+    <div class="admin-info"><i class="fa-solid fa-user-shield"></i> <span><?= htmlspecialchars($_SESSION['full_name'] ?? 'Admin') ?></span></div>
+</div>
+
+<div class="admin-main">
 
   <div class="banner">
     <div>
@@ -251,12 +98,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </tbody>
   </table>
 </div>
-
-<script>
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("show");
-}
-</script>
 
 </body>
 </html>
