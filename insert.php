@@ -155,370 +155,75 @@ $currentPage = basename($_SERVER['PHP_SELF']); // to highlight active menu
 <meta charset="UTF-8">
 <title>Add Service - Shakira Salon</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="assets/css/shared.css">
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: #f0f2f8;
-    }
-    /* Sidebar */
-    .sidebar {
-        width: 260px;
-        background: linear-gradient(180deg,#ff4081,#e73370);
-        height: 100vh;
-        padding-top: 0;
-        position: fixed;
-        left: 0;
-        top: 0;
-        color: #fff;
-        overflow-y: auto;
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-    }
-    .logo {
-        text-align: center;
-        font-size: 1.4rem;
-        font-weight: bold;
-        padding: 22px 10px 16px;
-        border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    .logo small { display: block; font-size: 0.65rem; font-weight: 400; opacity: .8; margin-top: 3px; letter-spacing: 1px; text-transform: uppercase; }
-    .logo i { margin-right: 6px; }
-    .sidebar a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #fff;
-        padding: 12px 20px;
-        text-decoration: none;
-        font-size: 0.88rem;
-        font-weight: 600;
-        transition: all .2s;
-        border-left: 3px solid transparent;
-        white-space: nowrap;
-    }
-    .sidebar a i { width: 18px; text-align: center; flex-shrink: 0; margin-right: 0; }
-    .sidebar a:hover,
-    .sidebar a.active {
-        background: rgba(255,255,255,0.2);
-    }
-    .sidebar a.active { border-left-color: #fff; }
-    .sidebar a:hover:not(.active) { border-left-color: rgba(255,255,255,0.5); }
-    .sidebar .nav-divider { height: 1px; background: rgba(255,255,255,0.15); margin: 6px 15px; }
-    /* Topbar */
-    .admin-topbar { position: fixed; top: 0; left: 260px; right: 0; height: 56px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; z-index: 900; }
-    .admin-topbar .page-title { font-size: 1.05rem; font-weight: 700; color: #ff4081; }
-    .admin-topbar .admin-info { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: #555; }
-    .admin-topbar .admin-info i { color: #ff4081; }
-
-    /* Main content */
-    .main-content {
-        margin-left: 260px;
-        padding: 74px 40px 40px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
 
     .form-section {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0px 6px 15px rgba(0,0,0,0.05);
-        margin-bottom: 40px;
-        width: 100%;
-        max-width: 900px; /* Center form size */
+        background:white;padding:25px;border-radius:var(--radius-lg);
+        box-shadow:var(--shadow-sm);margin-bottom:40px;width:100%;max-width:900px;
     }
-    h2 {
-        color: #ff4f81;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    .form-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 20px;
-    }
-    label {
-        font-weight: bold;
-        margin-top: 10px;
-        margin-bottom: 5px;
-        color: #333;
-        display: block;
-    }
-    input, textarea, button {
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        font-size: 1rem;
-        width: 100%;
-    }
-    textarea { resize: none; }
-    button {
-        background: #ff4f81;
-        color: white;
-        border: none;
-        cursor: pointer;
-        margin-top: 15px;
-        padding: 12px;
-        font-size: 1.1rem;
-        transition: background 0.3s;
-    }
-    button:hover { background: #e04371; }
-    .alert {
-        padding: 12px;
-        border-radius: 6px;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: bold;
-    }
-    .alert.success { background: #d4edda; color: #155724; }
-    .alert.error { background: #f8d7da; color: #721c24; }
+    h2 { color:var(--primary);margin-bottom:20px;text-align:center; }
+    .form-grid { display:grid;grid-template-columns:2fr 1fr;gap:20px; }
+    label { font-weight:bold;margin-top:10px;margin-bottom:5px;color:#333;display:block; }
+    input, textarea, button { padding:10px;border-radius:var(--radius-sm);border:2px solid #e8e8e8;font-size:1rem;width:100%;font-family:var(--font-family);transition:var(--transition); }
+    input:focus, textarea:focus { border-color:var(--primary);outline:none;box-shadow:0 0 0 4px rgba(255,64,129,0.12); }
+    textarea { resize:none; }
+    button { background:var(--primary);color:white;border:none;cursor:pointer;margin-top:15px;padding:12px;font-size:1.1rem;font-weight:600;border-radius:var(--radius-full); }
+    button:hover { background:var(--primary-dark); }
+    .alert { padding:12px;border-radius:var(--radius-sm);margin-bottom:15px;text-align:center;font-weight:bold; }
+    .alert.success { background:#d4edda;color:#155724; }
+    .alert.error { background:#f8d7da;color:#721c24; }
 
-    /* Services grid */
-    .services-section {
-        width: 100%;
-        max-width: 1200px;
-    }
-    .services-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 25px;
-    }
-    .service-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
-        transition: transform 0.3s, box-shadow 0.3s;
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-    .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0px 8px 20px rgba(0,0,0,0.12);
-    }
-    .service-card img {
-        width: 100%;
-        height: 220px;
-        object-fit: cover;
-    }
-    .service-content {
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-    }
-    .service-card h3 {
-        margin: 0 0 10px 0;
-        color: #ff4f81;
-        font-size: 1.2rem;
-        font-weight: bold;
-        text-align: center;
-    }
-    .service-card p {
-        font-size: 0.95rem;
-        color: #555;
-        margin-bottom: auto;
-        text-align: justify;
-    }
-    .service-footer {
-        margin-top: 15px;
-        display: flex;
-        justify-content: center;
-    }
-    .service-price {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #333;
-        background: #fceef3;
-        padding: 8px 12px;
-        border-radius: 8px;
-    }
-    
-    /* Action buttons */
-    .service-actions {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        margin-top: 10px;
-    }
-    .btn-edit, .btn-delete {
-        padding: 8px 16px;
-        border-radius: 6px;
-        border: none;
-        cursor: pointer;
-        font-size: 0.9rem;
-        transition: all 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .btn-edit {
-        background: #4CAF50;
-        color: white;
-    }
-    .btn-edit:hover {
-        background: #45a049;
-    }
-    .btn-delete {
-        background: #f44336;
-        color: white;
-    }
-    .btn-delete:hover {
-        background: #da190b;
-    }
+    .services-section { width:100%;max-width:1200px; }
+    .services-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:25px; }
+    .service-card { background:white;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-sm);transition:var(--transition);display:flex;flex-direction:column;height:100%; }
+    .service-card:hover { transform:translateY(-5px);box-shadow:var(--shadow-md); }
+    .service-card img { width:100%;height:220px;object-fit:cover; }
+    .service-content { padding:15px;display:flex;flex-direction:column;flex-grow:1; }
+    .service-card h3 { margin:0 0 10px;color:var(--primary);font-size:1.2rem;font-weight:bold;text-align:center; }
+    .service-card p { font-size:0.95rem;color:#555;margin-bottom:auto;text-align:justify; }
+    .service-footer { margin-top:15px;display:flex;justify-content:center; }
+    .service-price { font-size:1.2rem;font-weight:bold;color:#333;background:#fceef3;padding:8px 12px;border-radius:var(--radius-sm); }
+    .service-actions { display:flex;gap:10px;justify-content:center;margin-top:10px; }
+    .btn-edit, .btn-delete { padding:8px 16px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:0.9rem;transition:var(--transition);display:inline-flex;align-items:center;gap:5px; }
+    .btn-edit { background:#4CAF50;color:white; }
+    .btn-edit:hover { background:#45a049; }
+    .btn-delete { background:#f44336;color:white; }
+    .btn-delete:hover { background:#da190b; }
 
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.5);
-        animation: fadeIn 0.3s;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    .modal-content {
-        background-color: white;
-        margin: 5% auto;
-        padding: 0;
-        border-radius: 12px;
-        width: 90%;
-        max-width: 600px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        animation: slideDown 0.3s;
-    }
-    @keyframes slideDown {
-        from {
-            transform: translateY(-50px);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-    .modal-header {
-        background: #ff4f81;
-        color: white;
-        padding: 20px;
-        border-radius: 12px 12px 0 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .modal-header h2 {
-        margin: 0;
-        color: white;
-    }
-    .close {
-        color: white;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    .close:hover {
-        color: #fceef3;
-    }
-    .modal-body {
-        padding: 25px;
-    }
-    .modal-body label {
-        display: block;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #333;
-    }
-    .modal-body label:first-of-type {
-        margin-top: 0;
-    }
-    .modal-body input,
-    .modal-body textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        box-sizing: border-box;
-    }
-    .modal-body textarea {
-        resize: vertical;
-        min-height: 100px;
-    }
-    .modal-footer {
-        padding: 15px 25px 25px 25px;
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-    }
-    .btn-cancel, .btn-save {
-        padding: 10px 20px;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: 0.3s;
-    }
-    .btn-cancel {
-        background: #ccc;
-        color: #333;
-    }
-    .btn-cancel:hover {
-        background: #bbb;
-    }
-    .btn-save {
-        background: #ff4f81;
-        color: white;
-    }
-    .btn-save:hover {
-        background: #e04371;
-    }
-    .current-image {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-top: 10px;
-        max-height: 200px;
-        object-fit: cover;
-    }
+    /* Modal */
+    .modal { display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.5);animation:fadeIn 0.3s; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal-content { background-color:white;margin:5% auto;padding:0;border-radius:var(--radius-lg);width:90%;max-width:600px;box-shadow:var(--shadow-lg);animation:slideDown 0.3s; }
+    @keyframes slideDown { from{transform:translateY(-50px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal-header { background:var(--primary);color:white;padding:20px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;display:flex;justify-content:space-between;align-items:center; }
+    .modal-header h2 { margin:0;color:white; }
+    .close { color:white;font-size:28px;font-weight:bold;cursor:pointer;transition:0.3s; }
+    .close:hover { color:#fceef3; }
+    .modal-body { padding:25px; }
+    .modal-body label { display:block;margin-top:15px;margin-bottom:5px;font-weight:bold;color:#333; }
+    .modal-body label:first-of-type { margin-top:0; }
+    .modal-body input, .modal-body textarea { width:100%;padding:10px;border:2px solid #e8e8e8;border-radius:var(--radius-sm);font-size:1rem;box-sizing:border-box; }
+    .modal-body textarea { resize:vertical;min-height:100px; }
+    .modal-footer { padding:15px 25px 25px;display:flex;gap:10px;justify-content:flex-end; }
+    .btn-cancel, .btn-save { padding:10px 20px;border-radius:var(--radius-sm);border:none;cursor:pointer;font-size:1rem;transition:var(--transition); }
+    .btn-cancel { background:#ccc;color:#333; }
+    .btn-cancel:hover { background:#bbb; }
+    .btn-save { background:var(--primary);color:white; }
+    .btn-save:hover { background:var(--primary-dark); }
+    .current-image { max-width:100%;height:auto;border-radius:var(--radius-sm);margin-top:10px;max-height:200px;object-fit:cover; }
 
-    @media(max-width: 768px) {
-        .form-grid {
-            grid-template-columns: 1fr; /* stack form in mobile */
-        }
-        .modal-content {
-            width: 95%;
-            margin: 5% auto;
-        }
-        .sidebar {
-            width: 220px;
-        }
-        .admin-topbar { left: 220px; }
-        .main-content {
-            margin-left: 220px;
-            padding: 70px 20px 20px;
-        }
+    @media(max-width:768px) {
+        .form-grid { grid-template-columns:1fr; }
+        .modal-content { width:95%;margin:5% auto; }
     }
 </style>
 </head>
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
+<div class="admin-sidebar">
     <div class="logo">
         <i class="fa-solid fa-scissors"></i> Shakira <small>Admin Panel</small>
     </div>
