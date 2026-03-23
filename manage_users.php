@@ -20,6 +20,12 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
     <style>
         * { box-sizing: border-box; }
         body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
+        .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto;margin-bottom:30px; }
+        .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+        table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:600px; }
+        th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+        th { background:var(--primary);color:#fff;white-space:nowrap; }
+        tr:hover td { background:#fff5f8; }
     </style>
 </head>
 <body>
@@ -47,9 +53,10 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <div class="admin-main">
-    <h2 class="mb-4 text-center">Registered Users</h2>
-    <table class="table table-bordered table-striped mb-5">
-        <thead class="table-dark">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-users"></i> Registered Users</h2>
+      <table>
+        <thead>
             <tr>
                 <th>Full Name</th>
                 <th>Email</th>
@@ -73,15 +80,17 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
             </tr>
         <?php endif; ?>
         </tbody>
-    </table>
+      </table>
+    </div>
 
     <!-- ✅ Hairstylists -->
-    <h2 class="mb-4 text-center">Manage Hairstylist</h2>
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-scissors"></i> Manage Hairstylist</h2>
+      <table>
+        <thead>
             <tr>
                 <th>Full Name</th>
-                <th>Contact Number</th> <!-- changed -->
+                <th>Contact Number</th>
                 <th>Role</th>
             </tr>
         </thead>
@@ -100,7 +109,8 @@ $hairstylists = $stmtHairstylists->fetchAll(PDO::FETCH_ASSOC);
             </tr>
         <?php endif; ?>
         </tbody>
-    </table>
+      </table>
+    </div>
 </div>
 
 </body>

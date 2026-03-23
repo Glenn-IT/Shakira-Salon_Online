@@ -33,6 +33,15 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
   <style>
     * { box-sizing: border-box; }
     body { margin:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
+    .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto; }
+    .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+    table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:900px; }
+    th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+    th { background:var(--primary);color:#fff;white-space:nowrap; }
+    tr:hover td { background:#fff5f8; }
+    .btn-action { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition);color:#fff; }
+    .btn-action:hover { opacity:0.85;transform:translateY(-1px); }
+    .btn-mark-read { background:#007bff;color:#fff; }
   </style>
 </head>
 <body>
@@ -62,10 +71,10 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
 
   <!-- Main Content -->
   <div class="admin-main">
-    <div class="container-fluid mt-4">
-      <h2>📩 Contact Messages</h2>
-      <table class="table table-bordered table-hover mt-3">
-        <thead class="table-dark">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-envelope"></i> Contact Messages</h2>
+      <table>
+        <thead>
           <tr>
             <th>ID</th>
             <th>From</th>
@@ -84,7 +93,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
               <td><?= htmlspecialchars($row['name']) ?></td>
               <td><?= htmlspecialchars($row['email']) ?></td>
               <td><?= htmlspecialchars($row['subject']) ?></td>
-              <td><?= nl2br(htmlspecialchars($row['message'])) ?></td>
+              <td style="text-align:left;max-width:250px;"><?= nl2br(htmlspecialchars($row['message'])) ?></td>
               <td>
                 <?php if ($row['status'] == 'unread'): ?>
                   <span class="badge bg-danger">Unread</span>
@@ -94,7 +103,7 @@ $result = $conn->query("SELECT * FROM contact_messages ORDER BY created_at DESC"
               </td>
               <td><?= $row['created_at'] ?></td>
               <td>
-                <a href="?read_id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Mark as Read</a>
+                <a href="?read_id=<?= $row['id'] ?>" class="btn-action btn-mark-read">Mark as Read</a>
               </td>
             </tr>
           <?php endwhile; ?>

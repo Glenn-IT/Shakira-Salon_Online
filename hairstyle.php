@@ -108,12 +108,20 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <style>
         * { box-sizing: border-box; }
         body { margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif;background:#f0f2f8; }
-        .table { background:#fff;border-radius:8px;overflow:hidden; }
-        .btn-action { padding:5px 12px;margin:2px;border-radius:5px;font-size:14px;text-decoration:none;display:inline-block; }
+        .content-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);overflow-x:auto;margin-bottom:30px; }
+        .content-card h2 { color:var(--primary);margin-top:0;font-size:1.3rem; }
+        table { width:100%;border-collapse:collapse;margin-bottom:10px;min-width:700px; }
+        th, td { padding:10px 8px;border:1px solid #e9ecef;text-align:center;font-size:0.88rem;word-break:break-word; }
+        th { background:var(--primary);color:#fff;white-space:nowrap; }
+        tr:hover td { background:#fff5f8; }
+        .btn-action { padding:5px 12px;margin:2px;border-radius:var(--radius-sm);font-size:0.82rem;text-decoration:none;display:inline-block;cursor:pointer;font-weight:bold;transition:var(--transition);border:none; }
         .btn-edit { background:#ffc107;color:#000; }
         .btn-edit:hover { background:#e0a800;color:#000; }
         .btn-delete { background:#dc3545;color:#fff; }
         .btn-delete:hover { background:#c82333;color:#fff; }
+        /* Add form card */
+        .form-card { background:#fff;padding:25px;border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);margin-bottom:30px; }
+        .form-card .card-header-custom { background:var(--primary);color:#fff;font-weight:bold;padding:14px 20px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;margin:-25px -25px 20px;font-size:0.95rem; }
         /* Modal */
         .modal { display:none;position:fixed;z-index:1050;left:0;top:0;width:100%;height:100%;overflow-y:auto;background-color:rgba(0,0,0,0.4);padding:20px;box-sizing:border-box; }
         .modal-content { background-color:#fefefe;margin:40px auto;padding:25px;border:1px solid #888;width:100%;max-width:500px;border-radius:var(--radius-lg);box-shadow:var(--shadow-lg); }
@@ -174,11 +182,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     <?php endif; ?>
 
     <!-- Add Hairstylist Form -->
-    <div class="card mb-4">
-        <div class="card-header bg-dark text-white">
+    <div class="form-card">
+        <div class="card-header-custom">
             <i class="fa-solid fa-user-plus"></i> Add New Hairstylist
         </div>
-        <div class="card-body">
             <form method="POST">
                 <div class="row mb-3">
                     <div class="col-md-4">
@@ -205,23 +212,19 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                     </div>
                 </div>
             </form>
-        </div>
     </div>
 
     <!-- Hairstylists DataGrid Table -->
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <i class="fa-solid fa-table"></i> Hairstylists List
-        </div>
-        <div class="card-body p-0">
-            <table class="table table-striped table-hover mb-0">
-                <thead class="table-dark">
+    <div class="content-card">
+      <h2><i class="fa-solid fa-table"></i> Hairstylists List</h2>
+      <table>
+        <thead>
                     <tr>
                         <th width="5%">ID</th>
                         <th width="30%">Full Name</th>
                         <th width="20%">Phone Number</th>
                         <th width="20%">Role</th>
-                        <th width="25%" class="text-center">Actions</th>
+                        <th width="25%">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -243,20 +246,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                                     <i class="fa-solid fa-trash"></i> Delete
                                 </a>
                             </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center py-4">
-                            <i class="fa-solid fa-info-circle"></i> No hairstylists found.
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 <!-- Edit Modal -->
 <div id="editModal" class="modal">
