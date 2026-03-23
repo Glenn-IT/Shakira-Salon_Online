@@ -38,42 +38,19 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body { background: #fdfdfd; font-family: Arial, sans-serif; padding-top: 0; }
-    .navbar { background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .navbar-brand { font-weight: bold; color: #fff !important; }
-    .nav-link { color: #fff !important; font-weight: 500; }
-    .nav-link:hover, .nav-link.active { text-decoration: underline; }
-    .navbar-toggler { border-color: rgba(255,255,255,0.5); }
-    .navbar-toggler-icon { filter: invert(1); }
-    .page-header {
-      background: linear-gradient(135deg, #ff69b4, #ff1493);
-      color: white; padding: 50px 0; text-align: center;
-      border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-      margin-top: 56px;
-    }
-    .page-header h1 { margin: 0; font-size: 2rem; }
-    .page-header p { margin: 8px 0 0; opacity: 0.9; }
-    .content-wrap {
-      display: flex; justify-content: center; padding: 30px 15px 60px;
-      margin-top: -30px;
-    }
+    body { padding-top: 0; }
+    .content-wrap { display:flex;justify-content:center;padding:30px 15px 60px;margin-top:-30px; }
     .box {
-      background: #fff; padding: 35px 40px; border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.12); text-align: center;
-      width: 100%; max-width: 440px;
+      background:var(--bg-white);padding:35px 40px;border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);text-align:center;width:100%;max-width:440px;
+      position:relative;z-index:2;
     }
-    .status-open { color: #198754; font-weight: bold; font-size: 1.4rem; margin: 12px 0; }
-    .status-closed { color: #dc3545; font-weight: bold; font-size: 1.4rem; margin: 12px 0; }
-    footer { background: #ff69b4; color: white; padding: 40px 0; text-align: center; margin-top: 0; }
-    footer a { color: white; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    footer .social i { font-size: 20px; margin: 0 10px; color: white; transition: 0.3s; }
-    footer .social i:hover { color: #ffe4f2; }
-    @media (max-width: 576px) {
-      .page-header { border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; padding: 35px 15px; }
-      .box { padding: 25px 20px; }
-    }
+    .box h4 { color:var(--primary);font-weight:700; }
+    .status-open { color:#198754;font-weight:700;font-size:1.4rem;margin:12px 0; }
+    .status-closed { color:#dc3545;font-weight:700;font-size:1.4rem;margin:12px 0; }
+    @media (max-width:576px) { .box { padding:25px 20px; } }
   </style>
 </head>
 <body>

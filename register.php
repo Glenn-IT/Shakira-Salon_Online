@@ -83,141 +83,179 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Register - Shakira Salon Appointment System</title>
+<title>Register - Shakira Salon</title>
+<link rel="stylesheet" href="assets/css/shared.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
 <style>
     body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+        background: linear-gradient(135deg, #fce4ec, #f8bbd0, #f48fb1);
+        background-attachment: fixed;
         margin: 0;
         padding: 20px 15px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
         min-height: 100vh;
-        box-sizing: border-box;
     }
     main.register-container {
-        background: #fff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0px 4px 20px rgba(0,0,0,0.1);
+        background: rgba(255,255,255,0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 36px 32px;
+        border-radius: var(--radius-xl);
+        box-shadow: 0 16px 50px rgba(255, 64, 129, 0.2), 0 0 0 1px rgba(255,255,255,0.4);
         width: 100%;
-        max-width: 450px;
+        max-width: 480px;
         margin: auto 0;
+        animation: fadeInUp 0.6s ease forwards;
+    }
+    .register-logo {
+        width: 56px;
+        height: 56px;
+        background: var(--gradient);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        box-shadow: var(--shadow-pink);
+    }
+    .register-logo i {
+        font-size: 1.3rem;
+        color: #fff;
     }
     h1 {
         text-align: center;
-        color: #d63384;
-        margin-bottom: 20px;
+        color: var(--primary);
+        margin: 0 0 4px;
+        font-size: 1.5rem;
     }
-    label {
+    .register-subtitle {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 26px;
+    }
+    .form-group {
+        margin-bottom: 16px;
+    }
+    .form-group label {
         display: block;
-        margin: 10px 0 5px;
-        font-weight: bold;
-        color: #333;
+        margin-bottom: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--text-dark);
     }
-    input, select {
+    .form-group input,
+    .form-group select {
         width: 100%;
-        padding: 12px;
-        border: 2px solid #f8bbd0;
-        border-radius: 8px;
-        font-size: 14px;
-        margin-bottom: 15px;
-        transition: 0.3s;
+        padding: 12px 16px;
+        border: 2px solid #e8e8e8;
+        border-radius: var(--radius-sm);
+        font-size: 0.95rem;
+        font-family: var(--font-family);
+        transition: var(--transition);
+        background: #fff;
     }
-    input:focus, select:focus {
-        border-color: #d63384;
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: var(--primary);
         outline: none;
-        box-shadow: 0 0 6px rgba(214, 51, 132, 0.4);
+        box-shadow: 0 0 0 4px rgba(255, 64, 129, 0.12);
     }
-    input[type="submit"] {
-        background: #d63384;
-        color: white;
-        border: none;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    input[type="submit"]:hover {
-        background: #c2185b;
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 14px;
+        padding-right: 40px;
     }
     .message {
-        padding: 12px;
-        border-radius: 8px;
-        margin-bottom: 15px;
-        text-align: center;
-        font-weight: bold;
+        padding: 14px 16px;
+        border-radius: var(--radius-sm);
+        margin-bottom: 18px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
     .message.error {
-        background: #f8d7da;
-        color: #842029;
-        border: 1px solid #f5c2c7;
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+    }
+    .message.error::before {
+        content: '\f06a';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        flex-shrink: 0;
     }
     .message.success {
-        background: #d1e7dd;
-        color: #0f5132;
-        border: 1px solid #badbcc;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
+    }
+    .message.success::before {
+        content: '\f058';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        flex-shrink: 0;
     }
     .login-link {
         text-align: center;
-        margin-top: 15px;
+        margin-top: 20px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
     }
     .login-link a {
-        color: #d63384;
-        font-weight: bold;
+        color: var(--primary);
+        font-weight: 600;
         text-decoration: none;
     }
     .login-link a:hover {
+        color: var(--primary-darker);
         text-decoration: underline;
     }
-    .email-status {
-        font-size: 12px;
-        margin-top: 5px;
-        padding: 5px;
-        border-radius: 4px;
+    .email-status, .fullname-status, .cp-status {
+        font-size: 0.8rem;
+        margin-top: 6px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-weight: 500;
     }
-    .email-available {
-        background: #d1e7dd;
-        color: #0f5132;
-        border: 1px solid #badbcc;
+    .email-available, .fullname-available, .cp-valid {
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
     }
-    .email-taken {
-        background: #f8d7da;
-        color: #842029;
-        border: 1px solid #f5c2c7;
-    }
-    .fullname-status {
-        font-size: 12px;
-        margin-top: 5px;
-        padding: 5px;
-        border-radius: 4px;
-    }
-    .fullname-available {
-        background: #d1e7dd;
-        color: #0f5132;
-        border: 1px solid #badbcc;
+    .email-taken, .fullname-taken, .cp-invalid {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
     }
     .fullname-taken {
-        background: #f8d7da;
-        color: #842029;
-        border: 1px solid #f5c2c7;
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
     }
     .cp-status {
-        font-size: 12px;
-        margin-top: 5px;
-        padding: 5px;
-        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-top: 6px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-weight: 500;
     }
     .cp-valid {
-        background: #d1e7dd;
-        color: #0f5132;
-        border: 1px solid #badbcc;
+        background: #e8f5e9;
+        color: #2e7d32;
+        border: 1px solid #a5d6a7;
     }
     .cp-invalid {
-        background: #f8d7da;
-        color: #842029;
-        border: 1px solid #f5c2c7;
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
     }
 </style>
 <script>
@@ -339,7 +377,11 @@ function checkEmailAvailability() {
 </head>
 <body>
 <main class="register-container" role="main" aria-labelledby="registerHeading">
+  <div class="register-logo">
+    <i class="fa-solid fa-user-plus"></i>
+  </div>
   <h1 id="registerHeading">Create Your Account</h1>
+  <p class="register-subtitle">Join Shakira Salon and book your appointments</p>
 
   <?php if ($error): ?>
     <div class="message error" role="alert"><?= htmlspecialchars($error) ?></div>
@@ -348,38 +390,52 @@ function checkEmailAvailability() {
   <?php endif; ?>
 
   <form method="POST" novalidate>
-    <label for="fullname">Full Name</label>
-    <input type="text" id="fullname" name="fullname" placeholder="John Doe" required autocomplete="name" onblur="checkFullNameAvailability()" />
-    <div id="fullname-status" class="fullname-status"></div>
+    <div class="form-group">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" placeholder="e.g. Juan Dela Cruz" required autocomplete="name" onblur="checkFullNameAvailability()" />
+      <div id="fullname-status" class="fullname-status"></div>
+    </div>
 
-    <label for="email">Email Address</label>
-    <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" onblur="checkEmailAvailability()" />
-    <div id="email-status" class="email-status"></div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" onblur="checkEmailAvailability()" />
+      <div id="email-status" class="email-status"></div>
+    </div>
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" placeholder="Choose a strong password" required minlength="8" autocomplete="new-password" />
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Choose a strong password" required minlength="8" autocomplete="new-password" />
+    </div>
 
-    <label for="cp">Contact Number</label>
-    <input type="text" id="cp" name="cp" placeholder="e.g., 09123456789" pattern="09[0-9]{9}" required maxlength="11" minlength="11" oninput="validatePhilippineNumber(this)" />
-    <div id="cp-status" class="cp-status"></div>
+    <div class="form-group">
+      <label for="cp">Contact Number</label>
+      <input type="text" id="cp" name="cp" placeholder="e.g. 09123456789" pattern="09[0-9]{9}" required maxlength="11" minlength="11" oninput="validatePhilippineNumber(this)" />
+      <div id="cp-status" class="cp-status"></div>
+    </div>
 
-    <label for="security_question">Security Question</label>
-    <select id="security_question" name="security_question" required>
-      <option value="" disabled selected>Select a question</option>
-      <option value="What was your childhood nickname?">What was your childhood nickname?</option>
-      <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
-      <option value="What is the name of your first pet?">What is the name of your first pet?</option>
-      <option value="What was the model of your first car?">What was the model of your first car?</option>
-      <option value="What is your favorite food?">What is your favorite food?</option>
-    </select>
+    <div class="form-group">
+      <label for="security_question">Security Question</label>
+      <select id="security_question" name="security_question" required>
+        <option value="" disabled selected>Select a question</option>
+        <option value="What was your childhood nickname?">What was your childhood nickname?</option>
+        <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+        <option value="What is the name of your first pet?">What is the name of your first pet?</option>
+        <option value="What was the model of your first car?">What was the model of your first car?</option>
+        <option value="What is your favorite food?">What is your favorite food?</option>
+      </select>
+    </div>
 
-    <label for="security_answer">Security Answer</label>
-    <input type="text" id="security_answer" name="security_answer" placeholder="Your answer here" required autocomplete="off" />
+    <div class="form-group">
+      <label for="security_answer">Security Answer</label>
+      <input type="text" id="security_answer" name="security_answer" placeholder="Your answer here" required autocomplete="off" />
+    </div>
 
-    <input type="submit" value="Register" />
+    <button type="submit" class="btn-submit">
+      <i class="fa-solid fa-user-plus"></i> Create Account
+    </button>
   </form>
 
-  <p class="login-link">Already have an account? <a href="login.php">Login here</a>.</p>
+  <p class="login-link">Already have an account? <a href="login.php">Sign in here</a></p>
 </main>
 </body>
 </html>

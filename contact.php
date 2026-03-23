@@ -4,8 +4,11 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "shakira_salon";
-
-$conn = new mysqli($host, $user, $pass, $db);
+<!-- Header -->
+<div class="page-header">
+  <h1><i class="fa-solid fa-envelope me-2"></i>Contact Shakira Salon</h1>
+  <p>We'd love to hear from you! Fill out the form below.</p>
+</div>n = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -74,55 +77,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Contact Us - Shakira Salon</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body { background: #fdfdfd; font-family: Arial, sans-serif; margin-bottom: 0; padding-top: 0; }
-    .navbar { background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .navbar-brand { font-weight: bold; color: #fff !important; }
-    .nav-link { color: #fff !important; font-weight: 500; }
-    .nav-link:hover { text-decoration: underline; }
-    .navbar-toggler { border-color: rgba(255,255,255,0.5); }
-    .navbar-toggler-icon { filter: invert(1); }
-    .contact-header {
-      background: linear-gradient(135deg, #ff69b4, #ff1493);
-      color: white; padding: 50px 0; text-align: center;
-      border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-      margin-top: 56px;
+    body { padding-top: 0; }
+    .contact-form {
+      background:var(--bg-white);padding:32px;border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);margin-top:-40px;position:relative;z-index:2;
     }
-    .contact-form { background: white; padding: 30px; border-radius: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-top: -40px; }
-    .form-control:focus { border-color: #ff69b4; box-shadow: 0 0 5px rgba(255,105,180,0.5); }
-    .btn-salon { background-color: #ff1493; color: white; border-radius: 25px;
-      padding: 10px 20px; border: none; }
-    .btn-salon:hover { background-color: #e01383; color: white; }
-    footer {
-      background: #ff69b4;
-      color: white;
-      padding: 40px 0;
-      text-align: center;
-      margin-top: 50px;
+    .contact-form .form-label { font-weight:600;font-size:0.9rem;color:var(--text-dark); }
+    .contact-form .form-control {
+      padding:12px 16px;border-radius:var(--radius-sm);border:2px solid #e8e8e8;
+      font-size:0.95rem;font-family:var(--font-family);transition:var(--transition);
     }
-    footer a { color: white; text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    footer .social i {
-      font-size: 20px;
-      margin: 0 10px;
-      color: white;
-      transition: 0.3s;
+    .contact-form .form-control:focus {
+      border-color:var(--primary);box-shadow:0 0 0 4px rgba(255,64,129,0.12);
     }
-    footer .social i:hover {
-      color: #ffe4f2;
-    }
-    @media (max-width: 576px) {
-      .contact-header { border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; padding: 35px 15px; }
-      .contact-form { padding: 20px; }
-    }
+    .contact-form textarea { resize:vertical;min-height:120px; }
+    @media (max-width:576px) { .contact-form { padding:22px 18px; } }
   </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="salon-navbar navbar navbar-expand-lg fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
+    <a class="navbar-brand" href="dashboard.php"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -131,10 +109,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a></li>
         <li class="nav-item"><a class="nav-link" href="services.php"><i class="fa-solid fa-gears"></i> Services</a></li>
         <li class="nav-item"><a class="nav-link" href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a></li>
-        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
         <li class="nav-item"><a class="nav-link" href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a></li>
-        <li class="nav-item"><a class="nav-link active" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a></li>
+        <li class="nav-item"><a class="nav-link active" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Hours</a></li>
         <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
       </ul>
     </div>
@@ -153,30 +131,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="col-md-8">
       <div class="contact-form">
         <?php if ($success): ?>
-          <div class="alert alert-success"><?= $success; ?></div>
+          <div class="salon-alert-success"><i class="fa-solid fa-circle-check me-1"></i> <?= $success; ?></div>
         <?php endif; ?>
         <?php if ($error): ?>
-          <div class="alert alert-danger"><?= $error; ?></div>
+          <div class="salon-alert-error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= $error; ?></div>
         <?php endif; ?>
 
         <form method="POST" action="">
           <div class="mb-3">
-            <label class="form-label">Full Name</label>
+            <label class="form-label"><i class="fa-solid fa-user me-1"></i> Full Name</label>
             <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Email Address</label>
+            <label class="form-label"><i class="fa-solid fa-envelope me-1"></i> Email Address</label>
             <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Subject</label>
+            <label class="form-label"><i class="fa-solid fa-tag me-1"></i> Subject</label>
             <input type="text" name="subject" class="form-control" placeholder="Message subject" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Message</label>
+            <label class="form-label"><i class="fa-solid fa-message me-1"></i> Message</label>
             <textarea name="message" rows="5" class="form-control" placeholder="Write your message..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-salon">Send Message</button>
+          <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane me-1"></i> Send Message</button>
         </form>
       </div>
     </div>
@@ -184,18 +162,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <!-- Footer -->
-<footer>
+<footer class="salon-footer">
   <div class="container">
-    <h5>Shakira Salon</h5>
-    <p><i class="fa-solid fa-location-dot"></i> Tuao West, Cagayan, Philippines</p>
-    <p><i class="fa-solid fa-phone"></i> +63 912 345 6789</p>
-    <p><i class="fa-solid fa-envelope"></i> <a href="mailto:shakirabeautysalon@email.com">shakirabeautysalon@email.com</a></p>
-    <div class="social mt-3">
-      <a href="#"><i class="fa-brands fa-facebook"></i></a>
-      <a href="#"><i class="fa-brands fa-instagram"></i></a>
-      <a href="#"><i class="fa-brands fa-twitter"></i></a>
-    </div>
-    <hr class="my-3" style="border-color: rgba(255,255,255,0.5);">
+    <h5><i class="fa-solid fa-scissors me-2"></i>Shakira Salon</h5>
+    <p><i class="fa-solid fa-location-dot me-1"></i> Tuao West, Cagayan, Philippines</p>
+    <p><i class="fa-solid fa-phone me-1"></i> +63 912 345 6789</p>
+    <p><i class="fa-solid fa-envelope me-1"></i> <a href="mailto:shakirabeautysalon@email.com">shakirabeautysalon@email.com</a></p>
+    <hr>
     <p>&copy; <?= date('Y'); ?> Shakira Salon. All rights reserved.</p>
   </div>
 </footer>

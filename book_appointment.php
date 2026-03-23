@@ -200,38 +200,50 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <title>Book Appointment</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/shared.css">
   <style>
-    body {font-family: Arial, sans-serif; background:#fdf3f7; padding-top: 76px;}
-    .container-box {max-width:650px;margin:30px auto 60px;padding:30px;background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1);}
-    label{font-weight:bold;display:block;margin-top:14px;margin-bottom:4px;}
-    input,select{width:100%;padding:10px;margin-top:4px;border-radius:8px;border:1px solid #ccc;box-sizing:border-box;}
-    button[type="submit"]{margin-top:20px;padding:12px;width:100%;background:#ff4da6;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600;}
-    button[type="submit"]:hover{background:#e0358c;}
-    .success,.error{padding:10px;margin-bottom:15px;border-radius:8px;text-align:center;}
-    .success{background:#d4edda;color:#155724;}
-    .error{background:#f8d7da;color:#721c24;}
-    .alert-info {background:#e7f3fe;color:#0c5460;border:1px solid #bee5eb;border-radius:8px;padding:15px;}
-    .navbar {background-color: #ff69b4 !important; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
-    .navbar-brand {color:#fff !important;font-weight:bold;}
-    .nav-link {color:#fff !important;font-weight:500;}
-    .nav-link:hover, .nav-link.active {text-decoration:underline;}
-    .navbar-toggler {border-color:rgba(255,255,255,0.5);}
-    .navbar-toggler-icon {filter:invert(1);}
-    .page-header {
-      background: linear-gradient(135deg, #ff69b4, #ff1493);
-      color: white; padding: 50px 0; text-align: center;
-      border-bottom-left-radius: 50px; border-bottom-right-radius: 50px;
-      margin-top: 56px;
+    body { padding-top: 0; }
+    .container-box {
+      max-width:650px;margin:-30px auto 30px;padding:32px;
+      background:var(--bg-white);border-radius:var(--radius-lg);
+      box-shadow:var(--shadow-md);position:relative;z-index:2;
     }
-    .page-header h1 { margin: 0; font-size: 2rem; }
-    .page-header p { margin: 8px 0 0; opacity: 0.9; }
-    .container-box {max-width:650px;margin:-30px auto 30px;padding:30px;background:#fff;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);}
-    .qr-box {text-align:center;margin:15px 0;}
-    .qr-box img {max-width:200px;border:8px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,0.2);border-radius:12px;}
-    #gcash-section {display:none;}
+    .container-box h2 {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      font-weight: 600; display: block; margin-bottom: 6px;
+      font-size: 0.9rem; color: var(--text-dark);
+    }
+    .form-group input, .form-group select {
+      width:100%;padding:12px 16px;border-radius:var(--radius-sm);
+      border:2px solid #e8e8e8;font-size:0.95rem;
+      font-family:var(--font-family);transition:var(--transition);
+    }
+    .form-group input:focus, .form-group select:focus {
+      border-color:var(--primary);outline:none;
+      box-shadow:0 0 0 4px rgba(255,64,129,0.12);
+    }
+    .form-group select {
+      appearance:none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat:no-repeat;background-position:right 12px center;background-size:14px;padding-right:40px;
+    }
+    .form-group input[readonly] { background:#f5f5f5; cursor:not-allowed; }
+    .success { padding:14px 16px; margin-bottom:18px; border-radius:var(--radius-sm); background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7; font-weight:500; font-size:0.9rem; }
+    .error { padding:14px 16px; margin-bottom:18px; border-radius:var(--radius-sm); background:#ffebee; color:#c62828; border:1px solid #ef9a9a; font-weight:500; font-size:0.9rem; }
+    .alert-info { background:#e3f2fd; color:#1565c0; border:1px solid #90caf9; border-radius:var(--radius-sm); padding:18px; margin-top:16px; }
+    .alert-info strong { display:block; margin-bottom:8px; font-size:1rem; }
+    .qr-box { text-align:center; margin:15px 0; }
+    .qr-box img { max-width:180px; border:6px solid #fff; box-shadow:var(--shadow-md); border-radius:var(--radius-md); }
+    #gcash-section { display:none; }
     @media (max-width:576px) {
-      .page-header { border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; padding: 35px 15px; }
-      .container-box {margin:20px 12px 30px;padding:20px;}
+      .container-box { margin:15px 12px 30px; padding:22px 18px; }
     }
   </style>
   <script>
@@ -283,7 +295,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
 <!-- ✅ Navbar -->
-<nav class="navbar navbar-expand-lg fixed-top">
+<nav class="salon-navbar navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand" href="dashboard.php"><i class="fa-solid fa-scissors"></i> Shakira Salon</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -295,10 +307,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fa-solid fa-house"></i> Home</a></li>
         <li class="nav-item"><a class="nav-link" href="services.php"><i class="fa-solid fa-gears"></i> Services</a></li>
         <li class="nav-item"><a class="nav-link active" href="book_appointment.php"><i class="fa-solid fa-calendar-check"></i> Book</a></li>
-        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> Booking History</a></li>
+        <li class="nav-item"><a class="nav-link" href="booking_history.php"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
         <li class="nav-item"><a class="nav-link" href="gallery.php"><i class="fa-solid fa-image"></i> Gallery</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Business Hours</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.php"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="business_hours_client.php"><i class="fa-solid fa-clock"></i> Hours</a></li>
         <li class="nav-item"><a class="nav-link" href="logout.php"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
       </ul>
     </div>
@@ -312,100 +324,120 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <!-- ✅ Booking Form -->
 <div class="container-box">
-  <h2>💇 Book Appointment</h2>
+  <h2><i class="fa-solid fa-scissors me-2"></i>Book Appointment</h2>
 
   <?php if ($success): ?>
-    <div class="success">✅ Appointment saved! Your booking has been confirmed. A confirmation email has been sent to you.</div>
+    <div class="success"><i class="fa-solid fa-circle-check me-1"></i> Appointment saved! Your booking has been confirmed. A confirmation email has been sent to you.</div>
   <?php elseif ($error): ?>
-    <div class="error"><?= htmlspecialchars($error) ?></div>
+    <div class="error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= htmlspecialchars($error) ?></div>
   <?php endif; ?>
 
   <form method="POST" enctype="multipart/form-data">
-    <label>Name</label>
-    <input type="text" name="name" value="<?= htmlspecialchars($loggedInUser['full_name'] ?? '') ?>" required>
+    <div class="form-group">
+      <label><i class="fa-solid fa-user me-1"></i> Name</label>
+      <input type="text" name="name" value="<?= htmlspecialchars($loggedInUser['full_name'] ?? '') ?>" required>
+    </div>
     
-    <label>Email (Gmail only)</label>
-    <input type="email" name="email" id="email" 
-           value="<?= htmlspecialchars($loggedInUser['email'] ?? '') ?>"
-           placeholder="yourname@gmail.com" 
-           oninput="validateEmail()" 
-           required>
+    <div class="form-group">
+      <label><i class="fa-solid fa-envelope me-1"></i> Email (Gmail only)</label>
+      <input type="email" name="email" id="email" 
+             value="<?= htmlspecialchars($loggedInUser['email'] ?? '') ?>"
+             placeholder="yourname@gmail.com" 
+             oninput="validateEmail()" 
+             required>
+    </div>
     
-    <label>Phone (PH format: 09XXXXXXXXX)</label>
-    <input type="text" name="phone" id="phone" 
-           value="<?= htmlspecialchars($loggedInUser['user_phone'] ?? '') ?>"
-           maxlength="11" 
-           placeholder="09123456789" 
-           pattern="09[0-9]{9}"
-           oninput="validatePhone()" 
-           required>
+    <div class="form-group">
+      <label><i class="fa-solid fa-phone me-1"></i> Phone (PH format: 09XXXXXXXXX)</label>
+      <input type="text" name="phone" id="phone" 
+             value="<?= htmlspecialchars($loggedInUser['user_phone'] ?? '') ?>"
+             maxlength="11" 
+             placeholder="09123456789" 
+             pattern="09[0-9]{9}"
+             oninput="validatePhone()" 
+             required>
+    </div>
     
-    <label>Address</label>
-    <input type="text" name="address" required>
+    <div class="form-group">
+      <label><i class="fa-solid fa-location-dot me-1"></i> Address</label>
+      <input type="text" name="address" required>
+    </div>
 
-    <label>Service</label>
-    <select name="service" id="service" onchange="updatePrice()" required>
-      <option value="">--Select--</option>
-      <?php foreach($services as $s=>$p): ?>
-        <option value="<?= $s ?>"><?= $s ?></option>
-      <?php endforeach; ?>
-    </select>
+    <div class="form-group">
+      <label><i class="fa-solid fa-spa me-1"></i> Service</label>
+      <select name="service" id="service" onchange="updatePrice()" required>
+        <option value="">-- Select a service --</option>
+        <?php foreach($services as $s=>$p): ?>
+          <option value="<?= $s ?>"><?= $s ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-    <label>Price (₱)</label>
-    <input type="number" id="price" name="price" readonly required>
+    <div class="form-group">
+      <label><i class="fa-solid fa-peso-sign me-1"></i> Price (₱)</label>
+      <input type="number" id="price" name="price" readonly required>
+    </div>
 
-    <label>Schedule</label>
-    <select name="schedule" required>
-      <option value="">--Select--</option>
-      <?php foreach($schedules as $t): ?>
-        <option value="<?= $t ?>"><?= $t ?></option>
-      <?php endforeach; ?>
-    </select>
+    <div class="form-group">
+      <label><i class="fa-solid fa-calendar-days me-1"></i> Schedule</label>
+      <select name="schedule" required>
+        <option value="">-- Select a time --</option>
+        <?php foreach($schedules as $t): ?>
+          <option value="<?= $t ?>"><?= $t ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-    <label>Stylist</label>
-    <select name="stylist" required>
-      <option value="">--Select--</option>
-      <?php foreach($stylists as $st): ?>
-        <option value="<?= $st ?>"><?= $st ?></option>
-      <?php endforeach; ?>
-    </select>
+    <div class="form-group">
+      <label><i class="fa-solid fa-user-tie me-1"></i> Stylist</label>
+      <select name="stylist" required>
+        <option value="">-- Select a stylist --</option>
+        <?php foreach($stylists as $st): ?>
+          <option value="<?= $st ?>"><?= $st ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
 
-    <label>Payment Method</label>
-    <select name="payment_method" id="payment_method" onchange="togglePaymentSection()" required>
-      <option value="">--Select Payment Method--</option>
-      <option value="cash">Cash</option>
-      <option value="gcash">GCash</option>
-    </select>
+    <div class="form-group">
+      <label><i class="fa-solid fa-credit-card me-1"></i> Payment Method</label>
+      <select name="payment_method" id="payment_method" onchange="togglePaymentSection()" required>
+        <option value="">-- Select payment method --</option>
+        <option value="cash"><i class="fa-solid fa-money-bill"></i> Cash</option>
+        <option value="gcash">GCash</option>
+      </select>
+    </div>
 
     <!-- GCash Section (Hidden by default) -->
     <div id="gcash-section">
-      <div class="alert alert-info text-center" style="margin-top:15px;">
-        <strong>💰 GCash Payment Instructions</strong><br>
-        Send your payment to:<br>
-        <b>GCash Number:</b> <?= $gcashNumber ?><br>
-        <b>Account Name:</b> <?= $gcashName ?><br>
+      <div class="alert alert-info text-center">
+        <strong><i class="fa-solid fa-wallet me-1"></i> GCash Payment Instructions</strong>
+        <p class="mb-1 mt-2">Send your payment to:</p>
+        <p class="mb-1"><b>GCash Number:</b> <?= $gcashNumber ?></p>
+        <p class="mb-2"><b>Account Name:</b> <?= $gcashName ?></p>
         <div class="qr-box">
-          <p>📷 Scan this official QR Code to pay:</p>
+          <p class="mb-2"><i class="fa-solid fa-qrcode me-1"></i> Scan this official QR Code to pay:</p>
           <img src="<?= $gcashQRPath ?>" alt="GCash QR Code">
         </div>
-        <small>⚠️ After paying, upload your screenshot/receipt below to confirm your booking. Admin will verify your payment.</small>
+        <small class="text-muted"><i class="fa-solid fa-triangle-exclamation me-1"></i> After paying, upload your screenshot/receipt below to confirm your booking. Admin will verify your payment.</small>
       </div>
 
-      <label>Upload Payment Proof (Screenshot)</label>
-      <input type="file" name="payment_proof" id="payment_proof" accept="image/*">
+      <div class="form-group">
+        <label><i class="fa-solid fa-upload me-1"></i> Upload Payment Proof (Screenshot)</label>
+        <input type="file" name="payment_proof" id="payment_proof" accept="image/*">
+      </div>
     </div>
 
-    <button type="submit">Confirm Booking</button>
+    <button type="submit" class="btn-submit" style="margin-top:10px;"><i class="fa-solid fa-check me-1"></i> Confirm Booking</button>
   </form>
 </div>
 
-<footer style="background:#ff69b4;color:white;padding:40px 0;text-align:center;margin-top:20px;">
+<footer class="salon-footer">
   <div class="container">
-    <h5>Shakira Salon</h5>
-    <p><i class="fa-solid fa-location-dot"></i> Tuao West, Cagayan, Philippines</p>
-    <p><i class="fa-solid fa-phone"></i> +63 912 345 6789</p>
-    <p><i class="fa-solid fa-envelope"></i> <a href="mailto:shakirabeautysalon@email.com" style="color:white;">shakirabeautysalon@email.com</a></p>
-    <hr style="border-color:rgba(255,255,255,0.5);">
+    <h5><i class="fa-solid fa-scissors me-2"></i>Shakira Salon</h5>
+    <p><i class="fa-solid fa-location-dot me-1"></i> Tuao West, Cagayan, Philippines</p>
+    <p><i class="fa-solid fa-phone me-1"></i> +63 912 345 6789</p>
+    <p><i class="fa-solid fa-envelope me-1"></i> <a href="mailto:shakirabeautysalon@email.com">shakirabeautysalon@email.com</a></p>
+    <hr>
     <p>&copy; <?= date('Y'); ?> Shakira Salon. All rights reserved.</p>
   </div>
 </footer>
