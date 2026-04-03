@@ -72,6 +72,17 @@ $gcashNumber = "09623224038";
 $gcashName   = "Mary Grace Acojedo";
 $gcashQRPath = "gcash.jpg"; // ✅ Use your gcash.jpg file in root folder
 
+// ✅ Handle rebook prefill from query string
+$rebookData = [];
+if (isset($_GET['rebook']) && $_GET['rebook'] == 1) {
+    $rebookData = [
+        'service' => trim($_GET['service'] ?? ''),
+        'price'   => (float) ($_GET['price'] ?? 0),
+        'phone'   => trim($_GET['phone'] ?? ''),
+        'address' => trim($_GET['address'] ?? ''),
+    ];
+}
+
 // ✅ Handle booking form submission
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name     = trim($_POST['name'] ?? '');
@@ -239,6 +250,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     .qr-box { text-align:center; margin:15px 0; }
     .qr-box img { max-width:180px; border:6px solid #fff; box-shadow:var(--shadow-md); border-radius:var(--radius-md); }
     #gcash-section { display:none; }
+    .rebook-notice {
+      background: #fff3e0;
+      border: 1.5px solid #ffb300;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+      color: #7c5200;
+    }
+    .rebook-notice i { color: #ffb300; }
     @media (max-width:576px) {
       .container-box { margin:15px 12px 30px; padding:22px 18px; }
     }
@@ -249,6 +270,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       const s=document.getElementById("service").value;
       document.getElementById("price").value=prices[s]||0;
     }
+
+    // Pre-fill price on page load for rebook
+    window.addEventListener('DOMContentLoaded', function() {
+      <?php if (!empty($rebookData['service'])): ?>
+      updatePrice();
+      <?php endif; ?>
+    });
     
     function togglePaymentSection() {
       const paymentMethod = document.getElementById("payment_method").value;
@@ -329,6 +357,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= htmlspecialchars($error) ?></div>
   <?php endif; ?>
 
+  <?php if (!empty($rebookData)): ?>
+    <div class="rebook-notice">
+      <i class="fa-solid fa-rotate-right me-1"></i>
+      <strong>Rebooking your previous appointment.</strong>
+      Your details have been pre-filled — just pick a new <strong>date/time</strong>, <strong>stylist</strong>, and <strong>payment method</strong>.
+    </div>
+  <?php endif; ?>
+
   <form method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label><i class="fa-solid fa-user me-1"></i> Name</label>
@@ -347,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="form-group">
       <label><i class="fa-solid fa-phone me-1"></i> Phone (PH format: 09XXXXXXXXX)</label>
       <input type="text" name="phone" id="phone" 
-             value="<?= htmlspecialchars($loggedInUser['user_phone'] ?? '') ?>"
+             value="<?= htmlspecialchars($rebookData['phone'] ?? $loggedInUser['user_phone'] ?? '') ?>"
              maxlength="11" 
              placeholder="09123456789" 
              pattern="09[0-9]{9}"
@@ -357,7 +393,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     <div class="form-group">
       <label><i class="fa-solid fa-location-dot me-1"></i> Address</label>
-      <input type="text" name="address" required>
+      <input type="text" name="address" value="<?= htmlspecialchars($rebookData['address'] ?? '') ?>" required>
     </div>
 
     <div class="form-group">
@@ -365,14 +401,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <select name="service" id="service" onchange="updatePrice()" required>
         <option value="">-- Select a service --</option>
         <?php foreach($services as $s=>$p): ?>
-          <option value="<?= $s ?>"><?= $s ?></option>
+          <option value="<?= $s ?>" <?= (isset($rebookData['service']) && $rebookData['service'] === $s) ? 'selected' : '' ?>><?= $s ?></option>
         <?php endforeach; ?>
       </select>
     </div>
 
     <div class="form-group">
       <label><i class="fa-solid fa-peso-sign me-1"></i> Price (₱)</label>
-      <input type="number" id="price" name="price" readonly required>
+      <input type="number" id="price" name="price" value="<?= htmlspecialchars($rebookData['price'] ?? '') ?>" readonly required>
     </div>
 
     <div class="form-group">
