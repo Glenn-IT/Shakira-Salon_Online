@@ -135,9 +135,22 @@ try {
                 <span class="badge-status <?= $badgeClass ?>"><i class="fa-solid <?= $icon ?> me-1"></i><?= ucfirst($booking['status']) ?></span>
               </td>
               <td>
-                <a href="book_appointment.php" class="btn-rebook" title="Book another appointment">
-                  <i class="fa-solid fa-calendar-plus me-1"></i>Rebook
-                </a>
+                <?php if (strtolower($booking['status']) === 'approved'): ?>
+                  <?php
+                    $rebookUrl = 'book_appointment.php?' . http_build_query([
+                      'rebook'  => 1,
+                      'service' => $booking['service'],
+                      'price'   => $booking['price'],
+                      'phone'   => $booking['phone'],
+                      'address' => $booking['address'],
+                    ]);
+                  ?>
+                  <a href="<?= htmlspecialchars($rebookUrl) ?>" class="btn-rebook" title="Rebook this appointment">
+                    <i class="fa-solid fa-rotate-right me-1"></i>Rebook
+                  </a>
+                <?php else: ?>
+                  <span class="text-muted" style="font-size:0.82rem;">—</span>
+                <?php endif; ?>
               </td>
             </tr>
           <?php endforeach; ?>

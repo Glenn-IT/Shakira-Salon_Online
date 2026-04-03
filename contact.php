@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $mail->addAddress('nicoleacojedo03@gmail.com', 'Shakira Salon Admin');
 
                 $mail->isHTML(true);
-                $mail->Subject = "📩 New Contact Form Message: $subject";
+                $mail->Subject = "New Contact Form Message: $subject";
                 $mail->Body    = "
                     <h2>New Message from Contact Form</h2>
                     <p><b>Name:</b> $name</p>
@@ -53,15 +53,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ";
 
                 $mail->send();
-                $success = "✅ Your message has been sent successfully!";
+                $success = "Your message has been sent successfully!";
             } catch (Exception $e) {
-                $error = "❌ Message saved, but email could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                $error = "Message saved, but email could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
         } else {
-            $error = "❌ Something went wrong. Please try again.";
+            $error = "Something went wrong. Please try again.";
         }
     } else {
-        $error = "⚠️ All fields are required!";
+        $error = "All fields are required!";
     }
 }
 ?>
@@ -76,20 +76,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <link rel="stylesheet" href="assets/css/shared.css">
   <style>
     body { padding-top: 0; }
+    .content-section { margin-top: -30px; padding: 0 15px 40px; position: relative; z-index: 2; }
     .contact-form {
-      background:var(--bg-white);padding:32px;border-radius:var(--radius-lg);
-      box-shadow:var(--shadow-md);margin-top:-40px;position:relative;z-index:2;
+      background: var(--bg-white, #fff);
+      padding: 36px;
+      border-radius: var(--radius-lg, 16px);
+      box-shadow: var(--shadow-md, 0 4px 24px rgba(0,0,0,0.10));
     }
-    .contact-form .form-label { font-weight:600;font-size:0.9rem;color:var(--text-dark); }
+    .contact-form .form-label { font-weight: 600; font-size: 0.9rem; color: var(--text-dark, #222); }
     .contact-form .form-control {
-      padding:12px 16px;border-radius:var(--radius-sm);border:2px solid #e8e8e8;
-      font-size:0.95rem;font-family:var(--font-family);transition:var(--transition);
+      padding: 12px 16px;
+      border-radius: var(--radius-sm, 8px);
+      border: 2px solid #e8e8e8;
+      font-size: 0.95rem;
+      font-family: var(--font-family, inherit);
+      transition: var(--transition, border-color .2s);
     }
     .contact-form .form-control:focus {
-      border-color:var(--primary);box-shadow:0 0 0 4px rgba(255,64,129,0.12);
+      border-color: var(--primary, #ff4081);
+      box-shadow: 0 0 0 4px rgba(255,64,129,0.12);
     }
-    .contact-form textarea { resize:vertical;min-height:120px; }
-    @media (max-width:576px) { .contact-form { padding:22px 18px; } }
+    .contact-form textarea { resize: vertical; min-height: 130px; }
+    @media (max-width: 576px) { .contact-form { padding: 22px 18px; } }
   </style>
 </head>
 <body>
@@ -115,43 +123,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </nav>
 
-<!-- Header -->
-<div class="contact-header">
-  <h1>Contact Shakira Salon</h1>
-  <p>We’d love to hear from you! Fill out the form below.</p>
+<!-- Header - same page-header class used by all other pages -->
+<div class="page-header">
+  <h1><i class="fa-solid fa-envelope me-2"></i>Contact Us</h1>
+  <p>We'd love to hear from you! Fill out the form below.</p>
 </div>
 
 <!-- Contact Form -->
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="contact-form">
-        <?php if ($success): ?>
-          <div class="salon-alert-success"><i class="fa-solid fa-circle-check me-1"></i> <?= $success; ?></div>
-        <?php endif; ?>
-        <?php if ($error): ?>
-          <div class="salon-alert-error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= $error; ?></div>
-        <?php endif; ?>
+<div class="content-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="contact-form">
+          <?php if ($success): ?>
+            <div class="salon-alert-success"><i class="fa-solid fa-circle-check me-1"></i> <?= $success; ?></div>
+          <?php endif; ?>
+          <?php if ($error): ?>
+            <div class="salon-alert-error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= $error; ?></div>
+          <?php endif; ?>
 
-        <form method="POST" action="">
-          <div class="mb-3">
-            <label class="form-label"><i class="fa-solid fa-user me-1"></i> Full Name</label>
-            <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><i class="fa-solid fa-envelope me-1"></i> Email Address</label>
-            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><i class="fa-solid fa-tag me-1"></i> Subject</label>
-            <input type="text" name="subject" class="form-control" placeholder="Message subject" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label"><i class="fa-solid fa-message me-1"></i> Message</label>
-            <textarea name="message" rows="5" class="form-control" placeholder="Write your message..." required></textarea>
-          </div>
-          <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane me-1"></i> Send Message</button>
-        </form>
+          <form method="POST" action="">
+            <div class="mb-3">
+              <label class="form-label"><i class="fa-solid fa-user me-1"></i> Full Name</label>
+              <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="fa-solid fa-envelope me-1"></i> Email Address</label>
+              <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="fa-solid fa-tag me-1"></i> Subject</label>
+              <input type="text" name="subject" class="form-control" placeholder="Message subject" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label"><i class="fa-solid fa-message me-1"></i> Message</label>
+              <textarea name="message" rows="5" class="form-control" placeholder="Write your message..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane me-1"></i> Send Message</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
