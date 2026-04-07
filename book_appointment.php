@@ -360,7 +360,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <?php if ($success): ?>
     <div class="success"><i class="fa-solid fa-circle-check me-1"></i> Appointment saved! Your booking has been confirmed. A confirmation email has been sent to you.</div>
   <?php elseif ($error): ?>
-    <div class="error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= htmlspecialchars($error) ?></div>
+    <div class="error"><i class="fa-solid fa-circle-exclamation me-1"></i> <?= $error ?></div>
   <?php endif; ?>
 
   <?php if (!empty($rebookData)): ?>
