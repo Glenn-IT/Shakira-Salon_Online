@@ -54,6 +54,7 @@ try {
     .no-bookings i { font-size:3rem;margin-bottom:15px;color:#ddd;display:block; }
     .btn-rebook { background:var(--primary);color:#fff;border:none;padding:6px 14px;border-radius:var(--radius-sm);font-size:0.85rem;font-weight:600;transition:var(--transition);text-decoration:none;display:inline-block; }
     .btn-rebook:hover { background:var(--primary-dark);color:#fff;transform:translateY(-2px);box-shadow:0 4px 10px rgba(255,64,129,0.3); }
+    .badge-completed { background:#ede7f6;color:#6f42c1;border:1px solid #b39ddb;border-radius:20px;padding:3px 10px;font-size:0.78rem;font-weight:600; }
     @media (max-width:768px) {
       .container-main { padding:20px;margin:-20px 10px 20px; }
     }
@@ -130,7 +131,8 @@ try {
                   $badgeClass = 'badge-pending';
                   $icon = 'fa-clock';
                   if ($status === 'approved') { $badgeClass = 'badge-approved'; $icon = 'fa-circle-check'; }
-                  elseif ($status === 'cancelled') { $badgeClass = 'badge-cancelled'; $icon = 'fa-circle-xmark'; }
+                  elseif ($status === 'cancelled' || $status === 'rejected') { $badgeClass = 'badge-cancelled'; $icon = 'fa-circle-xmark'; }
+                  elseif ($status === 'completed') { $badgeClass = 'badge-completed'; $icon = 'fa-star'; }
                 ?>
                 <span class="badge-status <?= $badgeClass ?>"><i class="fa-solid <?= $icon ?> me-1"></i><?= ucfirst($booking['status']) ?></span>
               </td>
