@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2026 at 02:44 PM
+-- Generation Time: Apr 07, 2026 at 03:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,10 +77,9 @@ CREATE TABLE `appointments` (
 --
 
 INSERT INTO `appointments` (`id`, `date`, `user_id`, `appointment_date`, `appointment_time`, `service`, `status`, `created_at`, `customer_name`, `phone`, `address`, `price`, `schedule`, `stylist`, `payment_proof`, `payment_status`, `proof_payment`, `approved_at`, `email`) VALUES
-(60, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'approved', '2025-09-30 00:17:04', 'Jovelyn Erece', '09756432188', 'niug', 2000.00, '08:00 AM', 'Shakira', 'proof_68db21807feec.jpg', 'Pending', NULL, NULL, 'erecejovelyn@gmail.com'),
-(61, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'pending', '2025-09-30 00:41:19', 'Nicole Daguio Acojedo', '09657951427', 'Tabang', 2000.00, '08:00 AM', 'melody delacruz', 'proof_68db272fd6903.jpg', 'Pending', NULL, NULL, 'nicoleacojedo03@gmail.com'),
-(62, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'approved', '2025-10-25 15:26:45', 'Sample', '09192783312', 'sample', 2000.00, '05:00 PM', 'Lala Ursola Uy', NULL, 'Pending', NULL, NULL, 'glenard0823@gmail.com'),
-(63, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Cut', 'approved', '2026-04-03 02:19:26', 'Glenard Pagurayan', '09123791283', 'Centro Sur', 350.00, '02:00 PM', 'melody delacruz', 'proof_69cf23aed4e12.jpg', 'Pending', NULL, NULL, 'glenard2308@gmail.com');
+(66, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'completed', '2026-04-07 13:38:54', 'Sample Kun', '09712398123', 'Faire', 2000.00, '09:00 AM', 'Lala Ursola Uy', NULL, 'Pending', NULL, NULL, 'glenard0823@gmail.com'),
+(67, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Coloring', 'pending', '2026-04-07 13:39:43', 'Sample Kun', '09712398123', 'Faire', 2000.00, '01:00 PM', 'Lala Ursola Uy', NULL, 'Pending', NULL, NULL, 'glenard0823@gmail.com'),
+(68, '0000-00-00', NULL, '0000-00-00', '00:00:00', 'Hair Cut', 'pending', '2026-04-07 13:41:29', 'Sample Kun', '09712398123', 'Faire', 350.00, '09:00 AM', 'Lala Ursola Uy', NULL, 'Pending', NULL, NULL, 'glenard0823@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -237,7 +236,17 @@ INSERT INTO `login_attempts` (`id`, `email`, `ip_address`, `attempt_time`, `succ
 (78, 'glenard2308@gmail.com', '::1', '2026-04-07 12:37:41', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
 (79, 'glenard2308@gmail.com', '::1', '2026-04-07 12:37:46', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
 (80, 'glenard2308@gmail.com', '::1', '2026-04-07 12:37:50', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
-(81, 'glenard2308@gmail.com', '::1', '2026-04-07 12:37:55', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36');
+(81, 'glenard2308@gmail.com', '::1', '2026-04-07 12:37:55', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(82, 'glenard0823@gmail.com', '::1', '2026-04-07 13:14:04', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(83, 'glenard2308@gmail.com', '::1', '2026-04-07 13:17:43', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(84, 'glenard0823@gmail.com', '::1', '2026-04-07 13:18:36', 0, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(85, 'glenard0823@gmail.com', '::1', '2026-04-07 13:20:57', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(86, 'lheinardgasmenpagurayan@gmail.com', '::1', '2026-04-07 13:22:14', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(87, 'glenard0823@gmail.com', '::1', '2026-04-07 13:22:38', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(88, 'lheinardgasmenpagurayan@gmail.com', '::1', '2026-04-07 13:24:50', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(89, 'glenard0823@gmail.com', '::1', '2026-04-07 13:24:59', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(90, 'lheinardgasmenpagurayan@gmail.com', '::1', '2026-04-07 13:26:32', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36'),
+(91, 'glenard0823@gmail.com', '::1', '2026-04-07 13:32:18', 1, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36');
 
 -- --------------------------------------------------------
 
@@ -354,8 +363,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`username`, `id`, `full_name`, `first_name`, `last_name`, `name`, `email`, `phone_number`, `password`, `phone`, `security_question`, `security_answer`, `created_at`, `password_hash`, `role`, `security_question_id`, `security_answer_hash`, `contact_number`, `cp_number`, `status`) VALUES
 ('Admin', 22, 'Glenard', '', '', '', 'glenard2308@gmail.com', '', '$2y$10$rZqC.gjnp8wnzuyX58d.3OgLwZOBUmLDnetpYruhRA.RKR1m07M7u', NULL, 'What is your favorite color?', '16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548', '2025-05-26 23:59:06', '', 'admin', NULL, NULL, '09657951427', NULL, 'active'),
-(NULL, 47, 'John Doe', '', '', '', 'grandmahardcore0.1@gmail.com', '', '$2y$10$SYxcIffg/egaEIgPSVYmwOci2f.l/e7.l4Vh3feFhf053/.lo4dpS', NULL, 'What is your favorite food?', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2026-03-23 07:22:22', '', 'customer', NULL, NULL, '09123213123', '09123213123', 'active'),
-(NULL, 49, 'Sample Juan', '', '', '', 'glenard0823@gmail.com', '', '$2y$10$zRqyTuE7uV1kOrrdmWYiruFLiexSFmLejYV./c3Bfj.t.7d/cv6g2', NULL, 'What was your childhood nickname?', 'be3dbbc7121077e364c631a8acc2273b4f77fad3f0bb190dd04df77c21c259f5', '2026-04-07 12:44:23', '', 'customer', NULL, NULL, '09557997409', NULL, 'active');
+(NULL, 50, 'Sample Kun', '', '', '', 'glenard0823@gmail.com', '', '$2y$10$8gEUFtT.1URez3Ma6WK4QeeXNzLmCRS4NwRKw0Y1yz.dHAYsj3z22', NULL, 'What was your childhood nickname?', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2026-04-07 13:18:57', '', 'customer', NULL, NULL, '09712398123', NULL, 'active'),
+(NULL, 51, 'lehi Kun', '', '', '', 'lheinardgasmenpagurayan@gmail.com', '', '$2y$10$2b0ERQAnWo22dIwHQLyJpuLfIPSUlItOeCJN32zO6tF7dCRRT0nQm', NULL, 'What was your childhood nickname?', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2026-04-07 13:21:59', '', 'customer', NULL, NULL, '09167823871', NULL, 'active');
 
 --
 -- Indexes for dumped tables
@@ -450,7 +459,7 @@ ALTER TABLE `announcements`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `bookings`
@@ -486,7 +495,7 @@ ALTER TABLE `hairstylists`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT for table `promos`
@@ -510,7 +519,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- Constraints for dumped tables
