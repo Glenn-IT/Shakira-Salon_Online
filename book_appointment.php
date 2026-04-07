@@ -107,16 +107,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "⚠️ Please upload your payment proof for GCash payment.";
     } elseif ($name && $phone && $address && $service && $schedule && $stylist && $paymentMethod) {
         try {
-            // ✅ Check duplicates (name OR email OR phone)
-            $checkStmt = $pdo->prepare("SELECT * FROM appointments WHERE customer_name = :name OR email = :email OR phone = :phone LIMIT 1");
+            // ✅ Check duplicates: same email OR phone, same service, and still pending or approved
+            $checkStmt = $pdo->prepare("
+                SELECT * FROM appointments 
+                WHERE (email = :email OR phone = :phone) 
+                  AND service = :service 
+                  AND status IN ('pending', 'approved') 
+                LIMIT 1
+            ");
             $checkStmt->execute([
-                ':name'  => $name,
-                ':email' => $email,
-                ':phone' => $phone
+                ':email'   => $email,
+                ':phone'   => $phone,
+                ':service' => $service
             ]);
 
             if ($checkStmt->fetch()) {
-                $error = "⚠️ Duplicate booking found! Name, Email, or Phone number already used.";
+                $error = "⚠️ You already have an active booking for <strong>$service</strong>. Please wait for it to be completed or cancelled before booking the same service again.";
             } else {
                 // ✅ Handle file upload for GCash payment
                 $filename = null;
