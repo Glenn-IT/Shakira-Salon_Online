@@ -57,7 +57,7 @@ CREATE TABLE `appointments` (
   `appointment_date` date NOT NULL,
   `appointment_time` time NOT NULL,
   `service` varchar(100) DEFAULT NULL,
-  `status` enum('pending','approved','cancelled') DEFAULT 'pending',
+  `status` enum('pending','approved','rejected','completed','cancelled') DEFAULT 'pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `customer_name` varchar(100) DEFAULT NULL,
   `phone` varchar(20) DEFAULT NULL,
