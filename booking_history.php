@@ -137,7 +137,7 @@ try {
                 <span class="badge-status <?= $badgeClass ?>"><i class="fa-solid <?= $icon ?> me-1"></i><?= ucfirst($booking['status']) ?></span>
               </td>
               <td>
-                <?php if (strtolower($booking['status']) === 'approved'): ?>
+                <?php if (in_array(strtolower($booking['status']), ['approved', 'completed'])): ?>
                   <?php
                     $rebookUrl = 'book_appointment.php?' . http_build_query([
                       'rebook'  => 1,
