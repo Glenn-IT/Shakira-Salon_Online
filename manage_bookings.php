@@ -51,8 +51,12 @@ if (isset($_GET['action'], $_GET['id'])) {
     $id = (int) $_GET['id'];
     $action = strtolower($_GET['action']);
 
-    if (in_array($action, ['approve', 'reject'])) {
-        $status = ($action === 'approve') ? 'approved' : 'rejected';
+    if (in_array($action, ['approve', 'reject', 'complete'])) {
+        $status = match($action) {
+            'approve'  => 'approved',
+            'reject'   => 'rejected',
+            'complete' => 'completed',
+        };
 
         $stmt = $conn->prepare("UPDATE appointments SET status=? WHERE id=?");
         $stmt->bind_param("si", $status, $id);
@@ -74,6 +78,16 @@ if (isset($_GET['action'], $_GET['id'])) {
                     <p>Your booking for <b>$service</b> on <b>$schedule</b> has been 
                     <span style='color:green;'>approved</span>.</p>
                     <p>We look forward to seeing you! 💇‍♀️</p>
+                    <br><small>Shakira Salon</small>
+                ";
+            } elseif ($status === 'completed') {
+                $subject = "Your Appointment is Completed 🎉";
+                $body = "
+                    <h2>Hi $customer_name,</h2>
+                    <p>Your appointment for <b>$service</b> on <b>$schedule</b> has been marked as 
+                    <span style='color:#6f42c1;font-weight:bold;'>completed</span>. 🎉</p>
+                    <p>Thank you for visiting <b>Shakira Salon</b>! We hope you loved your experience. 💅</p>
+                    <p>We'd love to see you again soon. Feel free to book another appointment anytime!</p>
                     <br><small>Shakira Salon</small>
                 ";
             } else {
@@ -122,11 +136,13 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     .btn { padding:5px 10px;border-radius:var(--radius-sm);cursor:pointer;font-weight:bold;margin:2px;text-decoration:none;display:inline-block;font-size:0.82rem;transition:var(--transition); }
     .btn-approve { background:#28a745;color:#fff; }
     .btn-reject { background:#dc3545;color:#fff; }
+    .btn-complete { background:#6f42c1;color:#fff; }
     .btn-delete { background:#6c757d;color:#fff; }
     .btn:hover { opacity:0.85;transform:translateY(-1px); }
     .status-pending { color:#ffc107;font-weight:bold; }
     .status-approved { color:#28a745;font-weight:bold; }
     .status-rejected { color:#dc3545;font-weight:bold; }
+    .status-completed { color:#6f42c1;font-weight:bold; }
     .proof-img { max-width:80px;max-height:80px;border-radius:6px; }
   </style>
 </head>
@@ -191,7 +207,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                   <?php if ($status === 'pending'): ?>
                     <a href="?action=approve&id=<?= $row['id'] ?>" class="btn btn-approve" onclick="return confirm('Approve this booking?');">Approve</a>
                     <a href="?action=reject&id=<?= $row['id'] ?>" class="btn btn-reject" onclick="return confirm('Reject this booking?');">Reject</a>
-                  <?php elseif (in_array($status, ['approved','rejected'])): ?>
+                  <?php elseif ($status === 'approved'): ?>
+                    <a href="?action=complete&id=<?= $row['id'] ?>" class="btn btn-complete" onclick="return confirm('Mark this booking as Completed?');">Complete</a>
+                    <a href="?action=delete&id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Delete this booking?');">Delete</a>
+                  <?php elseif (in_array($status, ['rejected', 'completed'])): ?>
                     <a href="?action=delete&id=<?= $row['id'] ?>" class="btn btn-delete" onclick="return confirm('Delete this booking?');">Delete</a>
                   <?php else: ?> — <?php endif; ?>
                 </td>
